@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 {
 	"FileVersion": 3,
 	"EngineAssociation": "4.26",
@@ -15,23 +13,4 @@
 			]
 		}
 	]
-=======
-=======
->>>>>>> Stashed changes
-{
-	"FileVersion": 3,
-	"EngineAssociation": "4.26",
-	"Category": "",
-	"Description": "",
-	"Modules": [
-		{
-			"Name": "AG_ColdNites",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
-	]
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
