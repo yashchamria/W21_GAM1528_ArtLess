@@ -14,11 +14,9 @@ class AG_COLDNITES_API AAG_TestChar : public ACharacter
 public:
 	AAG_TestChar();
 
-	bool bESC_Down;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Controller");
 	class AAG_PlayerController* MainPlayerController;
-	
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -28,5 +26,4 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void EscKeyDown();
-	void EscKeyUp();
 };

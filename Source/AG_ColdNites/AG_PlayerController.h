@@ -15,19 +15,24 @@ class AG_COLDNITES_API AAG_PlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	//reference to the UMG asset in the editor
+	//Reference to the UMG asset in the editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> PauseMenuOverlayAsset;
 
-	//variable to hold the widget after creating it
+	//Variable to hold the widget after creating it
 	UUserWidget* PauseMenuOverlay;
 
 	bool bPauseMenuVisible;
+
+	class UButton* Button;
 protected:
 	virtual void BeginPlay() override;
 
 public:
-	void ShowPauseMenu();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PauseMenu")
 	void HidePauseMenu();
+
+	void ShowPauseMenu();
 	void TogglePauseMenu();
 };
