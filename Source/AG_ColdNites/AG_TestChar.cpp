@@ -28,9 +28,7 @@ void AAG_TestChar::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AAG_TestChar::EscKeyDown()
 {
-	FString name = GetWorld()->GetMapName();
-	
-	if(MainPlayerController && GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
+	if(MainPlayerController && GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu") 
 	{
 		MainPlayerController->TogglePauseMenu();
 	}

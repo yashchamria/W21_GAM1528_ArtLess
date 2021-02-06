@@ -22,9 +22,17 @@ public:
 	//Variable to hold the widget after creating it
 	UUserWidget* PauseMenuOverlay;
 
-	bool bPauseMenuVisible;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> ResOptionsMenuOverlayAsset;
 
-	class UButton* Button;
+	UUserWidget* ResOptionsMenuOverlay;
+	
+	bool bPauseMenuVisible;
+	bool bResOptionsMenuVisible;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Widgets")
+	bool bMainMenuVisible;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -32,7 +40,13 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PauseMenu")
 	void HidePauseMenu();
-
 	void ShowPauseMenu();
 	void TogglePauseMenu();
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ResOptionsMenu")
+	void ShowResOptionsMenu();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ResOptionsMenu")
+	void HideResOptionsMenu();
 };
