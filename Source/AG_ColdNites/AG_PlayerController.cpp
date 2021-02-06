@@ -7,12 +7,21 @@ void AAG_PlayerController::BeginPlay()
 	Super::BeginPlay();
 	
 	bPauseMenuVisible = false;
+	bMainMenuVisible = false;
+	bResOptionsMenuVisible = false;
 	
 	if (PauseMenuOverlayAsset)
 	{
 		PauseMenuOverlay = CreateWidget<UUserWidget>(this, PauseMenuOverlayAsset);
 		PauseMenuOverlay->AddToViewport();
 		PauseMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	if (ResOptionsMenuOverlayAsset)
+	{
+		ResOptionsMenuOverlay = CreateWidget<UUserWidget>(this, ResOptionsMenuOverlayAsset);
+		ResOptionsMenuOverlay->AddToViewport();
+		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
@@ -44,6 +53,37 @@ void AAG_PlayerController::TogglePauseMenu()
 	}
 	else
 	{
-		ShowPauseMenu();
+		if(!bResOptionsMenuVisible)
+		{
+			ShowPauseMenu();
+		}
+	}
+}
+
+void AAG_PlayerController::ShowResOptionsMenu_Implementation()
+{
+	if (ResOptionsMenuOverlay)
+	{
+		bResOptionsMenuVisible = true;
+		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Visible);
+
+		bPauseMenuVisible = false;
+		PauseMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+
+		SetShowMouseCursor(true);
+	}
+}
+
+void AAG_PlayerController::HideResOptionsMenu_Implementation()
+{
+	if (ResOptionsMenuOverlay)
+	{
+		bResOptionsMenuVisible = false;
+		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+
+		bPauseMenuVisible = true;
+		PauseMenuOverlay->SetVisibility(ESlateVisibility::Visible);
+
+		SetShowMouseCursor(true);
 	}
 }
