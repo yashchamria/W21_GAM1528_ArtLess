@@ -2,7 +2,6 @@
 #include "AG_PlayerController.h"
 #include "Blueprint/UserWidget.h"
 
-
 AAG_TestChar::AAG_TestChar()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -29,6 +28,8 @@ void AAG_TestChar::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AAG_TestChar::EscKeyDown()
 {
+	FString name = GetWorld()->GetMapName();
+	
 	if(MainPlayerController && GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
 	{
 		MainPlayerController->TogglePauseMenu();
