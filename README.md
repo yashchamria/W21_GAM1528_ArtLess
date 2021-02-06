@@ -45,7 +45,7 @@ Helper functions can be called as follow :
 /----------------------------------------------------------------Vrund(5th Feb 2021)---------------------------------------------------------/
 
 Added a working Main menu and pause menu.
-
 The pause menu makes use of character class the player controller class.
+Key binding for the pause menu is 'Q' key for now.
 
 /----------------------------------------------------------------Vrund---------------------------------------------------------/
