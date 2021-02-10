@@ -1,14 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "AG_Tile.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 
-// Sets default values
 AAG_Tile::AAG_Tile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bLockLocation = true;
@@ -125,5 +120,23 @@ void AAG_Tile::BeginPlay()
 void AAG_Tile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+
+///WIP CODE------>
+void AAG_Tile::Register(AActor* Actor)
+{
+}
+
+void AAG_Tile::UnRegister(AActor* Actor)
+{
+}
+
+void AAG_Tile::WipeRegister()
+{
+	if(RegisteredActors.Num() > 0)
+	{
+		RegisteredActors.Empty();
+	}
 }
 
