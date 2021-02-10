@@ -44,7 +44,7 @@ public:
 		void GenerateTiles();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileMapProperty")
-		FVector2D TileSize = FVector2D(250.0f, 250.0f);
+		FVector2D TileSize = FVector2D(250.0f, 250.0);
 
 	FIntPoint GetTileCoord(FVector WorldPosition);
 	

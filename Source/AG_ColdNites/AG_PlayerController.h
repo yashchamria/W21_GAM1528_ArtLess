@@ -15,6 +15,8 @@ class AG_COLDNITES_API AAG_PlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	AAG_PlayerController();
+	
 	//Reference to the UMG asset in the editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> PauseMenuOverlayAsset;
@@ -35,7 +37,19 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void PlayerTick(float DeltaTime) override;
+	virtual void SetupInputComponent() override;
 
+
+	uint32 bMoveToMouseCursor : 1;
+
+	void MoveToMouseCursor();
+
+	void SetNewMoveDestination(const FVector DestLocation);
+
+	void OnSetDestinationPressed();
+	void OnSetDestinationReleased();
+	
 public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PauseMenu")
