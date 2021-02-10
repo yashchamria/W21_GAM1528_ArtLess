@@ -4,8 +4,10 @@
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "AG_PlayerCharacter.h"
+#include "AG_Tile.h"
+#include "AG_TileMap.h"
+#include "EngineUtils.h"
 #include "Engine/World.h"
 
 AAG_PlayerController::AAG_PlayerController()
@@ -57,24 +59,30 @@ void AAG_PlayerController::SetupInputComponent()
 
 void AAG_PlayerController::MoveToMouseCursor()
 {
-	if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+
+	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile"))
 	{
-		if (AAG_PlayerCharacter* MyPawn = Cast<AAG_PlayerCharacter>(GetPawn()))
+		AAG_TileMap* TileMap = nullptr;
+		
+		for (TActorIterator<AActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
 		{
-			if (MyPawn->GetCursorToWorld())
+			if (ActorIterator->ActorHasTag("AG_TileMap"))
 			{
-				UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, MyPawn->GetCursorToWorld()->GetComponentLocation());
+				TileMap = Cast<AAG_TileMap>(*ActorIterator);
 			}
 		}
-	}
-	else
-	{
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-
-		if (Hit.bBlockingHit)
+		
+		if (TileMap)
 		{
-			SetNewMoveDestination(Hit.ImpactPoint);
+			FIntPoint TilePos = TileMap->GetTileCoord(Hit.ImpactPoint);
+
+			if (TileMap->GetTileProperty(TilePos, AG_TileProperty::IsWalkable))
+			{
+				FVector TargetDestination = TileMap->GetTilePosition(TilePos);
+				SetNewMoveDestination(TargetDestination);
+			}
 		}
 	}
 }
