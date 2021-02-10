@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -13,7 +11,6 @@ class AG_COLDNITES_API AAG_Tile : public AActor
 	
 public:	
 	AAG_Tile();
-
 	
 	//Tile Info
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
@@ -24,6 +21,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
 		FVector2D TileSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
+		TArray<class AActor*> RegisteredActors;
 
 	//Tile Properties
 	UFUNCTION(CallInEditor, BlueprintCallable, Category = "AG_TileProperty")
@@ -61,7 +61,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
 		bool IsWinTile = false;
-
 	
 	//Tile Components
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileComponents")
@@ -77,5 +76,9 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+
+	void Register(AActor* Actor);
+	void UnRegister(AActor* Actor);
+	void WipeRegister();
 
 };
