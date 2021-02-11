@@ -1,11 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
-
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AG_PlayerCharacter.generated.h"
-
 
 UCLASS()
 class AG_COLDNITES_API AAG_PlayerCharacter : public ACharacter
@@ -13,15 +9,35 @@ class AG_COLDNITES_API AAG_PlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AAG_PlayerCharacter();
 	
 	FORCEINLINE class UCameraComponent* GetCameraComponent() const { return CameraComponent; }
 	FORCEINLINE class USpringArmComponent* GetSpringArm() const { return SpringArm; }
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
+	//*****PickUp Start******
+	void Pickup();
+	UFUNCTION()
+		void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult& SweepResult);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
+		class USphereComponent* PickupSphere;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
+		class USceneComponent* ItemHolder;
+
+	class UInventoryComponent* InventoryComponent;
+
+	void NextInventoryItem();
+	void PreviousInventoryItem();
+	//*****PickUp End******
+	
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:

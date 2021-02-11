@@ -40,7 +40,6 @@ protected:
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 
-
 	uint32 bMoveToMouseCursor : 1;
 
 	void MoveToMouseCursor();
@@ -50,6 +49,9 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 	
+	void NextInventoryItem();
+	void PreviousInventoryItem();
+
 public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "PauseMenu")
@@ -63,4 +65,6 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ResOptionsMenu")
 	void HideResOptionsMenu();
+
+	void Esc_KeyDown();
 };
