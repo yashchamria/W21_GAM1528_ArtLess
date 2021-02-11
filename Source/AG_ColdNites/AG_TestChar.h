@@ -14,7 +14,7 @@ class AG_COLDNITES_API AAG_TestChar : public ACharacter
 public:
 	AAG_TestChar();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Controller");
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Controller");
 	class AAG_PlayerController* MainPlayerController;
 
 protected:

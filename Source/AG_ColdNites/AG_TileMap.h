@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -28,7 +26,6 @@ class AG_COLDNITES_API AAG_TileMap : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	AAG_TileMap();
 
 	UPROPERTY(EditAnywhere, Category = "AG_TileMapProperty")
@@ -47,7 +44,7 @@ public:
 		void GenerateTiles();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileMapProperty")
-		FVector2D TileSize = FVector2D(250.0f, 250.0f);
+		FVector2D TileSize = FVector2D(250.0f, 250.0);
 
 	FIntPoint GetTileCoord(FVector WorldPosition);
 	
@@ -60,13 +57,16 @@ public:
 	bool GetTileProperty(FIntPoint TileCoord, AG_TileProperty TileProperty);
 
 	uint32 GetArrayIndexFromCoord(FIntPoint TileCoord);
+
+	void Register(AActor* Actor, FIntPoint TileCoord);
+	void UnRegister(AActor* Actor, FIntPoint TileCoord);
+	bool IsRegistered(AActor* Actor, FIntPoint TileCoord);
+	AActor* GetAllRegisteredActors(FIntPoint TileCoord);
+	
 	
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };

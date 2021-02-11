@@ -13,5 +13,7 @@ UCLASS()
 class AG_COLDNITES_API AAG_ColdNitesGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AAG_ColdNitesGameModeBase();
 };

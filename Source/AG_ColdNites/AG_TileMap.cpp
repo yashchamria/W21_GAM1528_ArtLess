@@ -1,16 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "AG_TileMap.h"
 #include "AG_Tile.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-
-// Sets default values
 AAG_TileMap::AAG_TileMap()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bLockLocation = true;
@@ -19,7 +13,6 @@ AAG_TileMap::AAG_TileMap()
 }
 
 
-// Called when the game starts or when spawned
 void AAG_TileMap::BeginPlay()
 {
 	Super::BeginPlay();
@@ -32,6 +25,7 @@ void AAG_TileMap::ClearTiles()
 	{
 		if (Tiles.IsValidIndex(i))
 		{
+			Tiles[i]->WipeRegister();
 			Tiles[i]->Destroy();
 		}
 	}
@@ -71,11 +65,9 @@ void AAG_TileMap::GenerateTiles()
 		}
 	}
 }
-// Called every frame
 void AAG_TileMap::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 
@@ -151,6 +143,63 @@ bool AAG_TileMap::GetTileProperty(FIntPoint TileCoord, AG_TileProperty TilePrope
 
 uint32 AAG_TileMap::GetArrayIndexFromCoord(FIntPoint TileCoord)
 {
-	
 	return TileCoord.X * Length + TileCoord.Y;
 }
+
+void AAG_TileMap::Register(AActor* Actor, FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if(Tiles.Num() > 0)
+	{
+		Tiles[TileIndex]->Register(Actor);
+	}
+}
+
+
+///WIP CODE------>
+void AAG_TileMap::UnRegister(AActor* Actor, FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.Num() > 0)
+	{
+		Tiles[TileIndex]->UnRegister(Actor);
+	}
+}
+
+bool AAG_TileMap::IsRegistered(AActor* Actor, FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.Num() > 0)
+	{
+		//for(int i = 0 ; i < Tiles[TileIndex]->RegisteredActors.Num(); i++)
+		if (Tiles[TileIndex]->RegisteredActors.Find(Actor))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	return false;
+}
+
+AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.Num() > 0)
+	{
+		return Tiles[TileIndex]->RegisteredActors[0];
+	}
+
+	return nullptr;
+}
+
+//void Restore // Restore previous tileMap
+//void DestroySingleTile
+// set the tile to null.
