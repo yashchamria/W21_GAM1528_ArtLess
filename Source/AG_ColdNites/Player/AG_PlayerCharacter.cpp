@@ -12,8 +12,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Materials/Material.h"
-#include "Pickup/PickupActor.h"
-#include "Pickup/InventoryComponent.h"
+#include "../Pickup/PickupActor.h"
+#include "../Pickup/InventoryComponent.h"
 
 // Sets default values
 AAG_PlayerCharacter::AAG_PlayerCharacter()

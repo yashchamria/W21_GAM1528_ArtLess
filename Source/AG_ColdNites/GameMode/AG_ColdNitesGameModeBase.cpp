@@ -2,10 +2,9 @@
 
 
 #include "AG_ColdNitesGameModeBase.h"
-#include "AG_PlayerController.h"
-#include "AG_PlayerCharacter.h"
+#include "../Player/AG_PlayerController.h"
+#include "../Player/AG_PlayerCharacter.h"
 #include "UObject/ConstructorHelpers.h"
-
 
 AAG_ColdNitesGameModeBase::AAG_ColdNitesGameModeBase()
 {

@@ -5,11 +5,11 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "AG_PlayerCharacter.h"
-#include "AG_Tile.h"
-#include "AG_TileMap.h"
+#include "../TileMap/AG_Tile.h"
+#include "../TileMap/AG_TileMap.h"
 #include "EngineUtils.h"
 #include "Engine/World.h"
-#include "Pickup/InventoryComponent.h"
+#include "../Pickup/InventoryComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AAG_PlayerController::AAG_PlayerController()

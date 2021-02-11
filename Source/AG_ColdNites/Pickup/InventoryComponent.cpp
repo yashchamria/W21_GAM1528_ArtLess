@@ -3,7 +3,7 @@
 
 #include "InventoryComponent.h"
 #include "PickupActor.h"
-#include "../AG_PlayerCharacter.h"
+#include "../Player/AG_PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 
