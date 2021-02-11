@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "AG_PlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
@@ -7,7 +5,6 @@
 #include "AG_PlayerCharacter.h"
 #include "../TileMap/AG_Tile.h"
 #include "../TileMap/AG_TileMap.h"
-#include "EngineUtils.h"
 #include "Engine/World.h"
 #include "../Pickup/InventoryComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -39,6 +36,17 @@ void AAG_PlayerController::BeginPlay()
 		ResOptionsMenuOverlay->AddToViewport();
 		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	//Getting the Spawned TileMap Actor from the World
+	TArray<AActor*> TileMapActor; UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_TileMap::StaticClass(), TileMapActor);
+	
+	if (TileMapActor.Num() > 0)
+	{
+		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
+	}
+
+	//Getting the current player Actor
+	Player = Cast<AAG_PlayerCharacter>(GetPawn());
 }
 
 void AAG_PlayerController::PlayerTick(float DeltaTime)
@@ -75,27 +83,14 @@ void AAG_PlayerController::MoveToMouseCursor()
 	FHitResult Hit;
 	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile"))
+	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap)
 	{
-		AAG_TileMap* TileMap = nullptr;
-		
-		for (TActorIterator<AActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
-		{
-			if (ActorIterator->ActorHasTag("AG_TileMap"))
-			{
-				TileMap = Cast<AAG_TileMap>(*ActorIterator);
-			}
-		}
-		
-		if (TileMap)
-		{
-			FIntPoint TilePos = TileMap->GetTileCoord(Hit.ImpactPoint);
+		FIntPoint TilePos = TileMap->GetTileCoord(Hit.ImpactPoint);
 
-			if (TileMap->GetTileProperty(TilePos, AG_TileProperty::IsWalkable))
-			{
-				FVector TargetDestination = TileMap->GetTilePosition(TilePos);
-				SetNewMoveDestination(TargetDestination);
-			}
+		if (TileMap->GetTileProperty(TilePos, AG_TileProperty::IsWalkable))
+		{
+			FVector TargetDestination = TileMap->GetTilePosition(TilePos);
+			SetNewMoveDestination(TargetDestination);
 		}
 	}
 }
@@ -125,21 +120,13 @@ void AAG_PlayerController::OnSetDestinationReleased()
 
 void AAG_PlayerController::NextInventoryItem()
 {
-	//AAG_PlayerCharacter* Character = Cast<AAG_PlayerCharacter>(GetPawn());
-	//Character->NextInventoryItem();
-	APawn* MyPawn = GetPawn();
-	Cast<AAG_PlayerCharacter>(MyPawn)->NextInventoryItem();
+	if(Player) { Player->NextInventoryItem(); }
 }
 
 void AAG_PlayerController::PreviousInventoryItem()
 {
-	//AAG_PlayerCharacter* Character = Cast<AAG_PlayerCharacter>(GetPawn());
-	//Character->PreviousInventoryItem();
-	APawn* MyPawn = GetPawn();
-	Cast<AAG_PlayerCharacter>(MyPawn)->PreviousInventoryItem();
+	if (Player) { Player->PreviousInventoryItem(); }
 }
-
-///****** UI ******
 
 void AAG_PlayerController::Esc_KeyDown()
 {
