@@ -50,9 +50,10 @@ public:
 	
 	FIntPoint GetNextTileCoord(FVector CharacterLocation, FVector DirectionVector, uint32 TileLeap = 1);
 
-	FVector GetTilePosition(FIntPoint TileCoord);
+	FVector GetTileWorldPosition(FIntPoint TileCoord);
 
 	bool IsTileCoordVaild(FIntPoint TileCoord);
+	bool IsTileNeighbouring(FIntPoint CheckCoord, FVector WorldPosition, FVector ForwardDirection, FVector RightDirection, uint32 TileLeap = 1);
 
 	bool GetTileProperty(FIntPoint TileCoord, AG_TileProperty TileProperty);
 

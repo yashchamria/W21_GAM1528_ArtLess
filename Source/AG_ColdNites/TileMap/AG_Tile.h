@@ -79,6 +79,7 @@ public:
 
 	void Register(AActor* Actor);
 	void UnRegister(AActor* Actor);
+	bool IsRegistered(AActor* Actor);
 	void WipeRegister();
 
 };

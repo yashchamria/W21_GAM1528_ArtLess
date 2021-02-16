@@ -16,17 +16,9 @@ public:
 
 ///---------------------------------------Character Setup----------------------------------------------------------///
 public:
-	FORCEINLINE class UCameraComponent* GetCameraComponent() const { return CameraComponent; }
-	FORCEINLINE class USpringArmComponent* GetSpringArm() const { return SpringArm; }
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class UCameraComponent* CameraComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class USpringArmComponent* SpringArm;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UDecalComponent* CursorToWorld;
 	
