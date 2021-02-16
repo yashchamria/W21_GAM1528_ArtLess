@@ -17,23 +17,30 @@ protected:
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 
-///---------------------------------------Player Movement Setup----------------------------------------------------------///
-protected:
-	uint32 bMoveToMouseCursor : 1;
-
-	void MoveToMouseCursor();
-
-	class AAG_PlayerCharacter* Player;
+	class AAG_PlayableCharacter* Player;
+	//class AAG_PlayerCharacter* Player;
 	class AAG_TileMap* TileMap;
 	
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
-
-///---------------------------------------Inventory Setup----------------------------------------------------------///
 protected:
+
+	void MoveRight();
+	void MoveLeft();
+	void MoveForward();
+	void MoveBackward();
+	void StopMove();
+	
+	uint32 bMoveToMouseCursor : 1;
+
+	void MoveToMouseCursor();
 	void SetNewMoveDestination(const FVector DestLocation);
 
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+///---------------------------------------Player Movement Setup----------------------------------------------------------///
+
+///---------------------------------------Inventory Setup----------------------------------------------------------///
+protected:
 	
 	void NextInventoryItem();
 	void PreviousInventoryItem();

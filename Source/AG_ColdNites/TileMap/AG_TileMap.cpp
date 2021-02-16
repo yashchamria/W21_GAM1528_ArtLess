@@ -55,7 +55,7 @@ void AAG_TileMap::GenerateTiles()
 			SpawnedTile->SetActorLabel(Name);
 			SpawnedTile->Tags.Add(*Name);
 			SpawnedTile->TileSize = TileSize;
-			SpawnedTile->Position = GetTilePosition(FIntPoint(i, j));
+			SpawnedTile->Position = GetTileWorldPosition(FIntPoint(i, j));
 			
 			SpawnedTile->TileTriggerBox->SetRelativeLocation(SpawnedTile->Position + FVector(0.0f, 0.0f, 65.0f));
 			SpawnedTile->TileTriggerBox->SetBoxExtent(FVector(TileSize.X/2, TileSize.Y/2, 65.0f));
@@ -69,7 +69,6 @@ void AAG_TileMap::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
 
 FIntPoint AAG_TileMap::GetTileCoord(FVector WorldPosition)
 {
@@ -98,7 +97,7 @@ FIntPoint AAG_TileMap::GetNextTileCoord(FVector CharacterLocation, FVector Direc
 	return TileCoord;
 }
 
-FVector AAG_TileMap::GetTilePosition(FIntPoint TileCoord)
+FVector AAG_TileMap::GetTileWorldPosition(FIntPoint TileCoord)
 {
 	return FVector((TileCoord.X * TileSize.X) + TileSize.X / 2, (TileCoord.Y * TileSize.Y) + TileSize.Y / 2, GetActorLocation().Z);
 }
@@ -114,6 +113,22 @@ bool AAG_TileMap::IsTileCoordVaild(FIntPoint TileCoord)
 		GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TileCoord:%s Is Not Valid"), *TileCoord.ToString()));
 		return false;
 	}
+}
+
+bool AAG_TileMap::IsTileNeighbouring(FIntPoint CheckCoord, FVector WorldPosition, FVector ForwardDirection, FVector RightDirection, uint32 TileLeap)
+{
+	FIntPoint CurrentTileCoord = GetTileCoord(WorldPosition);
+
+	FIntPoint ForwardTileCoord = GetNextTileCoord(WorldPosition, ForwardDirection, TileLeap);
+	FIntPoint BackwardTileCoord = GetNextTileCoord(WorldPosition, -ForwardDirection, TileLeap);
+	FIntPoint RightTileCoord = GetNextTileCoord(WorldPosition, RightDirection, TileLeap);
+	FIntPoint LeftTileCoord = GetNextTileCoord(WorldPosition, -RightDirection, TileLeap);
+
+	if(CheckCoord == ForwardTileCoord || CheckCoord == BackwardTileCoord || CheckCoord == RightTileCoord || CheckCoord == LeftTileCoord)
+	{
+		return true;
+	}
+	return false;
 }
 
 bool AAG_TileMap::GetTileProperty(FIntPoint TileCoord, AG_TileProperty TileProperty)
@@ -162,7 +177,7 @@ void AAG_TileMap::UnRegister(AActor* Actor, FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 
-	if (Tiles.Num() > 0)
+	if (Tiles.IsValidIndex(TileIndex))
 	{
 		Tiles[TileIndex]->UnRegister(Actor);
 	}
@@ -172,7 +187,7 @@ bool AAG_TileMap::IsRegistered(AActor* Actor, FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 
-	if (Tiles.Num() > 0)
+	if (Tiles.IsValidIndex(TileIndex))
 	{
 		//for(int i = 0 ; i < Tiles[TileIndex]->RegisteredActors.Num(); i++)
 		if (Tiles[TileIndex]->RegisteredActors.Find(Actor))
@@ -192,7 +207,7 @@ AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 
-	if (Tiles.Num() > 0)
+	if (Tiles.IsValidIndex(TileIndex))
 	{
 		return Tiles[TileIndex]->RegisteredActors[0];
 	}

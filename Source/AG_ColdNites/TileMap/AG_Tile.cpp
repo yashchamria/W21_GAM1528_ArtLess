@@ -9,11 +9,12 @@ AAG_Tile::AAG_Tile()
 	bLockLocation = true;
 	
 	TileMesh = CreateDefaultSubobject<UStaticMeshComponent>("AG Tile Mesh");
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Game/Assets/Mesh/TileMap/Tiles/AG_TestTile.AG_TestTile'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Game/Art/Mesh/TileMap/Tiles/AG_TestTile.AG_TestTile'"));
 	if (Mesh.Succeeded()) { TileMesh->SetStaticMesh(Mesh.Object); }
 	RootComponent = TileMesh;
 
 	TileTriggerBox = CreateDefaultSubobject<UBoxComponent>("AG Tile Trigger Box");
+	TileTriggerBox->SetHiddenInGame(false);
 		
 	Tags.Add("AG_Tile");
 }
@@ -126,10 +127,33 @@ void AAG_Tile::Tick(float DeltaTime)
 ///WIP CODE------>
 void AAG_Tile::Register(AActor* Actor)
 {
+	uint32 ActorIndex = RegisteredActors.Find(Actor);
+
+	if(ActorIndex == INDEX_NONE)
+	{
+		RegisteredActors.Add(Actor);
+	}
 }
 
 void AAG_Tile::UnRegister(AActor* Actor)
 {
+	uint32 ActorIndex = RegisteredActors.Find(Actor);
+
+	if(RegisteredActors.IsValidIndex(ActorIndex))
+	{
+		RegisteredActors.RemoveAt(ActorIndex);
+	}
+}
+
+bool AAG_Tile::IsRegistered(AActor* Actor)
+{
+	uint32 ActorIndex = RegisteredActors.Find(Actor);
+
+	if (RegisteredActors.IsValidIndex(ActorIndex))
+	{
+		return true;
+	}
+	return false;
 }
 
 void AAG_Tile::WipeRegister()
