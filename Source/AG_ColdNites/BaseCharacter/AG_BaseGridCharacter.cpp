@@ -29,9 +29,8 @@ void AAG_BaseGridCharacter::BeginPlay()
 	if (TileMapActor.Num() > 0)
 	{
 		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
+		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
 	}
-
-	TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
 }
 
 
