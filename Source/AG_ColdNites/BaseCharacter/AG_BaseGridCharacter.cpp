@@ -29,9 +29,12 @@ void AAG_BaseGridCharacter::BeginPlay()
 	if (TileMapActor.Num() > 0)
 	{
 		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
+		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
+		
+		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
+		TileMap->Register(this, CurrentTileCoord);
 	}
 
-	TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
 }
 
 
@@ -67,6 +70,7 @@ void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 {
+	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 	FIntPoint NextTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), DirectionVector, TileLeap);
 
 	bool IsNextTileWalkable = TileMap->GetTileProperty(NextTileCoord, AG_TileProperty::IsWalkable);
@@ -76,6 +80,9 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 		bWalk = true;
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(NextTileCoord);
 		TargetDirection = DirectionVector;
+
+		TileMap->UnRegister(this, CurrentTileCoord);
+		TileMap->Register(this, NextTileCoord);
 	}
 }
 
