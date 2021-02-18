@@ -42,10 +42,16 @@ Helper functions can be called as follow :
 
 /******************************************************************************************************************************/
 
-/----------------------------------------------------------------Vrund(5th Feb 2021)---------------------------------------------------------/
+/----------------------------------------------------------------Vrund---------------------------------------------------------/
 
-Added a working Main menu and pause menu.
-The pause menu makes use of character class the player controller class.
+5/2/21 - Added a working Main menu and pause menu.
+
+-> The pause menu makes use of character class the player controller class.
 Key binding for the pause menu is 'Q' key for now.
+
+17/2/21 - Made BaseGridActor
+
+-> Use BaseGridActor to make any static objects (pickups, collectibles etc) that will go in the level. 
+To destory the actor do not call Destroy, instead call Delete function of BaseGridActor.
 
 /----------------------------------------------------------------Vrund---------------------------------------------------------/

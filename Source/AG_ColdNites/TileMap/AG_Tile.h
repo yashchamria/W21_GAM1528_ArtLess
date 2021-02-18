@@ -81,5 +81,4 @@ public:
 	void UnRegister(AActor* Actor);
 	bool IsRegistered(AActor* Actor);
 	void WipeRegister();
-
 };

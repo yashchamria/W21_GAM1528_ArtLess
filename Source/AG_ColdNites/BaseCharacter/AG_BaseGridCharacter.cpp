@@ -34,9 +34,7 @@ void AAG_BaseGridCharacter::BeginPlay()
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 		TileMap->Register(this, CurrentTileCoord);
 	}
-
 }
-
 
 void AAG_BaseGridCharacter::Tick(float DeltaTime)
 {

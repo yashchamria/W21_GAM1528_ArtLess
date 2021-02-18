@@ -29,7 +29,6 @@ void AAG_TileMap::ClearTiles()
 			Tiles[i]->Destroy();
 		}
 	}
-
 	Tiles.Empty();
 }
 
