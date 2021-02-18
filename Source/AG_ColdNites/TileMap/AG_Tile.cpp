@@ -9,12 +9,12 @@ AAG_Tile::AAG_Tile()
 	bLockLocation = true;
 	
 	TileMesh = CreateDefaultSubobject<UStaticMeshComponent>("AG Tile Mesh");
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Game/Art/Mesh/TileMap/Tiles/AG_TestTile.AG_TestTile'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/AG_FourwayTile.AG_FourwayTile'"));
 	if (Mesh.Succeeded()) { TileMesh->SetStaticMesh(Mesh.Object); }
 	RootComponent = TileMesh;
 
-	TileTriggerBox = CreateDefaultSubobject<UBoxComponent>("AG Tile Trigger Box");
-	TileTriggerBox->SetHiddenInGame(false);
+	//TileTriggerBox = CreateDefaultSubobject<UBoxComponent>("AG Tile Trigger Box");
+	//TileTriggerBox->SetHiddenInGame(true);
 		
 	Tags.Add("AG_Tile");
 }

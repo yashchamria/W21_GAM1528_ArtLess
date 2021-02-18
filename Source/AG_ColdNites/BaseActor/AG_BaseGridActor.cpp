@@ -36,7 +36,7 @@ void AAG_BaseGridActor::PostInitializeComponents()
 		TileMap->Register(this, CurrentTileCoord);
 	}
 	
-	AutoRepositionToTileCenter();
+	if (bAutoRepositionToTileCenter) { AutoRepositionToTileCenter(); }
 }
 
 void AAG_BaseGridActor::BeginPlay()
@@ -54,7 +54,7 @@ void AAG_BaseGridActor::AutoRepositionToTileCenter()
 	if (TileMap && TileMap->GetTileProperty(CurrentTileCoord, AG_TileProperty::IsWalkable))
 	{
 		FVector NewLocation = TileMap->GetTileWorldPosition(CurrentTileCoord);
-		NewLocation.Z = 75.406784;
+		NewLocation.Z = 0.0f;
 		SetActorLocation(NewLocation);
 
 		TileMap->Register(this, CurrentTileCoord);

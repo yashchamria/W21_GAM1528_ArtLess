@@ -9,17 +9,13 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	ErrorRange = 1.1f; //Don't lower it any further...movement will end up miss some update calls and will not stop
 	GetCharacterMovement()->MaxWalkSpeed = 100.0f;
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-}
-
-void AAG_BaseGridCharacter::BeginPlay()
-{
-	Super::BeginPlay();
 
 	//Getting the Spawned TileMap Actor from the World
 	TArray<AActor*> TileMapActor;
@@ -30,10 +26,19 @@ void AAG_BaseGridCharacter::BeginPlay()
 	{
 		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
-		
+
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 		TileMap->Register(this, CurrentTileCoord);
+
+		AutoRepositionToTileCenter(CurrentTileCoord);
 	}
+}
+
+void AAG_BaseGridCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+
 }
 
 void AAG_BaseGridCharacter::Tick(float DeltaTime)
@@ -44,9 +49,10 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 
 	if(bWalk)
 	{
-		TargetDistance = FVector::Distance(GetActorLocation(), TargetTileWorldLocation);
-
-		if(TargetDistance > TileMap->TileSize.X/2)
+		TargetDistance.X = TargetTileWorldLocation.X - GetActorLocation().X;
+		TargetDistance.Y = TargetTileWorldLocation.Y - GetActorLocation().Y;
+		
+		if( (TargetDistance.X > ErrorRange || TargetDistance.X < -ErrorRange) || (TargetDistance.Y > ErrorRange || TargetDistance.Y < -ErrorRange))
 		{
 			AddMovementInput(TargetDirection);
 		}
@@ -55,10 +61,9 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 			bWalk = false;
 		}
 	}
-	 
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("bRotate: %d"), bRotate));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetRotation: %s"), *TargetRotation.ToString()));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("GetActorRotation: %s"), *GetActorRotation().ToString()));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetDistance: %s"), *TargetDistance.ToString()));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetTileWorldLocation: %s"), *TargetTileWorldLocation.ToString()));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("GetActorLocation: %s"), *GetActorLocation().ToString()));
 }
 
 void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -134,5 +139,21 @@ void AAG_BaseGridCharacter::SetAnimation(AG_AnimationStates NewState)
 
 	case AG_AnimationStates::Attack:
 		break;
+	}
+}
+
+void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
+{
+	if (TileMap && TileMap->GetTileProperty(TileCoord, AG_TileProperty::IsWalkable))
+	{
+		FVector NewLocation = TileMap->GetTileWorldPosition(TileCoord);
+		NewLocation.Z = 0.0f;
+		SetActorLocation(NewLocation);
+
+		TileMap->Register(this, TileCoord);
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("--> Character placed on Unwalkable tile <--")));
 	}
 }

@@ -21,9 +21,10 @@ public:
 
 	class AAG_TileMap* TileMap;
 	
-	FVector TargetTileWorldLocation;
-	
 	FIntPoint CurrentTileCoord;
+	FVector TargetTileWorldLocation;
+
+	bool bAutoRepositionToTileCenter = true;
 protected:
 	virtual void BeginPlay() override;
 

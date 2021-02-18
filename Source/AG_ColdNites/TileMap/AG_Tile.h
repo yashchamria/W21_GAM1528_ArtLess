@@ -66,8 +66,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileComponents")
 		class UStaticMeshComponent* TileMesh;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
-		class UBoxComponent* TileTriggerBox;
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
+	//	class UBoxComponent* TileTriggerBox;
 
 	void SetTileCoordinates(FIntPoint coord) { TileCoordinate.X = coord.X; TileCoordinate.Y = coord.Y; }
 	

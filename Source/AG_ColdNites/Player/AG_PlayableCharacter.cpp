@@ -4,6 +4,9 @@
 #include "AG_ColdNites/Pickup/PickupActor.h"
 #include "../Pickup/InventoryComponent.h"
 
+#include "Components/StaticMeshComponent.h"
+
+
 AAG_PlayableCharacter::AAG_PlayableCharacter()
 {
 	PickupSphere = CreateDefaultSubobject<USphereComponent>("Pickup Sphere");
@@ -20,6 +23,9 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	ItemHolder = CreateDefaultSubobject<USceneComponent>("ItemHolder");
 	ItemHolder->AttachTo(GetRootComponent());
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
+
+	AG_Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	AG_Mesh->SetupAttachment(RootComponent);
 }
 
 void AAG_PlayableCharacter::BeginPlay()

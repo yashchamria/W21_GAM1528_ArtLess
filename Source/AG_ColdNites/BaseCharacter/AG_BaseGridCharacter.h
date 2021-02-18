@@ -44,8 +44,8 @@ public:
 	bool bRotate = false;
 	bool bWalk = false;
 	
-	float TargetDistance = 0.0f;
 	FVector TargetTileWorldLocation;
+	FVector TargetDistance = FVector::ZeroVector;
 	FVector TargetDirection = FVector::ZeroVector;
 	FRotator TargetRotation = FRotator::ZeroRotator;
 
@@ -57,4 +57,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AG_Animation")
 		AG_AnimationStates CurrentAnimationState = AG_AnimationStates::Idle;
+
+	UFUNCTION(CallInEditor, Category = "AG_")
+	void AutoRepositionToTileCenter(FIntPoint TileCoord);
+
+	
+private:
+	float ErrorRange = 0.0f;
+
+
 };

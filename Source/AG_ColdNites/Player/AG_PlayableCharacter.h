@@ -38,4 +38,8 @@ public:
 	void NextInventoryItem();
 	void PreviousInventoryItem();
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
+///
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
+		class UStaticMeshComponent* AG_Mesh;
 };

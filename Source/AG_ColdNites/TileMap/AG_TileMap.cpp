@@ -56,9 +56,9 @@ void AAG_TileMap::GenerateTiles()
 			SpawnedTile->TileSize = TileSize;
 			SpawnedTile->Position = GetTileWorldPosition(FIntPoint(i, j));
 			
-			SpawnedTile->TileTriggerBox->SetRelativeLocation(SpawnedTile->Position + FVector(0.0f, 0.0f, 65.0f));
-			SpawnedTile->TileTriggerBox->SetBoxExtent(FVector(TileSize.X/2, TileSize.Y/2, 65.0f));
-			SpawnedTile->TileTriggerBox->ComponentTags.Add(*Name);
+			//SpawnedTile->TileTriggerBox->SetRelativeLocation(SpawnedTile->Position + FVector(0.0f, 0.0f, 65.0f));
+			//SpawnedTile->TileTriggerBox->SetBoxExtent(FVector(TileSize.X/2, TileSize.Y/2, 65.0f));
+			//SpawnedTile->TileTriggerBox->ComponentTags.Add(*Name);
 			
 			Tiles.Add(SpawnedTile);
 		}
@@ -215,5 +215,9 @@ AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
 }
 
 //void Restore // Restore previous tileMap
-//void DestroySingleTile
-// set the tile to null.
+
+//void DestroySingleTile // set the tile to null.
+
+//Adding/removing more row or column without reseting the tiles
+
+//Saving or loading tiles or edited tiles array
