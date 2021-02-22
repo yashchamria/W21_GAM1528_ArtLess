@@ -1,6 +1,6 @@
 #include "InventoryComponent.h"
 #include "PickupActor.h"
-#include "../Player/AG_PlayerCharacter.h"
+#include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -86,7 +86,7 @@ void UInventoryComponent::EquipNewInventoryItem(APickupActor* NewItem)
 	{
 		NewItem->Enable();
 
-		AAG_PlayerCharacter* OwningActor = Cast<AAG_PlayerCharacter>(GetOwner());
+		AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 		NewItem->AttachToComponent(OwningActor->ItemHolder,
 			FAttachmentTransformRules::SnapToTargetIncludingScale,
 			"AttachPoint");

@@ -3,14 +3,13 @@
 
 #include "AG_ColdNitesGameModeBase.h"
 #include "../Player/AG_PlayerController.h"
-#include "../Player/AG_PlayerCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 AAG_ColdNitesGameModeBase::AAG_ColdNitesGameModeBase()
 {
 	PlayerControllerClass = AAG_PlayerController::StaticClass();
 
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/Player/BP_AG_PlayerCharacter"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/Player/BP_AG_PlayableCharacter"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;

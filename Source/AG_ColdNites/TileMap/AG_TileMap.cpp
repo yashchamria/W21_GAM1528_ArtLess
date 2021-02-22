@@ -53,12 +53,7 @@ void AAG_TileMap::GenerateTiles()
 			FString Name = *FString::Printf(TEXT("Tile(%i,%i)"), i, j);
 			SpawnedTile->SetActorLabel(Name);
 			SpawnedTile->Tags.Add(*Name);
-			SpawnedTile->TileSize = TileSize;
 			SpawnedTile->Position = GetTileWorldPosition(FIntPoint(i, j));
-			
-			//SpawnedTile->TileTriggerBox->SetRelativeLocation(SpawnedTile->Position + FVector(0.0f, 0.0f, 65.0f));
-			//SpawnedTile->TileTriggerBox->SetBoxExtent(FVector(TileSize.X/2, TileSize.Y/2, 65.0f));
-			//SpawnedTile->TileTriggerBox->ComponentTags.Add(*Name);
 			
 			Tiles.Add(SpawnedTile);
 		}
@@ -188,7 +183,6 @@ bool AAG_TileMap::IsRegistered(AActor* Actor, FIntPoint TileCoord)
 
 	if (Tiles.IsValidIndex(TileIndex))
 	{
-		//for(int i = 0 ; i < Tiles[TileIndex]->RegisteredActors.Num(); i++)
 		if (Tiles[TileIndex]->RegisteredActors.Find(Actor))
 		{
 			return true;

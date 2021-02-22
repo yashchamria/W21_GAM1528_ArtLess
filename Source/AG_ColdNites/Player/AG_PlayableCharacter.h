@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AG_ColdNites/BaseCharacter/AG_BaseGridCharacter.h"
+#include "AG_ColdNites/BaseGridClasses/AG_BaseGridCharacter.h"
 #include "AG_PlayableCharacter.generated.h"
 
 UCLASS()

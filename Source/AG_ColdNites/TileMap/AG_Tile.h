@@ -20,11 +20,18 @@ public:
 		FIntPoint TileCoordinate;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
-		FVector2D TileSize;
+		FVector2D TileSize = FVector2D(250.0f, 250.0);
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileInfo")
 		TArray<class AActor*> RegisteredActors;
 
+	//Tile Components
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
+		class UStaticMeshComponent* TileMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
+		class USceneComponent* TileRootTransformation;
+	
 	//Tile Properties
 	UFUNCTION(CallInEditor, BlueprintCallable, Category = "AG_TileProperty")
 		void AutoConfigurePropertyToggle();
@@ -61,14 +68,18 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
 		bool IsWinTile = false;
-	
-	//Tile Components
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileComponents")
-		class UStaticMeshComponent* TileMesh;
-	
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
-	//	class UBoxComponent* TileTriggerBox;
 
+	//Tile Aesthetics
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileAesthetic")
+		class UStaticMesh* NewTileMesh = nullptr;
+	
+	UFUNCTION(CallInEditor, Category = "AG_TileAesthetic")
+		void RotateMesh();
+
+	UFUNCTION(CallInEditor, Category = "AG_TileAesthetic")
+		void RegenerateMesh();
+
+	
 	void SetTileCoordinates(FIntPoint coord) { TileCoordinate.X = coord.X; TileCoordinate.Y = coord.Y; }
 	
 protected:
@@ -82,3 +93,8 @@ public:
 	bool IsRegistered(AActor* Actor);
 	void WipeRegister();
 };
+
+//Need to use Blueprint
+//Also need the functionality of choosing from asthtic enum
+//Will Provide rotating fuctionality
+//Might need to change the root for something else...then mesh pivot can be at centre

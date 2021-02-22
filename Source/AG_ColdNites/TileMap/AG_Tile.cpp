@@ -1,21 +1,23 @@
 #include "AG_Tile.h"
 #include "Components/StaticMeshComponent.h"
-#include "Components/BoxComponent.h"
 
 AAG_Tile::AAG_Tile()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	bLockLocation = true;
+
+	TileRootTransformation = CreateDefaultSubobject<USceneComponent>("AG Scene Component");
+	RootComponent = TileRootTransformation;
 	
 	TileMesh = CreateDefaultSubobject<UStaticMeshComponent>("AG Tile Mesh");
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/AG_FourwayTile.AG_FourwayTile'"));
-	if (Mesh.Succeeded()) { TileMesh->SetStaticMesh(Mesh.Object); }
-	RootComponent = TileMesh;
+	TileMesh->SetRelativeLocation(GetActorLocation() + FVector(TileSize.X / 2, TileSize.Y / 2, 0.0f));
+	TileMesh->SetupAttachment(TileRootTransformation);
 
-	//TileTriggerBox = CreateDefaultSubobject<UBoxComponent>("AG Tile Trigger Box");
-	//TileTriggerBox->SetHiddenInGame(true);
-		
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/FourwayTile.FourwayTile'"));
+	if (MeshAsset.Succeeded()) { NewTileMesh = MeshAsset.Object; }
+	RegenerateMesh();
+	
 	Tags.Add("AG_Tile");
 }
 
@@ -111,6 +113,18 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsCracked = false;
 		CanKill = false;
 	}
+}
+
+void AAG_Tile::RotateMesh()
+{
+	FRotator NewRotation = TileMesh->GetRelativeRotation() + FRotator(0.0f, 90.0f, 0.0f);
+	TileMesh->SetRelativeRotation(NewRotation);
+}
+
+void AAG_Tile::RegenerateMesh()
+{
+	if (NewTileMesh) { TileMesh->SetStaticMesh(NewTileMesh); }
+	else { TileMesh->SetStaticMesh(nullptr); }
 }
 
 void AAG_Tile::BeginPlay()

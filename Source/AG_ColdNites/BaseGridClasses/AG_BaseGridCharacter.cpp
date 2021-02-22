@@ -47,12 +47,12 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 
 	//SetActorRotation(TargetRotation); Rotates the player...Can make it hard to navigate 
 
-	if(bWalk)
+	if (bWalk)
 	{
 		TargetDistance.X = TargetTileWorldLocation.X - GetActorLocation().X;
 		TargetDistance.Y = TargetTileWorldLocation.Y - GetActorLocation().Y;
-		
-		if( (TargetDistance.X > ErrorRange || TargetDistance.X < -ErrorRange) || (TargetDistance.Y > ErrorRange || TargetDistance.Y < -ErrorRange))
+
+		if ((TargetDistance.X > ErrorRange || TargetDistance.X < -ErrorRange) || (TargetDistance.Y > ErrorRange || TargetDistance.Y < -ErrorRange))
 		{
 			AddMovementInput(TargetDirection);
 		}
@@ -78,7 +78,7 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 
 	bool IsNextTileWalkable = TileMap->GetTileProperty(NextTileCoord, AG_TileProperty::IsWalkable);
 
-	if(IsNextTileWalkable)
+	if (IsNextTileWalkable)
 	{
 		bWalk = true;
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(NextTileCoord);
@@ -118,7 +118,7 @@ void AAG_BaseGridCharacter::MoveLeft()
 
 void AAG_BaseGridCharacter::Animate()
 {
-	
+
 }
 
 void AAG_BaseGridCharacter::SetAnimation(AG_AnimationStates NewState)

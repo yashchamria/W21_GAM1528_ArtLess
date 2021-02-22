@@ -36,7 +36,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileMapProperty")
 		TArray<class AAG_Tile*> Tiles;
-
+		//TArray<TSubclassOf<class AAG_Tile*>> Tiles;
+	
 	UFUNCTION(CallInEditor, Category = "AG_TileMapProperty")
 		void ClearTiles();
 
