@@ -23,7 +23,6 @@ AAG_BaseCamera::AAG_BaseCamera()
 void AAG_BaseCamera::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void AAG_BaseCamera::Tick(float DeltaTime)
