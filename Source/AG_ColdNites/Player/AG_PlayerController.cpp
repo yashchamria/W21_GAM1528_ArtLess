@@ -67,8 +67,8 @@ void AAG_PlayerController::SetupInputComponent()
 	InputComponent->BindAction("MoveLeft", IE_Pressed, this, &AAG_PlayerController::MoveLeft);
 	InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	//InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
-	//InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);//OnSetDestinationReleased);
+	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
+	InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);//OnSetDestinationReleased);
 
 	InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
 	InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
