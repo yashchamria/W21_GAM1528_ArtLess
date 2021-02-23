@@ -24,6 +24,4 @@ void AAG_CameraManager::BeginPlay()
 void AAG_CameraManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
-
