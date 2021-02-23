@@ -6,15 +6,15 @@
 
 #include "../TileMap/AG_TileMap.h"
 #include "AG_PlayableCharacter.h"
+#include "../Pickup/InventoryComponent.h"
+
 
 AAG_PlayerController::AAG_PlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
-	bEnableMouseOverEvents = true;
-	bEnableClickEvents = true;
-	bMainMenuVisible = false;
 
+	bCanPlayerMove = false;
 }
 
 void AAG_PlayerController::BeginPlay()
@@ -22,6 +22,7 @@ void AAG_PlayerController::BeginPlay()
 	Super::BeginPlay();
 	
 	bPauseMenuVisible = false;
+	bMainMenuVisible = false;
 	bResOptionsMenuVisible = false;
 	
 	if (PauseMenuOverlayAsset)
@@ -67,8 +68,8 @@ void AAG_PlayerController::SetupInputComponent()
 	InputComponent->BindAction("MoveLeft", IE_Pressed, this, &AAG_PlayerController::MoveLeft);
 	InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	//InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
-	//InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);//OnSetDestinationReleased);
+	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
+	InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);//OnSetDestinationReleased);
 
 	InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
 	InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
@@ -79,38 +80,33 @@ void AAG_PlayerController::SetupInputComponent()
 void AAG_PlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
-	
+
 	//disable mouse input if any menu is open
 	if (bPauseMenuVisible || bResOptionsMenuVisible)
 	{
 		bMoveToMouseCursor = false;
-	}
-
-	if (bMoveToMouseCursor)
-	{
-		//MoveToMouseCursor();
 	}
 }
 
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 void AAG_PlayerController::MoveRight()
 {
-	if (Player && !bMainMenuVisible) { Player->MoveRight(); }
+	if (Player && bCanPlayerMove) { Player->MoveRight(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveLeft()
 {
-	if (Player && !bMainMenuVisible) { Player->MoveLeft(); }
+	if (Player && bCanPlayerMove) { Player->MoveLeft(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveForward()
 {
-	if (Player && !bMainMenuVisible) { Player->MoveForward(); }
+	if (Player && bCanPlayerMove) { Player->MoveForward(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveBackward()
 {
-	if (Player && !bMainMenuVisible) { Player->MoveBackward(); }
+	if (Player && bCanPlayerMove) { Player->MoveBackward(); bCanPlayerMove = false; }
 }
 
 
@@ -123,7 +119,7 @@ void AAG_PlayerController::MoveToMouseCursor()
 	FHitResult Hit;
 	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player)
+	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player && bCanPlayerMove)
 	{
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
 		FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
@@ -138,6 +134,7 @@ void AAG_PlayerController::MoveToMouseCursor()
 			
 			Player->MoveTile(TargetDirection);
 			//SetNewMoveDestination(TargetDestination);
+			bCanPlayerMove = false;
 		}
 	}
 }
@@ -187,6 +184,7 @@ void AAG_PlayerController::Esc_KeyDown()
 		TogglePauseMenu();
 	}
 }
+
 
 void AAG_PlayerController::ShowPauseMenu()
 {

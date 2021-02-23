@@ -1,5 +1,6 @@
 #include "AG_BaseGridCharacter.h"
 #include "../TileMap/AG_TileMap.h"
+#include "../GameMode/AG_ColdNitesGameModeBase.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -16,7 +17,7 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 void AAG_BaseGridCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
+	
 	//Getting the Spawned TileMap Actor from the World
 	TArray<AActor*> TileMapActor;
 
@@ -38,7 +39,7 @@ void AAG_BaseGridCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	GameMode = Cast<AAG_ColdNitesGameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
 void AAG_BaseGridCharacter::Tick(float DeltaTime)
@@ -59,6 +60,7 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		else
 		{
 			bWalk = false;
+			GameMode->FinishTurn();
 		}
 	}
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetDistance: %s"), *TargetDistance.ToString()));
