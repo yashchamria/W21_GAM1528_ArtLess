@@ -14,6 +14,7 @@ class AAG_PlayerController;
 
 enum TurnState : uint32
 {
+	IsPendingNewTurn    UMETA(DisplayName = "IsPendingNewTurn"),
 	IsNewTurn			UMETA(DisplayName = "IsNewTurn"),
 	IsPlayerTurn		UMETA(DisplayName = "IsPlayerTurn"),
 	IsAITurn			UMETA(DisplayName = "IsAITurn"),
@@ -38,6 +39,8 @@ public:
 	virtual void BeginPlay() override;
 	
 	void FinishTurn();
+
+	void NewTurn();
 	
 	void EndTurn();
 

@@ -17,8 +17,6 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 void AAG_BaseGridCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	GameMode = Cast<AAG_ColdNitesGameModeBase>(GetWorld()->GetAuthGameMode());
 	
 	//Getting the Spawned TileMap Actor from the World
 	TArray<AActor*> TileMapActor;
@@ -41,6 +39,7 @@ void AAG_BaseGridCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GameMode = Cast<AAG_ColdNitesGameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
 void AAG_BaseGridCharacter::Tick(float DeltaTime)

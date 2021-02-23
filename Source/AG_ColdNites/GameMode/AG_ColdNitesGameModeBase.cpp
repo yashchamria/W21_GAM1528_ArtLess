@@ -33,6 +33,7 @@ void AAG_ColdNitesGameModeBase::FinishTurn()
 	{		
 	case TurnState::IsNewTurn:
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("New Turn"));
+		NewTurn();
 		break;
 		
 	case TurnState::IsPlayerTurn:
@@ -46,7 +47,7 @@ void AAG_ColdNitesGameModeBase::FinishTurn()
 		
 	case TurnState::IsEndTurn:
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("End Turn"));
-		TurnState = TurnState::IsNewTurn;
+		EndTurn();
 		break;
 
 	default:
@@ -54,14 +55,24 @@ void AAG_ColdNitesGameModeBase::FinishTurn()
 	}
 }
 
-void AAG_ColdNitesGameModeBase::EndTurn()
+void AAG_ColdNitesGameModeBase::NewTurn()
 {
-
-
+	// Actors or Objects needed to be updated before turn starts
+	// The last Actor or Object updated should call FinishTurn()
 
 
 	
-	TurnState = TurnState::IsNewTurn;
+	FinishTurn();
+}
+
+void AAG_ColdNitesGameModeBase::EndTurn()
+{
+	// Actors or Objects needed to be updated once turn has ended
+	// The last Actor or Object updated should call FinishTurn()
+
+
+	TurnState = TurnState::IsPendingNewTurn;
+	FinishTurn();
 }
 
 void AAG_ColdNitesGameModeBase::AllowPlayerMove()
