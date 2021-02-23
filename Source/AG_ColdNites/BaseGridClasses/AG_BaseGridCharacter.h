@@ -4,6 +4,8 @@
 #include "GameFramework/Character.h"
 #include "AG_BaseGridCharacter.generated.h"
 
+class AAG_ColdNitesGameModeBase;
+
 UENUM()
 enum class AG_AnimationStates : uint8
 {
@@ -65,5 +67,6 @@ public:
 private:
 	float ErrorRange = 0.0f;
 
-
+protected:
+	AAG_ColdNitesGameModeBase* GameMode;
 };

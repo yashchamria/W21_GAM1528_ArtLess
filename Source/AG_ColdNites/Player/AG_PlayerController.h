@@ -4,6 +4,8 @@
 #include "GameFramework/PlayerController.h"
 #include "AG_PlayerController.generated.h"
 
+class AAG_ColdNitesGameModeBase;
+
 UCLASS()
 class AG_COLDNITES_API AAG_PlayerController : public APlayerController
 {
@@ -37,6 +39,9 @@ protected:
 
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+public:
+	void SetCanMove(bool canMove) { bCanPlayerMove = canMove; }
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
@@ -66,6 +71,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		bool bMainMenuVisible;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Movement")
+		bool bCanPlayerMove;
 	
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")

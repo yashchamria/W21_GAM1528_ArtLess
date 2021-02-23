@@ -13,6 +13,8 @@ AAG_PlayerController::AAG_PlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
+
+	bCanPlayerMove = false;
 }
 
 void AAG_PlayerController::BeginPlay()
@@ -84,32 +86,27 @@ void AAG_PlayerController::PlayerTick(float DeltaTime)
 	{
 		bMoveToMouseCursor = false;
 	}
-
-	if (bMoveToMouseCursor)
-	{
-		//MoveToMouseCursor();
-	}
 }
 
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 void AAG_PlayerController::MoveRight()
 {
-	if (Player) { Player->MoveRight(); }
+	if (Player && bCanPlayerMove) { Player->MoveRight(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveLeft()
 {
-	if (Player) { Player->MoveLeft(); }
+	if (Player && bCanPlayerMove) { Player->MoveLeft(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveForward()
 {
-	if (Player) { Player->MoveForward(); }
+	if (Player && bCanPlayerMove) { Player->MoveForward(); bCanPlayerMove = false; }
 }
 
 void AAG_PlayerController::MoveBackward()
 {
-	if (Player) { Player->MoveBackward(); }
+	if (Player && bCanPlayerMove) { Player->MoveBackward(); bCanPlayerMove = false; }
 }
 
 
@@ -122,7 +119,7 @@ void AAG_PlayerController::MoveToMouseCursor()
 	FHitResult Hit;
 	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player)
+	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player && bCanPlayerMove)
 	{
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
 		FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
@@ -137,6 +134,7 @@ void AAG_PlayerController::MoveToMouseCursor()
 			
 			Player->MoveTile(TargetDirection);
 			//SetNewMoveDestination(TargetDestination);
+			bCanPlayerMove = false;
 		}
 	}
 }
