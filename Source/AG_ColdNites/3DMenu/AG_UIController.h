@@ -13,17 +13,15 @@ public:
 	AAG_UIController();
 
 	TArray<AActor*> Buttons;
-	float YawVals[3];
+
+	TArray<float> YawVals;
+
+	int NumButtons;
 	
 	bool bNextClicked;
 	bool bPrevClicked;
 
 	float RotationRate;
-
-	FRotator InitRot;
-
-	int in;
-	float ip;
 protected:
 	virtual void BeginPlay() override;
 
