@@ -94,8 +94,3 @@ public:
 	bool IsRegistered(AActor* Actor);
 	void WipeRegister();
 };
-
-//Need to use Blueprint
-//Also need the functionality of choosing from asthtic enum
-//Will Provide rotating fuctionality
-//Might need to change the root for something else...then mesh pivot can be at centre

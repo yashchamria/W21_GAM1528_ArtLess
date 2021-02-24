@@ -12,16 +12,17 @@ class AG_COLDNITES_API AAG_UIController : public APlayerController
 public:
 	AAG_UIController();
 
-	TArray<AActor*> Buttons;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_ButtonInfo")
+	TArray<class AAG_MenuButton*> MenuButton;
 
-	TArray<float> YawVals;
+	UPROPERTY()
+	TArray<float> YawValues;
 
-	int NumButtons;
-	
 	bool bNextClicked;
 	bool bPrevClicked;
 
 	float RotationRate;
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -34,6 +35,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnPrevClicked();
 
-	void RotateOnNextClicked(float val);
-	void RotateOnPrevClicked(float val);
+	void UpdateNewYawValues();
+
+	void RotateOnNextClicked(float YawValue);
+	void RotateOnPrevClicked(float YawValue);
+
+	void RotateOnClick(float val, float Rotation);
+
+private:
+	float RotationSpeed = 0.0f;
 };
