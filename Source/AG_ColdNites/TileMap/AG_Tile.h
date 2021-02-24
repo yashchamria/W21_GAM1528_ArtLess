@@ -27,10 +27,11 @@ public:
 
 	//Tile Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
-		class UStaticMeshComponent* TileMesh;
+		class USceneComponent* TileRootTransformation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
-		class USceneComponent* TileRootTransformation;
+		class UStaticMeshComponent* TileMesh;
+
 	
 	//Tile Properties
 	UFUNCTION(CallInEditor, BlueprintCallable, Category = "AG_TileProperty")

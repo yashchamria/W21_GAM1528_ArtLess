@@ -19,7 +19,6 @@ void AAG_CameraManager::BeginPlay()
 		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 		PlayerController->SetViewTargetWithBlend(Cameras[0], 0);
 	}
-	
 }
 
 void AAG_CameraManager::Tick(float DeltaTime)
