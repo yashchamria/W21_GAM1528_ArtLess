@@ -1,6 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "AG_ColdNitesGameModeBase.h"
 #include "../Player/AG_PlayerController.h"
 #include "UObject/ConstructorHelpers.h"

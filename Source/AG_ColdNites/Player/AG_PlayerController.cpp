@@ -133,33 +133,10 @@ void AAG_PlayerController::MoveToMouseCursor()
 			FVector TargetDirection = TargetTileWorldPosition - CurrentTileWorldPosition;
 			
 			Player->MoveTile(TargetDirection);
-			//SetNewMoveDestination(TargetDestination);
 			bCanPlayerMove = false;
 		}
 	}
 }
-
-//void AAG_PlayerController::SetNewMoveDestination(const FVector DestLocation)
-//{
-//	if (Player)
-//	{
-//		UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
-//	}
-//	else
-//	{
-//		UE_LOG(LogTemp, Error, TEXT("MyPawn = NULL"));
-//	}
-//}
-//
-//void AAG_PlayerController::OnSetDestinationPressed()
-//{
-//	bMoveToMouseCursor = true;
-//}
-//
-//void AAG_PlayerController::OnSetDestinationReleased()
-//{
-//	bMoveToMouseCursor = false;
-//}
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///

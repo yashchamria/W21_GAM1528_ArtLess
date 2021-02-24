@@ -5,6 +5,7 @@
 AAG_CameraManager::AAG_CameraManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	bLockLocation = true;
 }
 
 void AAG_CameraManager::BeginPlay()
