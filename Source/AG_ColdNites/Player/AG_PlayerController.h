@@ -56,25 +56,25 @@ protected:
 public:
 	//Reference to the UMG asset in the editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-		TSubclassOf<class UUserWidget> PauseMenuOverlayAsset;
+		TSubclassOf<class UUserWidget> PauseMenuTemplate;
 
 	//Variable to hold the widget after creating it
-	UUserWidget* PauseMenuOverlay;
+	UUserWidget* PauseMenu;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-		TSubclassOf<class UUserWidget> ResOptionsMenuOverlayAsset;
+		TSubclassOf<class UUserWidget> ResOptionsMenuTemplate;
 
-	UUserWidget* ResOptionsMenuOverlay;
+	UUserWidget* ResOptionsMenu;
 
 	bool bPauseMenuVisible;
 	bool bResOptionsMenuVisible;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		bool bMainMenuVisible;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
 		bool bCanPlayerMove;
-	
+
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
 	void HidePauseMenu();

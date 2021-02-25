@@ -24,19 +24,19 @@ void AAG_PlayerController::BeginPlay()
 	bPauseMenuVisible = false;
 	bMainMenuVisible = false;
 	bResOptionsMenuVisible = false;
-	
-	if (PauseMenuOverlayAsset)
-	{
-		PauseMenuOverlay = CreateWidget<UUserWidget>(this, PauseMenuOverlayAsset);
-		PauseMenuOverlay->AddToViewport();
-		PauseMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
-	}
 
-	if (ResOptionsMenuOverlayAsset)
+	if(PauseMenuTemplate)
 	{
-		ResOptionsMenuOverlay = CreateWidget<UUserWidget>(this, ResOptionsMenuOverlayAsset);
-		ResOptionsMenuOverlay->AddToViewport();
-		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+		PauseMenu = CreateWidget<UUserWidget>(this, PauseMenuTemplate);
+		PauseMenu->AddToViewport();
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+	}
+	
+	if (ResOptionsMenuTemplate)
+	{
+		ResOptionsMenu = CreateWidget<UUserWidget>(this, ResOptionsMenuTemplate);
+		ResOptionsMenu->AddToViewport();
+		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 
 	//Getting the Spawned TileMap Actor from the World
@@ -69,12 +69,12 @@ void AAG_PlayerController::SetupInputComponent()
 	InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);//OnSetDestinationReleased);
+	InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);
 
 	InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
 	InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
 
-	InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::Esc_KeyDown);
+	InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::Esc_KeyDown); 
 }
 
 void AAG_PlayerController::PlayerTick(float DeltaTime)
@@ -156,19 +156,19 @@ void AAG_PlayerController::PreviousInventoryItem()
 
 void AAG_PlayerController::Esc_KeyDown()
 {
-	if (GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
+	/*if (GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
 	{
-		TogglePauseMenu();
-	}
+	}*/
+	TogglePauseMenu();
 }
 
 
 void AAG_PlayerController::ShowPauseMenu()
 {
-	if(PauseMenuOverlay)
+	if(PauseMenu)
 	{
 		bPauseMenuVisible = true;
-		PauseMenuOverlay->SetVisibility(ESlateVisibility::Visible);
+		PauseMenu->SetVisibility(ESlateVisibility::Visible);
 		DefaultMouseCursor = EMouseCursor::Default;
 		SetShowMouseCursor(true);
 	}
@@ -176,10 +176,10 @@ void AAG_PlayerController::ShowPauseMenu()
 
 void AAG_PlayerController::HidePauseMenu_Implementation()
 {
-	if (PauseMenuOverlay)
+	if (PauseMenu)
 	{
 		bPauseMenuVisible = false;
-		PauseMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		DefaultMouseCursor = EMouseCursor::Crosshairs;
 		//SetShowMouseCursor(false);
 	}
@@ -195,20 +195,27 @@ void AAG_PlayerController::TogglePauseMenu()
 	{
 		if(!bResOptionsMenuVisible)
 		{
-			ShowPauseMenu();
+			//ShowPauseMenu();
+			if (PauseMenu)
+			{
+				bPauseMenuVisible = true;
+				PauseMenu->SetVisibility(ESlateVisibility::Visible);
+				DefaultMouseCursor = EMouseCursor::Default;
+				SetShowMouseCursor(true);
+			}
 		}
 	}
 }
 
 void AAG_PlayerController::ShowResOptionsMenu_Implementation()
 {
-	if (ResOptionsMenuOverlay)
+	if (ResOptionsMenu)
 	{
 		bResOptionsMenuVisible = true;
-		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Visible);
+		ResOptionsMenu->SetVisibility(ESlateVisibility::Visible);
 
 		bPauseMenuVisible = false;
-		PauseMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 
 		DefaultMouseCursor = EMouseCursor::Default;
 		SetShowMouseCursor(true);
@@ -217,13 +224,13 @@ void AAG_PlayerController::ShowResOptionsMenu_Implementation()
 
 void AAG_PlayerController::HideResOptionsMenu_Implementation()
 {
-	if (ResOptionsMenuOverlay)
+	if (ResOptionsMenu)
 	{
 		bResOptionsMenuVisible = false;
-		ResOptionsMenuOverlay->SetVisibility(ESlateVisibility::Hidden);
+		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 
 		bPauseMenuVisible = true;
-		PauseMenuOverlay->SetVisibility(ESlateVisibility::Visible);
+		PauseMenu->SetVisibility(ESlateVisibility::Visible);
 
 		DefaultMouseCursor = EMouseCursor::Crosshairs;
 		SetShowMouseCursor(true);

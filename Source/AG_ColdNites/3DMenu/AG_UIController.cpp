@@ -8,14 +8,17 @@ AAG_UIController::AAG_UIController()
 	bEnableClickEvents = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 
-	RotationSpeed = 150.0f;  //Increasing this might cause the update to miss the correct snapping location for the button
+	RotationSpeed = 200.0f;  //Increasing this might cause the update to miss the correct snapping location for the button
 	
 	bNextClicked = false;
 	bPrevClicked = false;
+
 }
 
 void AAG_UIController::BeginPlay()
 {
+	SetShowMouseCursor(true);
+	
 	TArray<AActor*> ButtonActors;
 	UGameplayStatics::GetAllActorsOfClass(this, AAG_MenuButton::StaticClass(), ButtonActors);
 
@@ -56,6 +59,11 @@ void AAG_UIController::OnPrevClicked()
 {
 	UpdateNewYawValues();
 	bPrevClicked = true;
+}
+
+void AAG_UIController::HideResOptionsMenu_Implementation()
+{
+	bResOptionsVisible = true;
 }
 
 void AAG_UIController::UpdateNewYawValues()

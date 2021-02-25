@@ -18,6 +18,9 @@ public:
 	UPROPERTY()
 	TArray<float> YawValues;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Menu")
+	bool bResOptionsVisible;
+	
 	bool bNextClicked;
 	bool bPrevClicked;
 
@@ -35,6 +38,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnPrevClicked();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Menu")
+	void HideResOptionsMenu();
+	
 	void UpdateNewYawValues();
 
 	void RotateOnNextClicked(float YawValue);
