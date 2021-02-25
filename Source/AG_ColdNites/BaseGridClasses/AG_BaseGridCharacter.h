@@ -42,6 +42,7 @@ public:
 	void MoveBackward();
 	void MoveRight();
 	void MoveLeft();
+	void WalkSoundEffect();
 
 	bool bRotate = false;
 	bool bWalk = false;
@@ -62,6 +63,9 @@ public:
 
 	UFUNCTION(CallInEditor, Category = "AG_")
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
+
+	UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
+		class USoundBase* WalkSound;
 
 	
 private:

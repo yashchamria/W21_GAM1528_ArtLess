@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
+#include "Components/AudioComponent.h"
 
 AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
@@ -12,6 +13,13 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 
 	ErrorRange = 1.1f; //Don't lower it any further...movement will end up miss some update calls and will not stop
 	GetCharacterMovement()->MaxWalkSpeed = 100.0f;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB.Succeeded())
+	{
+		WalkSound = USB.Object;
+	}
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
@@ -93,12 +101,14 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 
 void AAG_BaseGridCharacter::MoveForward()
 {
+	WalkSoundEffect();
 	bRotate = false;
 	MoveTile(GetActorForwardVector());
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
 {
+	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
@@ -106,6 +116,7 @@ void AAG_BaseGridCharacter::MoveBackward()
 
 void AAG_BaseGridCharacter::MoveRight()
 {
+	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
@@ -113,9 +124,18 @@ void AAG_BaseGridCharacter::MoveRight()
 
 void AAG_BaseGridCharacter::MoveLeft()
 {
+	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
+}
+
+void AAG_BaseGridCharacter::WalkSoundEffect()
+{
+	if (WalkSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation());
+	}
 }
 
 void AAG_BaseGridCharacter::Animate()

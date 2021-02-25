@@ -3,8 +3,9 @@
 #include "Components/SphereComponent.h"
 #include "AG_ColdNites/Pickup/PickupActor.h"
 #include "../Pickup/InventoryComponent.h"
-
+#include "Components/AudioComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AAG_PlayableCharacter::AAG_PlayableCharacter()
@@ -26,6 +27,13 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 
 	AG_Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	AG_Mesh->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
+	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
+	if (USB.Succeeded())
+	{
+		PickUpSound = USB.Object;
+	}
 }
 
 void AAG_PlayableCharacter::BeginPlay()
@@ -41,6 +49,7 @@ void AAG_PlayableCharacter::Tick(float DeltaTime)
 void AAG_PlayableCharacter::MoveRight()
 {
 	Super::MoveRight();
+
 }
 
 void AAG_PlayableCharacter::MoveLeft()
