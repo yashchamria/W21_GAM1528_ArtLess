@@ -10,7 +10,7 @@ AAG_MenuButton::AAG_MenuButton()
 
 	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	ButtonMesh->SetupAttachment(GetRootComponent());
-	ButtonMesh->SetRelativeLocation(FVector(0.f, 150.f, 0.f));
+	ButtonMesh->SetRelativeLocation(FVector(0.f, 200.f, 0.f));
 
 	ButtonMesh->OnClicked.AddDynamic(this, &AAG_MenuButton::OnButtonClicked);
 }
@@ -23,9 +23,4 @@ void AAG_MenuButton::BeginPlay()
 void AAG_MenuButton::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
-
-void AAG_MenuButton::RotateButton()
-{
-	
 }

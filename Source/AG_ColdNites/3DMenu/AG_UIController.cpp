@@ -8,11 +8,10 @@ AAG_UIController::AAG_UIController()
 	bEnableClickEvents = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 
-	RotationSpeed = 200.0f;  //Increasing this might cause the update to miss the correct snapping location for the button
+	RotationSpeed = 175.0f;  //Increasing this might cause the update to miss the correct snapping location for the button
 	
 	bNextClicked = false;
 	bPrevClicked = false;
-
 }
 
 void AAG_UIController::BeginPlay()
@@ -22,6 +21,7 @@ void AAG_UIController::BeginPlay()
 	TArray<AActor*> ButtonActors;
 	UGameplayStatics::GetAllActorsOfClass(this, AAG_MenuButton::StaticClass(), ButtonActors);
 
+	
 	if(ButtonActors.Num() > 0)
 	{
 		for (int i = 0; i < ButtonActors.Num(); i++)
@@ -32,6 +32,8 @@ void AAG_UIController::BeginPlay()
 		YawValues.Reserve(MenuButton.Num());
 		RotationRate = 360.f / MenuButton.Num();
 	}
+
+	RepositionButtons();
 }
 
 void AAG_UIController::Tick(float DeltaSeconds)
@@ -51,22 +53,32 @@ void AAG_UIController::Tick(float DeltaSeconds)
 
 void AAG_UIController::OnNextClicked()
 {
-	UpdateNewYawValues();
+	GetCurrentYawValues();
 	bNextClicked = true;
 }
 
 void AAG_UIController::OnPrevClicked()
 {
-	UpdateNewYawValues();
+	GetCurrentYawValues();
 	bPrevClicked = true;
 }
 
-void AAG_UIController::HideResOptionsMenu_Implementation()
+void AAG_UIController::RepositionButtons()
 {
-	bResOptionsVisible = true;
+	float Angle = 0.f;
+	
+	if(MenuButton.Num())
+	{
+		for(int i = 0; i < MenuButton.Num(); i++)
+		{
+			MenuButton[i]->SetActorLocation(FVector(0.f));
+			MenuButton[i]->SetActorRotation(FRotator(0.f, Angle, 0.f));
+			Angle += RotationRate;
+		}
+	}
 }
 
-void AAG_UIController::UpdateNewYawValues()
+void AAG_UIController::GetCurrentYawValues()
 {
 	if (MenuButton.Num() > 0)
 	{

@@ -25,8 +25,4 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void OnButtonClicked(UPrimitiveComponent* TouchedComponent, FKey ButtonPressed);
-
-	UStaticMeshComponent* GetButtonMesh() const { return ButtonMesh; }
-	
-	void RotateButton();
 };
