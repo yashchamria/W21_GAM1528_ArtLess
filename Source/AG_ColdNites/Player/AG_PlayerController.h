@@ -1,3 +1,14 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Jonathan Sime, Vrund Soni
+
+ Module:  Player Character, UI
+
+ Description -
+
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -20,7 +31,6 @@ protected:
 	virtual void SetupInputComponent() override;
 
 	class AAG_PlayableCharacter* Player;
-	//class AAG_PlayerCharacter* Player;
 	class AAG_TileMap* TileMap;
 	
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
@@ -58,8 +68,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		TSubclassOf<class UUserWidget> PauseMenuTemplate;
 
-	//Variable to hold the widget after creating it
-	UUserWidget* PauseMenu;
+	UUserWidget* PauseMenu; //Variable to hold the widget after creating it
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		TSubclassOf<class UUserWidget> ResOptionsMenuTemplate;

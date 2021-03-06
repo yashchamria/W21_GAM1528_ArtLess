@@ -1,25 +1,27 @@
 #include "AG_BaseGridCharacter.h"
 #include "../TileMap/AG_TileMap.h"
 #include "../GameMode/AG_ColdNitesGameModeBase.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
-#include "Components/AudioComponent.h"
 
 AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	ErrorRange = 2.65f; //Don't lower it any further...movement will end up miss some update calls and will not stop
+	KnockOutDelay = 1.5f; //Based On Player WalkSpeed and AddedMovement
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);	
 
-	ErrorRange = 1.1f; //Don't lower it any further...movement will end up miss some update calls and will not stop
-	GetCharacterMovement()->MaxWalkSpeed = 100.0f;
-
+	//Temp Hack to display desired mesh without skeletal animation
+	AG_TempMesh = CreateDefaultSubobject<UStaticMeshComponent>("Temp Mesh");
+	AG_TempMesh->SetCollisionProfileName("NoCollision");
+	AG_TempMesh->SetupAttachment(RootComponent);
+	
 	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
 	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
-	if (USB.Succeeded())
-	{
-		WalkSound = USB.Object;
-	}
+	if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
@@ -71,6 +73,20 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 			GameMode->FinishTurn();
 		}
 	}
+
+	KnockOutDelay -= DeltaTime;
+	if(bKnockOut && KnockOutDelay <= 0.0f)
+	{
+		if(AG_TempMesh->GetRelativeRotation().Roll > 70.0f || AG_TempMesh->GetRelativeRotation().Roll < -70.0f)
+		{
+			bKnockOut = false;
+		}
+		else
+		{
+			AG_TempMesh->SetRelativeRotation(KnockedOutAngle);
+		}
+		
+	}
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetDistance: %s"), *TargetDistance.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetTileWorldLocation: %s"), *TargetTileWorldLocation.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("GetActorLocation: %s"), *GetActorLocation().ToString()));
@@ -83,6 +99,8 @@ void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 {
+	WalkSoundEffect();
+
 	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 	FIntPoint NextTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), DirectionVector, TileLeap);
 
@@ -101,14 +119,12 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 
 void AAG_BaseGridCharacter::MoveForward()
 {
-	WalkSoundEffect();
 	bRotate = false;
 	MoveTile(GetActorForwardVector());
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
 {
-	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
@@ -116,7 +132,6 @@ void AAG_BaseGridCharacter::MoveBackward()
 
 void AAG_BaseGridCharacter::MoveRight()
 {
-	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
@@ -124,24 +139,35 @@ void AAG_BaseGridCharacter::MoveRight()
 
 void AAG_BaseGridCharacter::MoveLeft()
 {
-	WalkSoundEffect();
 	bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
 }
 
+void AAG_BaseGridCharacter::KnockOut()
+{
+	//FRotator PossibleFallAngles[4] = { FRotator(180.0f, 45.0f, 85.0f), FRotator(180.0f, 135.0f, 85.0f),
+	//								   FRotator(0.0f, 225.0f, 85.0f), FRotator(0.0f, 315.0f, 85.0f) };
+
+	FRotator PossibleFallAngles[4] = { FRotator(0.0f, -45.0f, -80.0f), FRotator(0.0f, -135.0f, -80.0f),
+									  FRotator(0.0f, -45.0f, 80.0f), FRotator(0.0f, -135.0f, 80.0f) };
+	
+	OnKnockOut(PossibleFallAngles[ FMath::RandRange(0, 3)]);
+}
+
+void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
+{
+	bKnockOut = true;
+	KnockedOutAngle = KnockOutAngle;
+	KnockOutDelay = 1.0f;
+}
+
 void AAG_BaseGridCharacter::WalkSoundEffect()
 {
-	if (WalkSound)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation());
-	}
+	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
 }
 
-void AAG_BaseGridCharacter::Animate()
-{
-
-}
+void AAG_BaseGridCharacter::Animate(){}
 
 void AAG_BaseGridCharacter::SetAnimation(AG_AnimationStates NewState)
 {

@@ -187,12 +187,26 @@ bool AAG_TileMap::IsRegistered(AActor* Actor, FIntPoint TileCoord)
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
 	}
 	
+	return false;
+}
+
+bool AAG_TileMap::IsRegistered(FName ActorTag, FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		for(AActor* RegisteredActor : Tiles[TileIndex]->RegisteredActors)
+		{
+			if(RegisteredActor->ActorHasTag(ActorTag))
+			{
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 

@@ -1,3 +1,14 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Yash Chamria
+
+ Module:  CameraManager
+
+ Description - WIP ---> Will be reponsible for all the camera transition throughout the level and the game.
+
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"

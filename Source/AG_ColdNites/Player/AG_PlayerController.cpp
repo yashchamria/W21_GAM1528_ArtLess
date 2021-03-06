@@ -1,7 +1,7 @@
 #include "AG_PlayerController.h"
 
 #include "Blueprint/UserWidget.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
+//#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
 #include "../TileMap/AG_TileMap.h"
@@ -109,10 +109,8 @@ void AAG_PlayerController::MoveBackward()
 	if (Player && bCanPlayerMove) { Player->MoveBackward(); bCanPlayerMove = false; }
 }
 
-
-void AAG_PlayerController::StopMove()
-{
-}
+//Requires an Empty function to feed on KeyRelease after Player Movement
+void AAG_PlayerController::StopMove(){}
 
 void AAG_PlayerController::MoveToMouseCursor()
 {

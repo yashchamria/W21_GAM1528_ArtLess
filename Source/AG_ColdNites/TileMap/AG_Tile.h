@@ -1,3 +1,22 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Yash Chamria
+
+ Module:  TileMap
+
+ Description - TileMap is resoponsible for spawning the tiles in the world which makes the level possible.
+			   It is possible to spawn any number of tiles on the fly through the editor. For example change 10x10 tile to 100x100 from editor itself.
+			   
+			   Also we can set any properties for the tile through the editor. For instance making walkable, unwalkable, start, win, or other stuff.
+			   Aesthetic changes can also be done in the inspector.
+			   
+			   Tiles also keep track(register) of the actors standing on it which will be used for all the event throught the game.
+			   Such as AI can ask the TileMap about the Player Location for Player Detection and visa versa.
+
+			   Overall the main focus of the TileMap is to provide functionality and also make the level designers job easily.
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"

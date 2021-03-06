@@ -1,3 +1,14 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Jonathan Sime
+
+ Module:  Player Character
+
+ Description -
+
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -41,8 +52,4 @@ public:
 	void NextInventoryItem();
 	void PreviousInventoryItem();
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
-///
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
-		class UStaticMeshComponent* AG_Mesh;
 };

@@ -7,14 +7,14 @@ AAG_TempAI::AAG_TempAI()
 
 	AG_Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	AG_Mesh->SetupAttachment(RootComponent);
-	
-	TurnTimer = 5.0f;
+
+	TurnTimer = 3.0f;
 }
 
 void AAG_TempAI::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void AAG_TempAI::Tick(float DeltaTime)
@@ -28,8 +28,7 @@ void AAG_TempAI::Tick(float DeltaTime)
 		if (TurnTimer <= 0.0f)
 		{
 			bWalk = true;
-			TurnTimer = 5.0f;
+			TurnTimer = 3.0f;
 		}
 	}
 }
-

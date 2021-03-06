@@ -16,7 +16,7 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	PickupSphere->SetCollisionProfileName("OverlapAll");
 	PickupSphere->SetSphereRadius(100.f);
 	PickupSphere->SetupAttachment(RootComponent);
-	
+
 	PickupSphere->OnComponentBeginOverlap.AddDynamic(this, &AAG_PlayableCharacter::BeginOverlap);
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Player Inventory");
@@ -25,15 +25,12 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	ItemHolder->AttachTo(GetRootComponent());
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
 
-	AG_Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-	AG_Mesh->SetupAttachment(RootComponent);
 
 	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
 	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
-	if (USB.Succeeded())
-	{
-		PickUpSound = USB.Object;
-	}
+	if (USB.Succeeded()) { PickUpSound = USB.Object; }
+	
+	Tags.Add("PlayableCharacter");
 }
 
 void AAG_PlayableCharacter::BeginPlay()
@@ -46,36 +43,13 @@ void AAG_PlayableCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AAG_PlayableCharacter::MoveRight()
-{
-	Super::MoveRight();
+void AAG_PlayableCharacter::MoveForward() { Super::MoveForward(); }
+void AAG_PlayableCharacter::MoveBackward() { Super::MoveBackward(); }
+void AAG_PlayableCharacter::MoveRight() { Super::MoveRight(); }
+void AAG_PlayableCharacter::MoveLeft() { Super::MoveLeft(); }
 
-}
-
-void AAG_PlayableCharacter::MoveLeft()
-{
-	Super::MoveLeft();
-}
-
-void AAG_PlayableCharacter::MoveForward()
-{
-	Super::MoveForward();
-}
-
-void AAG_PlayableCharacter::MoveBackward()
-{
-	Super::MoveBackward();
-}
-
-void AAG_PlayableCharacter::NextInventoryItem()
-{
-	InventoryComponent->NextInventoryItem();
-}
-
-void AAG_PlayableCharacter::PreviousInventoryItem()
-{
-	InventoryComponent->PreviousInventoryItem();
-}
+void AAG_PlayableCharacter::NextInventoryItem() { InventoryComponent->NextInventoryItem(); }
+void AAG_PlayableCharacter::PreviousInventoryItem() { InventoryComponent->PreviousInventoryItem(); }
 
 void AAG_PlayableCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
