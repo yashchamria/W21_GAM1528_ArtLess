@@ -61,7 +61,7 @@ public:
 	void MoveRight();
 	void MoveLeft();
 
-	void KnockOut();
+	void KnockOut(FVector FallDirection);
 	void OnKnockOut(FRotator KnockOutAngle);
 	FRotator KnockedOutAngle = FRotator::ZeroRotator;
 
@@ -83,7 +83,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AG_Animation")
 		AG_AnimationStates CurrentAnimationState = AG_AnimationStates::Idle;
 
-	UFUNCTION(CallInEditor, Category = "AG_")
+	UFUNCTION()
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
 
 	//Audio Stuff ---> No Proper Implementation Yet

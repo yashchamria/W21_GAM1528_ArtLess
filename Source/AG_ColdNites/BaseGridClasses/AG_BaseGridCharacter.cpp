@@ -144,22 +144,17 @@ void AAG_BaseGridCharacter::MoveLeft()
 	MoveTile(-GetActorRightVector());
 }
 
-void AAG_BaseGridCharacter::KnockOut()
+void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
 {
-	//FRotator PossibleFallAngles[4] = { FRotator(180.0f, 45.0f, 85.0f), FRotator(180.0f, 135.0f, 85.0f),
-	//								   FRotator(0.0f, 225.0f, 85.0f), FRotator(0.0f, 315.0f, 85.0f) };
-
-	FRotator PossibleFallAngles[4] = { FRotator(0.0f, -45.0f, -80.0f), FRotator(0.0f, -135.0f, -80.0f),
-									  FRotator(0.0f, -45.0f, 80.0f), FRotator(0.0f, -135.0f, 80.0f) };
-	
-	OnKnockOut(PossibleFallAngles[ FMath::RandRange(0, 3)]);
+	FRotator FallAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
+	OnKnockOut(FallAngle);
 }
 
 void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
 {
 	bKnockOut = true;
 	KnockedOutAngle = KnockOutAngle;
-	KnockOutDelay = 1.0f;
+	KnockOutDelay = 0.7f;
 }
 
 void AAG_BaseGridCharacter::WalkSoundEffect()

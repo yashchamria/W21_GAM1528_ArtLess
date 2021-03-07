@@ -30,7 +30,7 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
 	if (USB.Succeeded()) { PickUpSound = USB.Object; }
 	
-	Tags.Add("PlayableCharacter");
+	Tags.Add("AG_PlayableCharacter");
 }
 
 void AAG_PlayableCharacter::BeginPlay()

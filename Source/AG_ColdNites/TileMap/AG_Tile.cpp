@@ -14,7 +14,7 @@ AAG_Tile::AAG_Tile()
 	TileMesh->SetRelativeLocation(GetActorLocation() + FVector(TileSize.X / 2, TileSize.Y / 2, 0.0f));
 	TileMesh->SetupAttachment(TileRootTransformation);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/FourwayTile.FourwayTile'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/AG_TileFourway.AG_TileFourway'"));
 	if (MeshAsset.Succeeded()) { NewTileMesh = MeshAsset.Object; }
 	RegenerateMesh();
 	

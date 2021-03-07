@@ -24,14 +24,15 @@ void AAG_AIBaseGridCharacter::BeginPlay()
 void AAG_AIBaseGridCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//DetectPlayer();
-	//CatchPlayer();
 
 	if (GameMode->GetTurnState() == TurnState::IsAITurn)
 	{
 		bIsAITurn = true;
 	}
-	
+	else
+	{
+		bIsAITurn = false;
+	}
 }
 
 void AAG_AIBaseGridCharacter::MoveRight()
@@ -72,7 +73,7 @@ void AAG_AIBaseGridCharacter::DetectPlayer(uint32 TileRange)
 {
 	for (uint32 i = 1; i <= TileRange; i++)
 	{
-		if(IsActorInRange("PlayableCharacter", GetActorForwardVector(), i))
+		if(IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), i))
 		{
 			bIsPlayerInRange = true;
 			break;

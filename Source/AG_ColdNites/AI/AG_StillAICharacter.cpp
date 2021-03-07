@@ -1,10 +1,9 @@
 #include "AG_StillAICharacter.h"
-
-#include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 
 AAG_StillAICharacter::AAG_StillAICharacter()
 {
+	Tags.Add("AG_StillAI");
 }
 
 void AAG_StillAICharacter::BeginPlay()
@@ -16,12 +15,12 @@ void AAG_StillAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(IsActorInRange("PlayableCharacter", GetActorForwardVector(), 1))
+	if(IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
 	{
-		if (GameMode->GetTurnState() == TurnState::IsAITurn)
+		if (bIsAITurn)
 		{
 			MoveForward();
-			PlayerCharacter->KnockOut();
+			PlayerCharacter->KnockOut(GetActorForwardVector());
 		}
 	}
 }
