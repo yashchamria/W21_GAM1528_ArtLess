@@ -39,7 +39,7 @@ void AAG_BaseGridCharacter::PostInitializeComponents()
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
 
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
-		TileMap->Register(this, CurrentTileCoord);
+		if (bShouldRegister) { TileMap->Register(this, CurrentTileCoord); }
 
 		AutoRepositionToTileCenter(CurrentTileCoord);
 	}
@@ -87,6 +87,10 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		}
 		
 	}
+
+	DestroyDelay -= DeltaTime;
+	if (bDestroy && DestroyDelay <= 0.0f) { Destroy(); }
+
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetDistance: %s"), *TargetDistance.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetTileWorldLocation: %s"), *TargetTileWorldLocation.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("GetActorLocation: %s"), *GetActorLocation().ToString()));
@@ -112,8 +116,11 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(NextTileCoord);
 		TargetDirection = DirectionVector;
 
-		TileMap->UnRegister(this, CurrentTileCoord);
-		TileMap->Register(this, NextTileCoord);
+		if (bShouldRegister)
+		{
+			TileMap->UnRegister(this, CurrentTileCoord);
+			TileMap->Register(this, NextTileCoord);
+		}
 	}
 }
 
@@ -155,6 +162,12 @@ void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
 	bKnockOut = true;
 	KnockedOutAngle = KnockOutAngle;
 	KnockOutDelay = 0.7f;
+
+	if (bShouldDestroy)
+	{
+		bDestroy = true;
+		DestroyDelay = 1.0f;
+	}
 }
 
 void AAG_BaseGridCharacter::WalkSoundEffect()
@@ -193,7 +206,7 @@ void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
 		NewLocation.Z = 0.0f;
 		SetActorLocation(NewLocation);
 
-		TileMap->Register(this, TileCoord);
+		if (bShouldRegister) { TileMap->Register(this, TileCoord); }
 	}
 	else
 	{

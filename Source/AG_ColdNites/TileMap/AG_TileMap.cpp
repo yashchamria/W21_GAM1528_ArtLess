@@ -71,7 +71,8 @@ FIntPoint AAG_TileMap::GetTileCoord(FVector WorldPosition)
 	TileCoord.X = UE4::SSE4::FloorToFloat(WorldPosition.X / TileSize.X);
 	TileCoord.Y = UE4::SSE4::FloorToFloat(WorldPosition.Y / TileSize.Y);
 
-	return TileCoord;
+	if(IsTileCoordVaild(TileCoord)){ return TileCoord; }
+	else { return FIntPoint(-1,-1); } // Returns (-1,-1) if the coord are not valid.
 }
 
 FIntPoint AAG_TileMap::GetNextTileCoord(FVector CharacterLocation, FVector DirectionVector, uint32 TileLeap)
@@ -81,14 +82,15 @@ FIntPoint AAG_TileMap::GetNextTileCoord(FVector CharacterLocation, FVector Direc
 	FVector2D DirectionRounding = RoundToInt(FVector2D(DirectionVector.X, DirectionVector.Y));
 	FIntPoint Direction = FIntPoint(DirectionRounding.X, DirectionRounding.Y);
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Orange, FString::Printf(TEXT("Forward Vector: %s"), *Direction.ToString()));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Orange, FString::Printf(TEXT("Forward Vector: %s"), *Direction.ToString()));
 
 	if (Direction.X > 0) { TileCoord.X += TileLeap; }
 	if (Direction.X < 0) { TileCoord.X -= TileLeap; }
 	if (Direction.Y > 0) { TileCoord.Y += TileLeap; }
 	if (Direction.Y < 0) { TileCoord.Y -= TileLeap; }
 
-	return TileCoord;
+	if (IsTileCoordVaild(TileCoord)) { return TileCoord; }
+	else { return FIntPoint(-1, -1); } // Returns (-1,-1) if the coord are not valid.
 }
 
 FVector AAG_TileMap::GetTileWorldPosition(FIntPoint TileCoord)

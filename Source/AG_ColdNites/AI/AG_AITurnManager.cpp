@@ -5,6 +5,7 @@ AAG_AITurnManager::AAG_AITurnManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	AITurnTimer = 2.5f;
+	bShouldRegister = false;
 }
 
 void AAG_AITurnManager::BeginPlay()

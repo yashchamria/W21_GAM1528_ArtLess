@@ -6,6 +6,7 @@
 
 AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
 {
+	Tags.Add("AG_BaseAI");
 }
 
 void AAG_AIBaseGridCharacter::PostInitializeComponents()

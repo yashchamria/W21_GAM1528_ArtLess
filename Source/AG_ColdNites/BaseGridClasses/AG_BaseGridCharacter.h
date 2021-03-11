@@ -31,7 +31,7 @@ enum class AG_AnimationStates : uint8
 };
 
 UCLASS()
-class AG_COLDNITES_API AAG_BaseGridCharacter : public ACharacter
+class AG_COLDNITES_API	AAG_BaseGridCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -68,7 +68,11 @@ public:
 	bool bWalk = false;
 	bool bRotate = false;
 	bool bKnockOut = false;
-	
+	bool bDestroy = false;
+
+	bool bShouldRegister = true;
+	bool bShouldDestroy = true;
+
 	FVector TargetTileWorldLocation;
 	FVector TargetDistance = FVector::ZeroVector;
 	FVector TargetDirection = FVector::ZeroVector;
@@ -96,7 +100,8 @@ public:
 private:
 	float ErrorRange = 0.0f;
 	float KnockOutDelay = 0.0f;
-	
+	float DestroyDelay = 0.0f;
+
 //Temp Hack to display desired mesh without skeletal animation
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
