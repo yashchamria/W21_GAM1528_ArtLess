@@ -14,16 +14,6 @@ AAG_AITurnManager::AAG_AITurnManager()
 void AAG_AITurnManager::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	
-	//TArray<AActor*> AIActors;
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_AIBaseGridCharacter::StaticClass(), AIActors);
-	//if (AIActors.Num() > 0)
-	//{
-	//	for (int i = 0; i < AIActors.Num(); i++)
-	//	{
-	//		AllPresentAIActors.Add(Cast<AAG_AIBaseGridCharacter>(AIActors[i]));
-	//	}
-	//}
 }
 
 void AAG_AITurnManager::BeginPlay()
@@ -40,9 +30,7 @@ void AAG_AITurnManager::Tick(float DeltaTime)
 
 	PlayerRestTimer -= DeltaTime;
 
-	bool Check = CheckIsAITurn();
-
-	if (!Check && PlayerRestTimer <= 0.0f) 
+	if (!CheckIsAITurn() && PlayerRestTimer <= 0.0f)
 	{
 		GameMode->FinishTurn();
 		ResetAfterAITurn();
