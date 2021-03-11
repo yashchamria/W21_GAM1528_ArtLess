@@ -33,8 +33,15 @@ void AAG_AIBaseGridCharacter::Tick(float DeltaTime)
 	else
 	{
 		bIsAITurn = false;
+		ResetOnTurnEnd();
 	}
 }
+
+//void AAG_AIBaseGridCharacter::InTick(float DeltaTime)
+//{
+//
+//	
+//}
 
 void AAG_AIBaseGridCharacter::MoveRight()
 {

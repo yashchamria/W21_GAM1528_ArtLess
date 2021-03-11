@@ -19,9 +19,9 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 	AG_TempMesh->SetCollisionProfileName("NoCollision");
 	AG_TempMesh->SetupAttachment(RootComponent);
 	
-	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
-	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
-	if (USB.Succeeded()) { WalkSound = USB.Object; }
+	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
+	//WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	//if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
@@ -58,6 +58,7 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 
 	//SetActorRotation(TargetRotation); Rotates the player...Can make it hard to navigate 
 
+	
 	if (bWalk)
 	{
 		TargetDistance.X = TargetTileWorldLocation.X - GetActorLocation().X;
@@ -74,6 +75,12 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		}
 	}
 
+	if (bRotate)
+	{
+		SetActorRotation(TargetRotation);
+		bRotate = false;
+	}
+	
 	KnockOutDelay -= DeltaTime;
 	if(bKnockOut && KnockOutDelay <= 0.0f)
 	{
@@ -103,8 +110,6 @@ void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 {
-	WalkSoundEffect();
-
 	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 	FIntPoint NextTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), DirectionVector, TileLeap);
 
@@ -126,29 +131,39 @@ void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 
 void AAG_BaseGridCharacter::MoveForward()
 {
-	bRotate = false;
+	//bRotate = false;
 	MoveTile(GetActorForwardVector());
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
 {
-	bRotate = true;
+	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
 }
 
 void AAG_BaseGridCharacter::MoveRight()
 {
-	bRotate = true;
+	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
 }
 
 void AAG_BaseGridCharacter::MoveLeft()
 {
-	bRotate = true;
+	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
+}
+
+void AAG_BaseGridCharacter::Rotate(float Rotation)
+{
+	if (!bAlreadyRotated)
+	{
+		bAlreadyRotated = true;
+		bRotate = true;
+		TargetRotation = GetActorRotation() + FRotator(0.0f, Rotation, 0.0f);
+	}
 }
 
 void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
@@ -170,10 +185,10 @@ void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
 	}
 }
 
-void AAG_BaseGridCharacter::WalkSoundEffect()
-{
-	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
-}
+//void AAG_BaseGridCharacter::WalkSoundEffect()
+//{
+//	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
+//}
 
 void AAG_BaseGridCharacter::Animate(){}
 
@@ -212,4 +227,9 @@ void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("--> Character placed on Unwalkable tile <--")));
 	}
+}
+
+void AAG_BaseGridCharacter::ResetOnTurnEnd()
+{
+	bAlreadyRotated = false;
 }

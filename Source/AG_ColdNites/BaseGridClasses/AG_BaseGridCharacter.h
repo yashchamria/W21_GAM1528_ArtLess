@@ -61,6 +61,8 @@ public:
 	void MoveRight();
 	void MoveLeft();
 
+	void Rotate(float Rotation);
+	
 	void KnockOut(FVector FallDirection);
 	void OnKnockOut(FRotator KnockOutAngle);
 	FRotator KnockedOutAngle = FRotator::ZeroRotator;
@@ -90,20 +92,22 @@ public:
 	UFUNCTION()
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
 
-	//Audio Stuff ---> No Proper Implementation Yet
-	UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
-		class USoundBase* WalkSound;
-	
-	void WalkSoundEffect();
-
+	void ResetOnTurnEnd();
 	
 private:
 	float ErrorRange = 0.0f;
 	float KnockOutDelay = 0.0f;
 	float DestroyDelay = 0.0f;
+	bool bAlreadyRotated = false;
 
 //Temp Hack to display desired mesh without skeletal animation
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
 		class UStaticMeshComponent* AG_TempMesh;
+
+	//Audio Stuff ---> No Proper Implementation Yet
+	//UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
+	//	class USoundBase* WalkSound;
+	
+	//void WalkSoundEffect();
 };
