@@ -1,12 +1,10 @@
 #include "AG_PlayerController.h"
 
 #include "Blueprint/UserWidget.h"
-//#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Kismet/GameplayStatics.h"
-
-#include "../TileMap/AG_TileMap.h"
+#include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "AG_PlayableCharacter.h"
-#include "../Pickup/InventoryComponent.h"
+#include "AG_ColdNites/Pickup/InventoryComponent.h"
 
 
 AAG_PlayerController::AAG_PlayerController()
@@ -135,7 +133,7 @@ void AAG_PlayerController::MoveToMouseCursor()
 		}
 	}
 }
-///---------------------------------------Player Movement Setup----------------------------------------------------------///
+///******************************************************************************************************************///
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 void AAG_PlayerController::NextInventoryItem()
@@ -147,7 +145,7 @@ void AAG_PlayerController::PreviousInventoryItem()
 {
 	if (Player) { Player->PreviousInventoryItem(); }
 }
-///---------------------------------------Inventory Setup----------------------------------------------------------///
+///******************************************************************************************************************///
 
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
@@ -235,4 +233,4 @@ void AAG_PlayerController::HideResOptionsMenu_Implementation()
 	}
 }
 
-///---------------------------------------UI Setup----------------------------------------------------------///
+///******************************************************************************************************************///

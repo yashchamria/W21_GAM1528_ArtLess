@@ -24,7 +24,7 @@ void AAG_AIBaseGridCharacter::BeginPlay()
 	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
 
 
-        //Getting AIManager
+    //Getting AIManager
 	TArray<AActor*> AIActor;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_AITurnManager::StaticClass(), AIActor);
 	if (AIActor.Num() > 0)

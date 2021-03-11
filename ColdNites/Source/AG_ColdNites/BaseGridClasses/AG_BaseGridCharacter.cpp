@@ -58,7 +58,6 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 
 	//SetActorRotation(TargetRotation); Rotates the player...Can make it hard to navigate 
 
-	
 	if (bWalk)
 	{
 		TargetDistance.X = TargetTileWorldLocation.X - GetActorLocation().X;
