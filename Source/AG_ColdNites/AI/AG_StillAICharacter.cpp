@@ -15,9 +15,11 @@ void AAG_StillAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
+	if (bIsMyTurn && bIsAITurn)
 	{
-		if (bIsAITurn)
+		bIsMyTurn = false;
+		
+		if (IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
 		{
 			MoveForward();
 			PlayerCharacter->KnockOut(GetActorForwardVector());

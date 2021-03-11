@@ -1,23 +1,37 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AG_ColdNites/BaseGridClasses/AG_AIBaseGridCharacter.h"
+#include "GameFramework/Actor.h"
 #include "AG_AITurnManager.generated.h"
 
 UCLASS()
-class AG_COLDNITES_API AAG_AITurnManager : public AAG_AIBaseGridCharacter
+class AG_COLDNITES_API AAG_AITurnManager : public AActor
 {
 	GENERATED_BODY()
-
-public:
+	
+public:	
 	AAG_AITurnManager();
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
-	
-private:
-	UPROPERTY(VisibleAnywhere, Category = "AG_AITurnSystem")
-	float AITurnTimer;
+	virtual void PostInitializeComponents() override;
 
+public:	
+	virtual void Tick(float DeltaTime) override;
+
+public:
+	class AAG_ColdNitesGameModeBase* GameMode;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_AIIInfo")
+		TArray<class AAG_AIBaseGridCharacter*> AllPresentAIActors;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_AIIInfo")
+		float PlayerRestTimer = 2.5f;
+
+
+	void RegisterToAIManager(AAG_AIBaseGridCharacter* AIActor);
+	void UnRegisterToAIManager(AAG_AIBaseGridCharacter* AIActor);
+
+	bool CheckIsAITurn();
+	void ResetAfterAITurn();
 };

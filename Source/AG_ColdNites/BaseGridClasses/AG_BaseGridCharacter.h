@@ -92,7 +92,7 @@ public:
 	UFUNCTION()
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
 
-	void ResetOnTurnEnd();
+	virtual void ResetOnTurnEnd();
 	
 private:
 	float ErrorRange = 0.0f;

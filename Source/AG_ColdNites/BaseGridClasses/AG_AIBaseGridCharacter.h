@@ -23,12 +23,12 @@ class AG_COLDNITES_API AAG_AIBaseGridCharacter : public AAG_BaseGridCharacter
 public:
 	AAG_AIBaseGridCharacter();
 	class AAG_PlayableCharacter* PlayerCharacter;
+	class AAG_AITurnManager* AITurnManager;
 	
 protected:
 	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	//virtual void InTick(float DeltaTime);
 
 public:
 	void MoveRight();
@@ -42,4 +42,7 @@ public:
 	void CatchPlayer();
 
 	bool bIsAITurn = false;
+	bool bIsMyTurn = false;
+
+	virtual void ResetOnTurnEnd() override;
 };

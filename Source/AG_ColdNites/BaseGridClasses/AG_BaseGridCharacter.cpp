@@ -10,7 +10,7 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	ErrorRange = 2.65f; //Don't lower it any further...movement will end up miss some update calls and will not stop
-	KnockOutDelay = 1.5f; //Based On Player WalkSpeed and AddedMovement
+	KnockOutDelay = 1.65f; //Based On Player WalkSpeed and AddedMovement
 	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);	
 
@@ -176,7 +176,7 @@ void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
 {
 	bKnockOut = true;
 	KnockedOutAngle = KnockOutAngle;
-	KnockOutDelay = 0.7f;
+	KnockOutDelay = 1.65f;
 
 	if (bShouldDestroy)
 	{

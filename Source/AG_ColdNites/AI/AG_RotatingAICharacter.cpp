@@ -15,8 +15,10 @@ void AAG_RotatingAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bIsAITurn)
+	if (bIsAITurn && bIsMyTurn)
 	{
+		bIsMyTurn = false;
+
 		if (IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
 		{
 			MoveForward();
