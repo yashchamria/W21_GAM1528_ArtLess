@@ -13,7 +13,7 @@ APickupActor::APickupActor()
 	PickupSphere->SetSimulatePhysics(false);
 	PickupSphere->SetCollisionProfileName("OverlapAllDynamic");
 	PickupSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	PickupSphere->SetSphereRadius(100.f);
+	PickupSphere->SetSphereRadius(20.f);
 
 	SetRootComponent(PickupSphere);
 
@@ -44,5 +44,13 @@ void APickupActor::BeginPlay()
 void APickupActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	FVector NewLocation = GetActorLocation();
+	float DeltaHeight = (FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime));
+	NewLocation.Z += DeltaHeight * MoveOnZ;
+
+	//Increment RunningTime
+	RunningTime += DeltaTime * Speed;
+	SetActorLocation(NewLocation);
 }
 
