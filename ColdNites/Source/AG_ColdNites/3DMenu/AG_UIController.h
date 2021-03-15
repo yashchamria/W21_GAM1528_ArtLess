@@ -24,7 +24,7 @@ public:
 	AAG_UIController();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_ButtonInfo")
-	TArray<class AAG_MenuButton*> MenuButton;
+	TArray<class AAG_MenuButton*> MenuButtons;
 
 	UPROPERTY()
 	TArray<float> YawValues;

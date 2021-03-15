@@ -26,11 +26,11 @@ void AAG_UIController::BeginPlay()
 	{
 		for (int i = 0; i < ButtonActors.Num(); i++)
 		{
-			MenuButton.Insert(Cast<AAG_MenuButton>(ButtonActors[i]), i);
+			MenuButtons.Insert(Cast<AAG_MenuButton>(ButtonActors[i]), i);
 		}
 		
-		YawValues.Reserve(MenuButton.Num());
-		RotationRate = 360.f / MenuButton.Num();
+		YawValues.Reserve(MenuButtons.Num());
+		RotationRate = 360.f / MenuButtons.Num();
 	}
 
 	RepositionButtons();
@@ -67,12 +67,12 @@ void AAG_UIController::RepositionButtons()
 {
 	float Angle = 0.f;
 	
-	if(MenuButton.Num())
+	if(MenuButtons.Num())
 	{
-		for(int i = 0; i < MenuButton.Num(); i++)
+		for(int i = 0; i < MenuButtons.Num(); i++)
 		{
-			MenuButton[i]->SetActorLocation(FVector(0.f));
-			MenuButton[i]->SetActorRotation(FRotator(0.f, Angle, 0.f));
+			MenuButtons[i]->SetActorLocation(FVector(0.f));
+			MenuButtons[i]->SetActorRotation(FRotator(0.f, Angle, 0.f));
 			Angle += RotationRate;
 		}
 	}
@@ -80,28 +80,28 @@ void AAG_UIController::RepositionButtons()
 
 void AAG_UIController::GetCurrentYawValues()
 {
-	if (MenuButton.Num() > 0)
+	if (MenuButtons.Num() > 0)
 	{
-		for (int i = 0; i < MenuButton.Num(); i++)
+		for (int i = 0; i < MenuButtons.Num(); i++)
 		{
-			YawValues.Insert(MenuButton[i]->GetActorRotation().Yaw, i);
+			YawValues.Insert(MenuButtons[i]->GetActorRotation().Yaw, i);
 		}
 	}
 
 }
 void AAG_UIController::RotateOnNextClicked(float YawValue)
 {
-	for(int i = 0; i < MenuButton.Num(); i++)
+	for(int i = 0; i < MenuButtons.Num(); i++)
 	{
 		const float TargetYaw = YawValues[i] + RotationRate;
 		
-		if(MenuButton[i]->GetActorRotation().Yaw <= TargetYaw)
+		if(MenuButtons[i]->GetActorRotation().Yaw <= TargetYaw)
 		{
-			MenuButton[i]->SetActorRotation(MenuButton[i]->GetActorRotation() + FRotator(0.f, YawValue, 0.f));
+			MenuButtons[i]->SetActorRotation(MenuButtons[i]->GetActorRotation() + FRotator(0.f, YawValue, 0.f));
 
-			if(MenuButton[i]->GetActorRotation().Yaw >= TargetYaw)
+			if(MenuButtons[i]->GetActorRotation().Yaw >= TargetYaw)
 			{
-				MenuButton[i]->SetActorRotation(FRotator(0.f, TargetYaw, 0.f));
+				MenuButtons[i]->SetActorRotation(FRotator(0.f, TargetYaw, 0.f));
 				bNextClicked = false;
 			}
 		}
@@ -110,17 +110,17 @@ void AAG_UIController::RotateOnNextClicked(float YawValue)
 
 void AAG_UIController::RotateOnPrevClicked(float YawValue)
 {
-	for (int i = 0; i < MenuButton.Num(); i++)
+	for (int i = 0; i < MenuButtons.Num(); i++)
 	{
 		const float TargetYaw = YawValues[i] - RotationRate;
 
-		if (MenuButton[i]->GetActorRotation().Yaw >= TargetYaw)
+		if (MenuButtons[i]->GetActorRotation().Yaw >= TargetYaw)
 		{
-			MenuButton[i]->SetActorRotation(MenuButton[i]->GetActorRotation() - FRotator(0.f, YawValue, 0.f));
+			MenuButtons[i]->SetActorRotation(MenuButtons[i]->GetActorRotation() - FRotator(0.f, YawValue, 0.f));
 
-			if (MenuButton[i]->GetActorRotation().Yaw <= TargetYaw)
+			if (MenuButtons[i]->GetActorRotation().Yaw <= TargetYaw)
 			{
-				MenuButton[i]->SetActorRotation(FRotator(0.f, TargetYaw, 0.f));
+				MenuButtons[i]->SetActorRotation(FRotator(0.f, TargetYaw, 0.f));
 				bPrevClicked = false;
 			}
 		}
