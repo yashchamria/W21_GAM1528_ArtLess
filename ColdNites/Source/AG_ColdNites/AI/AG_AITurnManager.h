@@ -8,15 +8,15 @@ UCLASS()
 class AG_COLDNITES_API AAG_AITurnManager : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AAG_AITurnManager();
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents() override;
 
-public:	
+public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
@@ -25,13 +25,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_AIIInfo")
 		TArray<class AAG_AIBaseGridCharacter*> AllPresentAIActors;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_AIIInfo")
-		float PlayerRestTimer = 2.5f;
-
-
 	void RegisterToAIManager(AAG_AIBaseGridCharacter* AIActor);
 	void UnRegisterToAIManager(AAG_AIBaseGridCharacter* AIActor);
 
 	bool CheckIsAITurn();
 	void ResetAfterAITurn();
+
+private:
+	float PlayerRestTimer = 3.25f;
 };

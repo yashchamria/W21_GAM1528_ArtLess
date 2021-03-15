@@ -8,7 +8,7 @@ AAG_TileMap::AAG_TileMap()
 	PrimaryActorTick.bCanEverTick = true;
 
 	bLockLocation = true;
-	
+
 	Tags.Add("AG_TileMap");
 }
 
@@ -16,7 +16,6 @@ AAG_TileMap::AAG_TileMap()
 void AAG_TileMap::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void AAG_TileMap::ClearTiles()
@@ -54,7 +53,7 @@ void AAG_TileMap::GenerateTiles()
 			SpawnedTile->SetActorLabel(Name);
 			SpawnedTile->Tags.Add(*Name);
 			SpawnedTile->Position = GetTileWorldPosition(FIntPoint(i, j));
-			
+
 			Tiles.Add(SpawnedTile);
 		}
 	}
@@ -71,8 +70,8 @@ FIntPoint AAG_TileMap::GetTileCoord(FVector WorldPosition)
 	TileCoord.X = UE4::SSE4::FloorToFloat(WorldPosition.X / TileSize.X);
 	TileCoord.Y = UE4::SSE4::FloorToFloat(WorldPosition.Y / TileSize.Y);
 
-	if(IsTileCoordVaild(TileCoord)){ return TileCoord; }
-	else { return FIntPoint(-1,-1); } // Returns (-1,-1) if the coord are not valid.
+	if (IsTileCoordVaild(TileCoord)) { return TileCoord; }
+	else { return FIntPoint(-1, -1); } // Returns (-1,-1) if the coord are not valid.
 }
 
 FIntPoint AAG_TileMap::GetNextTileCoord(FVector CharacterLocation, FVector DirectionVector, uint32 TileLeap)
@@ -100,7 +99,7 @@ FVector AAG_TileMap::GetTileWorldPosition(FIntPoint TileCoord)
 
 bool AAG_TileMap::IsTileCoordVaild(FIntPoint TileCoord)
 {
-	if(TileCoord.X >= 0 && (uint32)TileCoord.X < Width && TileCoord.Y >= 0 && (uint32)TileCoord.Y < Length)
+	if (TileCoord.X >= 0 && (uint32)TileCoord.X < Width && TileCoord.Y >= 0 && (uint32)TileCoord.Y < Length)
 	{
 		return true;
 	}
@@ -120,7 +119,7 @@ bool AAG_TileMap::IsTileNeighbouring(FIntPoint CheckCoord, FVector WorldPosition
 	FIntPoint RightTileCoord = GetNextTileCoord(WorldPosition, RightDirection, TileLeap);
 	FIntPoint LeftTileCoord = GetNextTileCoord(WorldPosition, -RightDirection, TileLeap);
 
-	if(CheckCoord == ForwardTileCoord || CheckCoord == BackwardTileCoord || CheckCoord == RightTileCoord || CheckCoord == LeftTileCoord)
+	if (CheckCoord == ForwardTileCoord || CheckCoord == BackwardTileCoord || CheckCoord == RightTileCoord || CheckCoord == LeftTileCoord)
 	{
 		return true;
 	}
@@ -129,21 +128,21 @@ bool AAG_TileMap::IsTileNeighbouring(FIntPoint CheckCoord, FVector WorldPosition
 
 bool AAG_TileMap::GetTileProperty(FIntPoint TileCoord, AG_TileProperty TileProperty)
 {
-	if(IsTileCoordVaild(TileCoord))
+	if (IsTileCoordVaild(TileCoord))
 	{
 		uint32 index = GetArrayIndexFromCoord(TileCoord);
 
-		if (TileProperty == AG_TileProperty::IsStartTile)			{ return Tiles[index]->IsStartTile; }
-		else if (TileProperty == AG_TileProperty::IsWalkable)		{ return Tiles[index]->IsWalkable; }
-		else if (TileProperty == AG_TileProperty::IsTransportable)	{ return Tiles[index]->IsTransportable; }
-		else if (TileProperty == AG_TileProperty::CanKill)			{ return Tiles[index]->CanKill; }
-		else if (TileProperty == AG_TileProperty::HasPickup)		{ return Tiles[index]->HasPickup; }
-		else if (TileProperty == AG_TileProperty::HasTriggerEvent)	{ return Tiles[index]->HasTriggerEvent; }
-		else if (TileProperty == AG_TileProperty::NullTile)			{ return Tiles[index]->NullTile; }
-		else if (TileProperty == AG_TileProperty::IsCrackable)		{ return Tiles[index]->IsCrackable; }
-		else if (TileProperty == AG_TileProperty::IsCracked)		{ return Tiles[index]->IsCracked; }
-		else if (TileProperty == AG_TileProperty::CanSlide)			{ return Tiles[index]->CanSlide; }
-		else if (TileProperty == AG_TileProperty::IsWinTile)		{ return Tiles[index]->IsWinTile; }
+		if (TileProperty == AG_TileProperty::IsStartTile) { return Tiles[index]->IsStartTile; }
+		else if (TileProperty == AG_TileProperty::IsWalkable) { return Tiles[index]->IsWalkable; }
+		else if (TileProperty == AG_TileProperty::IsTransportable) { return Tiles[index]->IsTransportable; }
+		else if (TileProperty == AG_TileProperty::CanKill) { return Tiles[index]->CanKill; }
+		else if (TileProperty == AG_TileProperty::HasPickup) { return Tiles[index]->HasPickup; }
+		else if (TileProperty == AG_TileProperty::HasTriggerEvent) { return Tiles[index]->HasTriggerEvent; }
+		else if (TileProperty == AG_TileProperty::NullTile) { return Tiles[index]->NullTile; }
+		else if (TileProperty == AG_TileProperty::IsCrackable) { return Tiles[index]->IsCrackable; }
+		else if (TileProperty == AG_TileProperty::IsCracked) { return Tiles[index]->IsCracked; }
+		else if (TileProperty == AG_TileProperty::CanSlide) { return Tiles[index]->CanSlide; }
+		else if (TileProperty == AG_TileProperty::IsWinTile) { return Tiles[index]->IsWinTile; }
 	}
 	else
 	{
@@ -161,7 +160,7 @@ void AAG_TileMap::Register(AActor* Actor, FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 
-	if(Tiles.Num() > 0)
+	if (Tiles.Num() > 0)
 	{
 		Tiles[TileIndex]->Register(Actor);
 	}
@@ -190,7 +189,7 @@ bool AAG_TileMap::IsRegistered(AActor* Actor, FIntPoint TileCoord)
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -200,15 +199,14 @@ bool AAG_TileMap::IsRegistered(FName ActorTag, FIntPoint TileCoord)
 
 	if (Tiles.IsValidIndex(TileIndex))
 	{
-		for(AActor* RegisteredActor : Tiles[TileIndex]->RegisteredActors)
+		for (AActor* RegisteredActor : Tiles[TileIndex]->RegisteredActors)
 		{
-			if(RegisteredActor->ActorHasTag(ActorTag))
+			if (RegisteredActor->ActorHasTag(ActorTag))
 			{
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
 
@@ -220,9 +218,40 @@ AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
 	{
 		return Tiles[TileIndex]->RegisteredActors[0];
 	}
-
 	return nullptr;
 }
+
+AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor)
+{
+	if (!IsTileCoordVaild(NextTileCoord))
+	{
+		return AG_TileInDirection::TileAtInvalidDirection;
+	}
+
+	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorForwardVector()) == NextTileCoord)
+	{
+		return AG_TileInDirection::TileAtForward;
+	}
+
+	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorForwardVector()) == NextTileCoord)
+	{
+		return AG_TileInDirection::TileAtBackward;
+	}
+
+	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorRightVector()) == NextTileCoord)
+	{
+		return AG_TileInDirection::TileAtRight;
+	}
+
+	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorRightVector()) == NextTileCoord)
+	{
+		return AG_TileInDirection::TileAtLeft;
+	}
+
+	return AG_TileInDirection::TileAtInvalidDirection;
+}
+
+//Future Possibility
 
 //void Restore // Restore previous tileMap
 

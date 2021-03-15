@@ -21,8 +21,7 @@ void AAG_RotatingAICharacter::Tick(float DeltaTime)
 
 		if (IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
 		{
-			MoveForward();
-			PlayerCharacter->KnockOut(GetActorForwardVector());
+			KnockOutPlayer(GetActorForwardVector());
 		}
 		else
 		{
@@ -30,4 +29,3 @@ void AAG_RotatingAICharacter::Tick(float DeltaTime)
 		}
 	}
 }
-

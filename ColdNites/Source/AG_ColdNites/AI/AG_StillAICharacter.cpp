@@ -18,11 +18,10 @@ void AAG_StillAICharacter::Tick(float DeltaTime)
 	if (bIsMyTurn && bIsAITurn)
 	{
 		bIsMyTurn = false;
-		
+
 		if (IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), 1))
 		{
-			MoveForward();
-			PlayerCharacter->KnockOut(GetActorForwardVector());
+			KnockOutPlayer(GetActorForwardVector());
 		}
 	}
 }

@@ -1,6 +1,5 @@
 #include "AG_AITurnManager.h"
 
-#include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
 #include "AG_ColdNites/BaseGridClasses/AG_AIBaseGridCharacter.h"
 
@@ -8,7 +7,7 @@ AAG_AITurnManager::AAG_AITurnManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	bLockLocation = true;
-	PlayerRestTimer = 2.5f;
+	PlayerRestTimer = 3.25f;
 }
 
 void AAG_AITurnManager::PostInitializeComponents()
@@ -72,9 +71,10 @@ bool AAG_AITurnManager::CheckIsAITurn()
 
 void AAG_AITurnManager::ResetAfterAITurn()
 {
+	PlayerRestTimer = 3.25f;
+
 	for (AAG_AIBaseGridCharacter* AIActor : AllPresentAIActors)
 	{
-		PlayerRestTimer = 2.5f;
 		AIActor->ResetOnTurnEnd();
 	}
 }

@@ -26,9 +26,9 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
 
 
-	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
-	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
-	if (USB.Succeeded()) { PickUpSound = USB.Object; }
+	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
+	//PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
+	//if (USB.Succeeded()) { PickUpSound = USB.Object; }
 
 	bShouldDestroy = false;
 	Tags.Add("AG_PlayableCharacter");

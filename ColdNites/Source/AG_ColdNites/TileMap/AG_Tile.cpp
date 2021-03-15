@@ -9,7 +9,7 @@ AAG_Tile::AAG_Tile()
 
 	TileRootTransformation = CreateDefaultSubobject<USceneComponent>("AG Scene Component");
 	RootComponent = TileRootTransformation;
-	
+
 	TileMesh = CreateDefaultSubobject<UStaticMeshComponent>("AG Tile Mesh");
 	TileMesh->SetRelativeLocation(GetActorLocation() + FVector(TileSize.X / 2, TileSize.Y / 2, 0.0f));
 	TileMesh->SetupAttachment(TileRootTransformation);
@@ -17,27 +17,27 @@ AAG_Tile::AAG_Tile()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Game/Art/TileMap/Tiles/AG_TileFourway.AG_TileFourway'"));
 	if (MeshAsset.Succeeded()) { NewTileMesh = MeshAsset.Object; }
 	RegenerateMesh();
-	
+
 	Tags.Add("AG_Tile");
 }
 
 void AAG_Tile::AutoConfigurePropertyToggle()
-{	
-	if(NullTile == true)
+{
+	if (NullTile == true)
 	{
-		IsStartTile 	   = false;
-		IsWalkable		   = false;
-		IsTransportable	   = false;
-		CanKill			   = false;
-		HasPickup		   = false;
-		HasTriggerEvent	   = false;
-		IsCrackable		   = false;
-		IsCracked		   = false;
-		CanSlide		   = false;
-		IsWinTile		   = false;
+		IsStartTile = false;
+		IsWalkable = false;
+		IsTransportable = false;
+		CanKill = false;
+		HasPickup = false;
+		HasTriggerEvent = false;
+		IsCrackable = false;
+		IsCracked = false;
+		CanSlide = false;
+		IsWinTile = false;
 	}
 
-	if(IsStartTile == true)
+	if (IsStartTile == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
@@ -46,13 +46,13 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsCracked = false;
 	}
 
-	if(IsWalkable == true)
+	if (IsWalkable == true)
 	{
 		NullTile = false;
 		IsCracked = false;
 	}
 
-	if(IsTransportable == true)
+	if (IsTransportable == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
@@ -60,14 +60,14 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsCracked = false;
 	}
 
-	if(CanKill == true)
+	if (CanKill == true)
 	{
 		NullTile = false;
 		IsStartTile = false;
 		IsWalkable = true;
 		IsWinTile = false;
 	}
-	if(HasPickup == true)
+	if (HasPickup == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
@@ -75,20 +75,20 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsCracked = false;
 	}
 
-	if(HasTriggerEvent == true)
+	if (HasTriggerEvent == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
 	}
 
-	if(IsCrackable == true)
+	if (IsCrackable == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
 		IsCracked = false;
 	}
 
-	if(IsCracked == true)
+	if (IsCracked == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
@@ -96,7 +96,7 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsWinTile = false;
 	}
 
-	if(CanSlide == true)
+	if (CanSlide == true)
 	{
 		NullTile = false;
 		IsWalkable = true;
@@ -105,7 +105,7 @@ void AAG_Tile::AutoConfigurePropertyToggle()
 		IsWinTile = false;
 	}
 
-	if(IsWinTile == true)
+	if (IsWinTile == true)
 	{
 		NullTile = false;
 		IsStartTile = false;
@@ -143,7 +143,7 @@ void AAG_Tile::Register(AActor* Actor)
 {
 	uint32 ActorIndex = RegisteredActors.Find(Actor);
 
-	if(ActorIndex == INDEX_NONE)
+	if (ActorIndex == INDEX_NONE)
 	{
 		RegisteredActors.Add(Actor);
 	}
@@ -153,7 +153,7 @@ void AAG_Tile::UnRegister(AActor* Actor)
 {
 	uint32 ActorIndex = RegisteredActors.Find(Actor);
 
-	if(RegisteredActors.IsValidIndex(ActorIndex))
+	if (RegisteredActors.IsValidIndex(ActorIndex))
 	{
 		RegisteredActors.RemoveAt(ActorIndex);
 	}
@@ -172,9 +172,8 @@ bool AAG_Tile::IsRegistered(AActor* Actor)
 
 void AAG_Tile::WipeRegister()
 {
-	if(RegisteredActors.Num() > 0)
+	if (RegisteredActors.Num() > 0)
 	{
 		RegisteredActors.Empty();
 	}
 }
-

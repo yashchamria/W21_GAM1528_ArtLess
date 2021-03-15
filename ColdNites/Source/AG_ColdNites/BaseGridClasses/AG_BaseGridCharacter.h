@@ -54,8 +54,8 @@ public:
 	class AAG_TileMap* TileMap;
 
 	class AAG_ColdNitesGameModeBase* GameMode;
-	void MoveTile(FVector DirectionVector, uint32 TileLeap = 1);
 	
+	void MoveTile(FVector DirectionVector, uint32 TileLeap = 1);
 	void MoveForward();
 	void MoveBackward();
 	void MoveRight();
@@ -65,6 +65,7 @@ public:
 	
 	void KnockOut(FVector FallDirection);
 	void OnKnockOut(FRotator KnockOutAngle);
+	
 	FRotator KnockedOutAngle = FRotator::ZeroRotator;
 
 	bool bWalk = false;

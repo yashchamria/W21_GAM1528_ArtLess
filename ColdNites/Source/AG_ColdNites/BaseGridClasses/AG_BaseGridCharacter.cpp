@@ -1,6 +1,6 @@
 #include "AG_BaseGridCharacter.h"
-#include "../TileMap/AG_TileMap.h"
-#include "../GameMode/AG_ColdNitesGameModeBase.h"
+#include "AG_ColdNites/TileMap/AG_TileMap.h"
+#include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"

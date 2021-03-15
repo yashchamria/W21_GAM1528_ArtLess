@@ -3,10 +3,9 @@ Team - ArtLess Games - Section 010
 
 Name - Yash Chamria
 
- Module:  AI (For Both AIBase and Player)
-
+ Module:  AI
+ 
  Description - StillAI is the most basic AI in the game. It only moves when the player is in front of the AI.
-
 ******************************************************************************************************************/
 
 #pragma once
