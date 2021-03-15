@@ -26,8 +26,13 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	float RunningTime;
+	float MoveOnZ = 20.0f;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, Category = Movement)
+		float Speed = 5.0f;
 
 };

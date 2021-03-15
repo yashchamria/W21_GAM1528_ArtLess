@@ -14,7 +14,7 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	PickupSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	PickupSphere->SetSimulatePhysics(false);
 	PickupSphere->SetCollisionProfileName("OverlapAll");
-	PickupSphere->SetSphereRadius(100.f);
+	PickupSphere->SetSphereRadius(20.f);
 	PickupSphere->SetupAttachment(RootComponent);
 
 	PickupSphere->OnComponentBeginOverlap.AddDynamic(this, &AAG_PlayableCharacter::BeginOverlap);
