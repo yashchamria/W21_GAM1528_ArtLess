@@ -3,6 +3,7 @@
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
+#include "AG_ColdNites/Player/AG_PlayerController.h"
 #include "AG_ColdNites/AI/AG_AITurnManager.h"
 
 AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
@@ -23,6 +24,9 @@ void AAG_AIBaseGridCharacter::BeginPlay()
 	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
 
+	//Getting PlayerController
+	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
 
 	//Getting AIManager
 	TArray<AActor*> AIActor;
@@ -100,6 +104,8 @@ void AAG_AIBaseGridCharacter::KnockOutPlayer(FVector ForwardDirection)
 {
 	MoveForward();
 	PlayerCharacter->KnockOut(ForwardDirection);
+	PlayerController->EnableGamePlayInput(false);
+
 	GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "Player Caught !!!");
 }
 

@@ -22,6 +22,7 @@ class AG_COLDNITES_API AAG_AIBaseGridCharacter : public AAG_BaseGridCharacter
 public:
 	AAG_AIBaseGridCharacter();
 	class AAG_PlayableCharacter* PlayerCharacter;
+	class AAG_PlayerController* PlayerController;
 	class AAG_AITurnManager* AITurnManager;
 
 protected:

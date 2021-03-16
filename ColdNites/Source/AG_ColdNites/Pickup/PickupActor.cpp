@@ -1,6 +1,5 @@
 #include "PickupActor.h"
 #include "Components/SphereComponent.h"
-#include <Components/SkeletalMeshComponent.h>
 #include <Components/PrimitiveComponent.h>
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
@@ -17,9 +16,9 @@ APickupActor::APickupActor()
 
 	SetRootComponent(PickupSphere);
 
-	ActorTopMesh = CreateDefaultSubobject<UStaticMeshComponent>("Sphere Mesh");
-	ActorTopMesh->SetupAttachment(GetRootComponent());
-	ActorTopMesh->SetCollisionProfileName("NoCollision");	
+	ActorMesh = CreateDefaultSubobject<UStaticMeshComponent>("Sphere Mesh");
+	ActorMesh->SetupAttachment(GetRootComponent());
+	ActorMesh->SetCollisionProfileName("NoCollision");	
 }
 
 void APickupActor::Disable()

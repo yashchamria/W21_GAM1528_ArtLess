@@ -5,7 +5,8 @@ Name - Xiyang Chen
 
  Module:  Inventory System
 
- Description -
+ Description - The PickupActor will be stored in the inventory.
+			   The inventory can equip the PickupActor using PageUp and PageDown Keys.
 
 ******************************************************************************************************************/
 
