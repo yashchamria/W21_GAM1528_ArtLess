@@ -3,10 +3,22 @@ Team - ArtLess Games - Section 010
 
 Name - Jonathan Sime
 
- Module:  Player Character
+Module:  Player Character
 
- Description -
+Description -
 
+/******************************************************************************************************************
+
+Name - Xiyang Chen
+
+Module:  Inventory
+
+Description -	A Spherecomponent is used for overlapping detection of PickupActors
+				
+				After pickup, the PickupActor will be stored in the inventory.
+
+				The inventory can equip the PickupActor using PageUp and PageDown Keys. 
+				
 ******************************************************************************************************************/
 
 #pragma once

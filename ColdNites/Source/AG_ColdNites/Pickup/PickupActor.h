@@ -1,3 +1,21 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Xiyang Chen
+
+ Module:  Inventory
+
+ Description -	The PickupActor is pickup-able when overlaps with a PlayableCharacter
+
+				It has a SphereComponent for overlapping detection.
+
+				And a Meshcomponent for later art assert 
+
+				Adding a floating effect when it shows on the level
+
+				This class will later be modified as an essential part of the game mechanism.
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -16,7 +34,7 @@ public:
 		class USphereComponent* PickupSphere;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_PickupComponents")
-		class UStaticMeshComponent* ActorTopMesh;
+		class UStaticMeshComponent* ActorMesh;
 
 	UFUNCTION()
 		virtual void Disable();
