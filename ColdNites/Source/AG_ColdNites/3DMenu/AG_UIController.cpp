@@ -66,7 +66,7 @@ void AAG_UIController::RepositionButtons()
 {
 	float Angle = 0.f;
 	
-	if(MenuButtons.Num())
+	if(MenuButtons.Num() > 0)
 	{
 		for(int i = 0; i < MenuButtons.Num(); i++)
 		{

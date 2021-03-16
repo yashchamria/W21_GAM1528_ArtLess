@@ -47,6 +47,9 @@ protected:
 public:
 	void EnableGamePlayInput(bool GamePlayInput = true);
 	
+	UPROPERTY(BlueprintReadOnly, Category = "Movement")
+		bool bCanPlayerMove;
+
 	void SetCanMove(bool canMove) { bCanPlayerMove = canMove; }
 	
 protected:
@@ -77,43 +80,38 @@ protected:
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
 public:
-	//Reference to the UMG asset in the editor
+
+	UUserWidget* PauseMenu;
+	UUserWidget* ResOptionsMenu;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		TSubclassOf<class UUserWidget> PauseMenuTemplate;
-
-	UUserWidget* PauseMenu; //Variable to hold the widget after creating it
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		TSubclassOf<class UUserWidget> ResOptionsMenuTemplate;
 
-	UUserWidget* ResOptionsMenu;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
+		bool bPauseMenuVisible;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-	bool bPauseMenuVisible;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-	bool bResOptionsMenuVisible;
+		bool bResOptionsMenuVisible;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		bool bMainMenuVisible;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Movement")
-		bool bCanPlayerMove;
 
 public:
 
 	void EnableUIInput(bool UIInput = true);
 
-	void TogglePauseMenu();
-
-
+	//Pause Menu
 	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HidePauseMenu();
 	void ShowPauseMenu();
+	void TogglePauseMenu();
 
+	//Resolution Options Menu
 	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void ToggleResOptionsMenu();
-
 	void ShowResOptionsMenu();
 	void HideResOptionsMenu();
 
