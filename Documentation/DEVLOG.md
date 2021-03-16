@@ -8,7 +8,10 @@ Helper Functions in TileMap -> TileMap class is storing all the spawned tile poi
 
 Tile -> Tile class is a actor, on which the level is build on. One can change the tile properties and apperance for any tile in the editor itself. TileMap will be responsible for spawning the tile. Note - Don't put tiles directly in levels. Note - Don't delete Tiles directly from Outliner. It will cause memory leaks since TileMap is holding the reference for all the tiles.
 
-Helper functions can be called as follow : { TArray<AActor*> TileMapActor; UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATileMap::StaticClass(), TileMapActor);
+Helper functions can be called as follow : 
+{ 
+TArray<AActor*> TileMapActor; 
+UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATileMap::StaticClass(), TileMapActor);
 
 if (TileMapActor.Num() > 0)
 	TileMap = Cast<ATileMap>(TileMapActor[0]);

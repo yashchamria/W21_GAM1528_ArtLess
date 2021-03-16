@@ -1,5 +1,7 @@
 # W21_GAM1528_ArtLess
 
+**Review in Notepad for better formatting
+
 Team --> ArtLess Games
 
 Game --> Cold Nites
@@ -18,7 +20,7 @@ Alpha 01 Modules -->
 
 1. TileMap 	     | Yash
 2. TurnBase System   | Jonathan
-3. BaseGridCharacter | Yash
+3. BaseGrid Classes  | Yash
 4. PlayerCharacter   | Jonathan
 5. Inventory System  | Xiyang
 6. User Interface    | Vrund
@@ -51,9 +53,21 @@ Resume -> Q
 
 
 
-Known Bugs for Alpha01-->
+Known Bugs for Alpha01 -->
 
 Individual Tile is not aware of its TileType(i.e. Fourway, Threeway, corner or straight), it just checks if the next tile is walkable or not. 
 Results in walking over a visual gap between two walkable tiles even in the cases it should not possible.
 
 Multiple consequence presses in the beginning 3D main menu screen might result in 3D Props losing their desired position.
+
+
+
+Current(Alpha01) Limitations -->
+
+No Animation is available for any characters.
+Player cannot knock out AI just yet.
+No indication for win(win system is not in place yet).
+No indication for losing but player indeed gets knocked out and cannot move anymore.
+AI is still work in progress.
+Pickup is currently proof of working, more game specific features will be added later on.
+
