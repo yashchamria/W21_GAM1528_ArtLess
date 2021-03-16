@@ -1,3 +1,16 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Jonathan Sime
+
+ Module:  Game Mode Base
+
+ Description - GameModeBase handles TurnStates.
+			   FinishTurn() is called by the last object to update during it's turn to continue the turns.
+			   AllowPlayerMove() allows the player to move once their turn starts.
+
+*******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"

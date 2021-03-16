@@ -3,9 +3,11 @@ Team - ArtLess Games - Section 010
 
 Name - Jonathan Sime
 
- Module:  Player Character
+ Module:  Player Controller
 
- Description -
+ Description - PlayerController contains methods used to control the playable character.
+			   Move methods are called using keybinds.
+			   
 
 *******************************************************************************************************************
 Team - ArtLess Games - Section 010

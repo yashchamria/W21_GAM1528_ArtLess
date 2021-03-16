@@ -5,7 +5,9 @@ Name - Jonathan Sime
 
  Module:  Player Character
 
- Description -
+ Description - PlayableCharacter inherits from BaseGridCharacter.
+			   Move methods call the parent's move methods for movement code.
+			   Move methods are called by the PlayerController.
 
 *******************************************************************************************************************
 Team - ArtLess Games - Section 010
