@@ -6,7 +6,7 @@ Also added downloaded Player character model, found on Sketchfab.
 Player Character Art - "Anime Boy" ---> Entire Credit for the 3D Modelling goes to Kazukiarts for this artwork. 
 Artist Link - https://sketchfab.com/jeffraeson Art Link - https://sketchfab.com/3d-models/anime-boy-cf5de6e8d866489488c138571d15f8d1
 
-/******************************************************************************************************************************/
+
 
 /---------------------------------------------------------------Yash(6th March 2021)----------------------------------------------------------/ 
 Added downlaoded AI character model, found on Sketchfab.
@@ -16,7 +16,7 @@ Artist Link - https://sketchfab.com/tomy97 Art Link - https://sketchfab.com/3d-m
 
 Also, created textures for Player and AI.
 
-/******************************************************************************************************************************/
+
 
 /---------------------------------------------------------------Yash(7th March 2021)----------------------------------------------------------/
 
@@ -26,7 +26,7 @@ Created a new type of tile.
 
 Fixed some of the previous texture issues with Tiles.
 
-/******************************************************************************************************************************/
+
 
 /--------------------------------------------------------------- Yash(11th March 2021)----------------------------------------------------------/
 
@@ -37,4 +37,3 @@ Artist Link - https://sketchfab.com/norgeotloic Art Link - https://sketchfab.com
 
 Also, created texture for StillAI.
 
-/******************************************************************************************************************************/

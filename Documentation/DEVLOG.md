@@ -27,19 +27,12 @@ GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT(
 GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("Tile World Location: %s"), *TileWorldLocation.ToString()));
 }
 
-/******************************************************************************************************************************/
 
-/----------------------------------------------------------------Vrund---------------------------------------------------------/
+/----------------------------------------------------------------Vrund(5th Feb 2021)---------------------------------------------------------/
 
-5/2/21 - Added a working Main menu and pause menu.
-
--> The pause menu makes use of character class the player controller class. Key binding for the pause menu is 'Q' key for now.
-
-17/2/21 - Made BaseGridActor
-
--> Use BaseGridActor to make any static objects (pickups, collectibles etc) that will go in the level. To destory the actor do not call Destroy, instead call Delete function of BaseGridActor.
-
-/******************************************************************************************************************************/
+Main Menu -> Added a working Main menu and pause menu.
+	     The pause menu makes use of character class the player controller class. 
+    	     Key binding for the pause menu is 'Q' key for now.
 
 /--------------------------------------------------------------- Yash(16th Feb 2021)----------------------------------------------------------/
 
@@ -49,7 +42,11 @@ Now all the moving characters should inherit from BaseGridCharacter.
 
 PlayableCharacter -> Now the playable character inherits from ABaseGridCharacter. PlayerController -> Also, playercontroller works with WASD, Mouse clicking and Arrow keys.
 
-/******************************************************************************************************************************/
+/----------------------------------------------------------------Vrund(17th Feb 2021)---------------------------------------------------------/
+
+BaseGridActor-> Use BaseGridActor to make any static objects (pickups, collectibles etc) that will go in the level. 
+		To destory the actor do not call Destroy, instead call Delete function of BaseGridActor.
+
 
 /--------------------------------------------------------------- Yash(22th Feb 2021)----------------------------------------------------------/
 
@@ -57,7 +54,6 @@ Tile -> Individual spawned tile now keeps track of all actors/characters standin
 
 Tile -> Now you can rotate the staticmesh or change tilemesh from TileAesthetic Category in the editor.
 
-/******************************************************************************************************************************/
 
 /--------------------------------------------------------------- Yash(6th March 2021)----------------------------------------------------------/
 
@@ -67,4 +63,14 @@ AIBaseGridCharacter -> Added a BaseAI class inheriting from BaseGridCharacter an
 
 StillAI -> Inherits from AIBaseGridCharacter. Itis the most basic AI in the game. It only moves when the player is in front of him and knocks him over.
 
-/******************************************************************************************************************************/
+
+/--------------------------------------------------------------- Yash(11th March 2021)----------------------------------------------------------/
+
+AITurnManager -> Rewrote the entire Manager System. Now, it inherits from a basic actor.
+		 Now, the AITurn Manager is aware of all the present AI in the world.
+		 It will call FinishTurn once all the AI are done with their turn.
+		 Still need to deal with some bugs.
+
+RotatingAI -> It rotates 180 in each turn. It only attacks when the player is right in front of the AI when it is looking at him.
+
+PatrollingAI -> Very WIP
