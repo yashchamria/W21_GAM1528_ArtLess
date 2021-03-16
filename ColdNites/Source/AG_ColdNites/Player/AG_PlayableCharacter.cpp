@@ -2,9 +2,8 @@
 
 #include "Components/SphereComponent.h"
 #include "AG_ColdNites/Pickup/PickupActor.h"
-#include "../Pickup/InventoryComponent.h"
+#include "AG_ColdNites/Pickup/InventoryComponent.h"
 #include "Components/AudioComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -22,7 +21,7 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Player Inventory");
 
 	ItemHolder = CreateDefaultSubobject<USceneComponent>("ItemHolder");
-	ItemHolder->AttachTo(GetRootComponent());
+	ItemHolder->SetupAttachment(GetRootComponent());
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
 
 

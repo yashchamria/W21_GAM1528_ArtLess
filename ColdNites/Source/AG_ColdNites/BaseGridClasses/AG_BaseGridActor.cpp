@@ -92,7 +92,7 @@ void AAG_BaseGridActor::UnRegisterToTileMap()
 	TileMap->UnRegister(this, CurrentTileCoord);
 }
 
-void AAG_BaseGridActor::Delete()
+void AAG_BaseGridActor::DeleteGridActor()
 {
 	TileMap->UnRegister(this, CurrentTileCoord);
 	Destroy();

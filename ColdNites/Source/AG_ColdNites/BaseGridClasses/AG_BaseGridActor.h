@@ -62,5 +62,5 @@ public:
 
 	void UnRegisterToTileMap();
 
-	virtual void Delete();
+	virtual void DeleteGridActor();
 };
