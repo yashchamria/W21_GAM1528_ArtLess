@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/AI/AG_AITurnManager.h"
+#include "AG_ColdNites/Player/AG_PlayerController.h"
 
 AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
 {
@@ -101,6 +102,15 @@ void AAG_AIBaseGridCharacter::KnockOutPlayer(FVector ForwardDirection)
 	MoveForward();
 	PlayerCharacter->KnockOut(ForwardDirection);
 	GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "Player Caught !!!");
+
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+	AAG_PlayerController* MyPC = Cast<AAG_PlayerController>(PC);
+
+	if(MyPC)
+	{
+		MyPC->DisableInput(MyPC);
+	}
 }
 
 void AAG_AIBaseGridCharacter::ResetOnTurnEnd()
