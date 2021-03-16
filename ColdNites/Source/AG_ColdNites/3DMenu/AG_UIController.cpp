@@ -21,7 +21,6 @@ void AAG_UIController::BeginPlay()
 	TArray<AActor*> ButtonActors;
 	UGameplayStatics::GetAllActorsOfClass(this, AAG_MenuButton::StaticClass(), ButtonActors);
 
-	
 	if(ButtonActors.Num() > 0)
 	{
 		for (int i = 0; i < ButtonActors.Num(); i++)

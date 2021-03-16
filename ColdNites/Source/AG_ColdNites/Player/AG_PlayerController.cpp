@@ -194,6 +194,7 @@ void AAG_PlayerController::PreviousInventoryItem()
 		}
 	}
 }
+///******************************************************************************************************************///
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
 
@@ -207,6 +208,18 @@ void AAG_PlayerController::OnEscKeyPressed()
 	if(bUIInput)
 	{
 		TogglePauseMenu();
+	}
+}
+
+void AAG_PlayerController::TogglePauseMenu()
+{
+	if(!bPauseMenuVisible && !bResOptionsMenuVisible)
+	{
+		ShowPauseMenu();
+	}
+	else
+	{
+		HidePauseMenu();
 	}
 }
 
@@ -229,18 +242,15 @@ void AAG_PlayerController::HidePauseMenu()
 	}
 }
 
-void AAG_PlayerController::TogglePauseMenu()
+void AAG_PlayerController::ToggleResOptionsMenu()
 {
-	if(bPauseMenuVisible)
+	if(!bResOptionsMenuVisible)
 	{
-		HidePauseMenu();
+		ShowResOptionsMenu();
 	}
 	else
 	{
-		if(!bResOptionsMenuVisible)
-		{
-			ShowPauseMenu();
-		}
+		HideResOptionsMenu();
 	}
 }
 

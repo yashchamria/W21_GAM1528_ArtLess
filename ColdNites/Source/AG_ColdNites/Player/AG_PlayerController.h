@@ -101,20 +101,22 @@ public:
 		bool bCanPlayerMove;
 
 public:
+
 	void EnableUIInput(bool UIInput = true);
+
+	void TogglePauseMenu();
+
 
 	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HidePauseMenu();
-	
-	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
-	void ShowResOptionsMenu();
-
-	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
-	void HideResOptionsMenu();
-
 	void ShowPauseMenu();
 
-	void TogglePauseMenu();
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
+	void ToggleResOptionsMenu();
+
+	void ShowResOptionsMenu();
+	void HideResOptionsMenu();
+
 	void OnEscKeyPressed();
 
 private:
