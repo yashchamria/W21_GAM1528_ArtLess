@@ -17,9 +17,9 @@ APickupActor::APickupActor()
 
 	SetRootComponent(PickupSphere);
 
-	ActorTopMesh = CreateDefaultSubobject<UStaticMeshComponent>("Sphere Mesh");
-	ActorTopMesh->SetupAttachment(GetRootComponent());
-	ActorTopMesh->SetCollisionProfileName("NoCollision");	
+	ActorMesh = CreateDefaultSubobject<UStaticMeshComponent>("Sphere Mesh");
+	ActorMesh->SetupAttachment(GetRootComponent());
+	ActorMesh->SetCollisionProfileName("NoCollision");	
 }
 
 void APickupActor::Disable()
