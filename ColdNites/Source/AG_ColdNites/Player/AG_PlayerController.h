@@ -97,7 +97,10 @@ public:
 
 	UUserWidget* ResOptionsMenu;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 	bool bPauseMenuVisible;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 	bool bResOptionsMenuVisible;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
@@ -107,18 +110,19 @@ public:
 		bool bCanPlayerMove;
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HidePauseMenu();
 	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void ShowResOptionsMenu();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HideResOptionsMenu();
 
 	void ShowPauseMenu();
+
 	void TogglePauseMenu();
-	void Esc_KeyDown();
+	void OnEscKeyPressed();
 	
 ///******************************************************************************************************************///
 };

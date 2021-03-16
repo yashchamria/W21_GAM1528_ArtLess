@@ -4,8 +4,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "AG_PlayableCharacter.h"
-#include "AG_ColdNites/Pickup/InventoryComponent.h"
-
 
 AAG_PlayerController::AAG_PlayerController()
 {
@@ -33,7 +31,6 @@ void AAG_PlayerController::BeginPlay()
 	if (ResOptionsMenuTemplate)
 	{
 		ResOptionsMenu = CreateWidget<UUserWidget>(this, ResOptionsMenuTemplate);
-		ResOptionsMenu->AddToViewport();
 		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 
@@ -72,18 +69,12 @@ void AAG_PlayerController::SetupInputComponent()
 	InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
 	InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
 
-	InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::Esc_KeyDown); 
+	InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::OnEscKeyPressed);
 }
 
 void AAG_PlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
-
-	//disable mouse input if any menu is open
-	if (bPauseMenuVisible || bResOptionsMenuVisible)
-	{
-		bMoveToMouseCursor = false;
-	}
 }
 
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
@@ -150,14 +141,10 @@ void AAG_PlayerController::PreviousInventoryItem()
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
 
-void AAG_PlayerController::Esc_KeyDown()
+void AAG_PlayerController::OnEscKeyPressed()
 {
-	/*if (GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
-	{
-	}*/
 	TogglePauseMenu();
 }
-
 
 void AAG_PlayerController::ShowPauseMenu()
 {
@@ -165,19 +152,15 @@ void AAG_PlayerController::ShowPauseMenu()
 	{
 		bPauseMenuVisible = true;
 		PauseMenu->SetVisibility(ESlateVisibility::Visible);
-		DefaultMouseCursor = EMouseCursor::Default;
-		SetShowMouseCursor(true);
 	}
 }
 
-void AAG_PlayerController::HidePauseMenu_Implementation()
+void AAG_PlayerController::HidePauseMenu()
 {
 	if (PauseMenu)
 	{
 		bPauseMenuVisible = false;
 		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
-		DefaultMouseCursor = EMouseCursor::Crosshairs;
-		//SetShowMouseCursor(false);
 	}
 }
 
@@ -185,51 +168,40 @@ void AAG_PlayerController::TogglePauseMenu()
 {
 	if(bPauseMenuVisible)
 	{
-		HidePauseMenu_Implementation();
+		HidePauseMenu();
 	}
 	else
 	{
 		if(!bResOptionsMenuVisible)
 		{
-			//ShowPauseMenu();
-			if (PauseMenu)
-			{
-				bPauseMenuVisible = true;
-				PauseMenu->SetVisibility(ESlateVisibility::Visible);
-				DefaultMouseCursor = EMouseCursor::Default;
-				SetShowMouseCursor(true);
-			}
+			ShowPauseMenu();
 		}
 	}
 }
 
-void AAG_PlayerController::ShowResOptionsMenu_Implementation()
+void AAG_PlayerController::ShowResOptionsMenu()
 {
 	if (ResOptionsMenu)
 	{
-		bResOptionsMenuVisible = true;
-		ResOptionsMenu->SetVisibility(ESlateVisibility::Visible);
-
 		bPauseMenuVisible = false;
 		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 
-		DefaultMouseCursor = EMouseCursor::Default;
-		SetShowMouseCursor(true);
+		bResOptionsMenuVisible = true;
+		ResOptionsMenu->AddToViewport();
+		ResOptionsMenu->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 
-void AAG_PlayerController::HideResOptionsMenu_Implementation()
+void AAG_PlayerController::HideResOptionsMenu()
 {
 	if (ResOptionsMenu)
 	{
 		bResOptionsMenuVisible = false;
+		ResOptionsMenu->RemoveFromParent();
 		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 
 		bPauseMenuVisible = true;
 		PauseMenu->SetVisibility(ESlateVisibility::Visible);
-
-		DefaultMouseCursor = EMouseCursor::Crosshairs;
-		SetShowMouseCursor(true);
 	}
 }
 
