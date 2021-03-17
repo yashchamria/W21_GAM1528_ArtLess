@@ -30,6 +30,7 @@ Alpha 01 Modules -->
 
 Setup Instructions -->
 The correct level should load itself. The game will start with 3D Main Menu. Leading to one Alpha01 gameplay prototype level.
+Though rebuilding the light for each of this levels manually is prefered.
 In case, to manually load the levels, all the Alpha01 levels are located in Content/Maps/ALPHA01/...
 
 
