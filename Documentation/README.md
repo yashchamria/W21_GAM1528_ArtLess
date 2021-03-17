@@ -48,7 +48,7 @@ Scroll Down Throw the Inventory(collected pickups) -> PageDown
 
 Pause(Menu Screen) -> Esc/Q
 Resume -> Esc/Q
-NOTE: The Esc key is disabled to stop PlayInEditor. To Exit the game use the 3dButton for exit in the 3D MainMenu.
+NOTE: The Esc key is disabled to stop PlayInEditor. To Exit the game use the 3D Exit Button in the 3D MainMenu.
 
 Known Bugs for Alpha01 -->
 
