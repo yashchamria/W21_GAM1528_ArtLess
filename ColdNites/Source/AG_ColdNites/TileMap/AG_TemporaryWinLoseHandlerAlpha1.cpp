@@ -28,6 +28,20 @@ void AAG_TemporaryWinLoseHandlerAlpha1::BeginPlay()
 
 	Player = Cast<AAG_PlayableCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), AAG_PlayableCharacter::StaticClass()));
 	PlayerController = Cast<AAG_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if (WinWidgetTemplate)
+	{
+		WinWidget = CreateWidget<UUserWidget>(PlayerController, WinWidgetTemplate);
+		WinWidget->AddToViewport();
+		WinWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	if (LoseWidgetTemplate)
+	{
+		LoseWidget = CreateWidget<UUserWidget>(PlayerController, LoseWidgetTemplate);
+		LoseWidget->AddToViewport();
+		LoseWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void AAG_TemporaryWinLoseHandlerAlpha1::Tick(float DeltaTime)
@@ -39,12 +53,16 @@ void AAG_TemporaryWinLoseHandlerAlpha1::Tick(float DeltaTime)
 	if(Tilemap->GetTileProperty(CurrentTileCoord, AG_TileProperty::IsWinTile))
 	{
 		bWon = true;
-		
-		if (WinWidgetTemplate)
+
+		WinDelay -= DeltaTime;
+
+		if(WinDelay <= 0.f)
 		{
-			WinWidget = CreateWidget<UUserWidget>(PlayerController, WinWidgetTemplate);
-			WinWidget->AddToViewport();
-			WinWidget->SetVisibility(ESlateVisibility::Visible);
+			if (WinWidgetTemplate)
+			{
+				WinWidget->SetVisibility(ESlateVisibility::Visible);
+				PlayerController->EnableUIInput(false);
+			}
 		}
 
 		PlayerController->EnableGamePlayInput(false);
@@ -55,11 +73,10 @@ void AAG_TemporaryWinLoseHandlerAlpha1::Tick(float DeltaTime)
 		LoseDelay -= DeltaTime;
 		if(LoseDelay <= 0.f)
 		{
-			if (WinWidgetTemplate)
+			if(LoseWidgetTemplate)
 			{
-				LoseWidget = CreateWidget<UUserWidget>(PlayerController, LoseWidgetTemplate);
-				LoseWidget->AddToViewport();
 				LoseWidget->SetVisibility(ESlateVisibility::Visible);
+				PlayerController->EnableUIInput(false);
 			}
 		}
 	}

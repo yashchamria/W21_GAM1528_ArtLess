@@ -3,9 +3,9 @@ Team - ArtLess Games - Section 010
 
 Name - Vrund Soni
 
- Module: Menu System
+ Module: UI
 
- Description - Handles working of the 3D MainMenu in the game.
+ Description -
 
 ******************************************************************************************************************/
 

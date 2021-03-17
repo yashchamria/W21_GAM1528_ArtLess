@@ -7,7 +7,7 @@ Team --> ArtLess Games
 Game --> Cold Nites
 
 Description --> Cold Nites is a Grid-style turn-based game. The player must strategically navigate through the level to survive the cold night, protecting the boy from all the mischievous elements of the city. 
-	       And, there are always multiple ways to solve the puzzles along the way.
+	        And, there are always multiple ways to solve the puzzles along the way.
 
 Team Members --> Xiyang Chen   | Project Manager/Programmer
 	     --> Jonathan Sime | Programmer
@@ -23,16 +23,14 @@ Alpha 01 Modules -->
 3. BaseGrid Classes  | Yash
 4. PlayerCharacter   | Jonathan
 5. Inventory System  | Xiyang
-6. User Interface    | Vrund
+6. Menu System       | Vrund
 
 **Other feature that might be present in submission but not ready for Alpha01 -> AI/Enemy, Camera Manager, Audio System, Pickup & BaseGrid Actor, Level Manager, Event System
-
 
 
 Setup Instructions -->
 The correct level should load itself. The game will start with 3D Main Menu. Leading to one Alpha01 gameplay prototype level.
 In case, to manually load the levels, all the Alpha01 levels are located in Content/Maps/ALPHA01/...
-
 
 
 Player Controls -->
@@ -44,14 +42,13 @@ Backward -> S,  Down-Arrow,   Mouse-Clicking on Backward Tile
 Right    -> D,  Right-Arrow,  Mouse-Clicking on Right Tile
 
 Character Inventory(Only if you have collected pickups) -->
-Scroll Up Throw the Inventory(collected pickups) -> PageUp
+Scroll Up Throw the Inventory(collected pickups)   -> PageUp
 Scroll Down Throw the Inventory(collected pickups) -> PageDown
 
-User Interface -->
-Pause(Menu Screen) -> Q
-Resume -> Q
 
-
+Pause(Menu Screen) -> Esc/Q
+Resume -> Esc/Q
+NOTE: The Esc key is disabled to stop PlayInEditor. To Exit the game use the 3dButton for exit in the 3D MainMenu.
 
 Known Bugs for Alpha01 -->
 
@@ -66,8 +63,6 @@ Current(Alpha01) Limitations -->
 
 No Animation is available for any characters.
 Player cannot knock out AI just yet.
-No indication for win(win system is not in place yet).
-No indication for losing but player indeed gets knocked out and cannot move anymore.
 AI is still work in progress.
 Pickup is currently proof of working, more game specific features will be added later on.
 

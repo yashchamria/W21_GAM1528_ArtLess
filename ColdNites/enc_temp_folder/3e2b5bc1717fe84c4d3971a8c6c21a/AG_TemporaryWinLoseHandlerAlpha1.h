@@ -34,6 +34,5 @@ private:
 
 	bool bWon = false;
 	float LoseDelay = 1.65f;
-	float WinDelay = 1.0f;
 	bool bPlayerKnockedOut = false;
 };

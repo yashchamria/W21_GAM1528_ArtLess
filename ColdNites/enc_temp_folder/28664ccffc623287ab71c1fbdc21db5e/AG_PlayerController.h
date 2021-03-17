@@ -14,9 +14,9 @@ Team - ArtLess Games - Section 010
 
 Name - Vrund Soni
 
- Module - Menu System
+ Module:  UI
 
- Description - Handles the working of PauseMenu in the game.
+ Description -
 
 ******************************************************************************************************************/
 #pragma once
