@@ -7,25 +7,34 @@ Name - Xiyang Chen
 
  Description - The PickupActor will be stored in the inventory.
 			   The inventory can equip the PickupActor using PageUp and PageDown Keys.
-
 ******************************************************************************************************************/
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "InventoryComponent.generated.h"
+#include "AG_InventoryComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class AG_COLDNITES_API UInventoryComponent : public UActorComponent
+class AG_COLDNITES_API UAG_InventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	UInventoryComponent();
+	UAG_InventoryComponent();
 
-	void AddToInventory(class APickupActor* pickup);
+protected:
+	
+	virtual void BeginPlay() override;
+
+public:
+	
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+public:
+	
+	void AddToInventory(class AAG_PickupActor* pickup);
 
 	int GetInventoryCount();
 
@@ -36,21 +45,18 @@ public:
 		virtual void PreviousInventoryItem();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_Inventory")
-		class APickupActor* GetCurrentInventory() const;
-
-protected:
-	virtual void BeginPlay() override;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Inventory")
-		class APickupActor* CurrentInventoryItem;
-
-	void EquipNewInventoryItem(APickupActor* NewItem);
-
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	TArray< class APickupActor* > Inventory;
+		class AAG_PickupActor* GetCurrentInventory() const;
 
 	void ResetCurrentInventory();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Inventory")
+	TArray< class AAG_PickupActor* > Inventory;
+
+protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Inventory")
+		class AAG_PickupActor* CurrentInventoryItem;
+
+	void EquipNewInventoryItem(AAG_PickupActor* NewItem);
 		
 };

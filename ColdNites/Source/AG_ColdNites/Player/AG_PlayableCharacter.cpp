@@ -1,29 +1,16 @@
 #include "AG_PlayableCharacter.h"
-
-#include "Components/SphereComponent.h"
-#include "AG_ColdNites/Pickup/PickupActor.h"
-#include "AG_ColdNites/Pickup/InventoryComponent.h"
-#include "Components/AudioComponent.h"
-#include "Kismet/GameplayStatics.h"
+#include "AG_ColdNites/Pickup/AG_InventoryComponent.h"
+//#include "Components/AudioComponent.h"
+//#include "Kismet/GameplayStatics.h"
 
 
 AAG_PlayableCharacter::AAG_PlayableCharacter()
 {
-	PickupSphere = CreateDefaultSubobject<USphereComponent>("Pickup Sphere");
-	PickupSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	PickupSphere->SetSimulatePhysics(false);
-	PickupSphere->SetCollisionProfileName("OverlapAll");
-	PickupSphere->SetSphereRadius(20.f);
-	PickupSphere->SetupAttachment(RootComponent);
-
-	PickupSphere->OnComponentBeginOverlap.AddDynamic(this, &AAG_PlayableCharacter::BeginOverlap);
-
-	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Player Inventory");
+	InventoryComponent = CreateDefaultSubobject<UAG_InventoryComponent>("Player Inventory");
 
 	ItemHolder = CreateDefaultSubobject<USceneComponent>("ItemHolder");
-	ItemHolder->SetupAttachment(GetRootComponent());
+	ItemHolder->AttachTo(GetRootComponent());
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
-
 
 	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
 	//PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
@@ -50,18 +37,3 @@ void AAG_PlayableCharacter::MoveLeft() { Super::MoveLeft(); }
 
 void AAG_PlayableCharacter::NextInventoryItem() { InventoryComponent->NextInventoryItem(); }
 void AAG_PlayableCharacter::PreviousInventoryItem() { InventoryComponent->PreviousInventoryItem(); }
-
-void AAG_PlayableCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	TArray<AActor*> pickups;
-
-	PickupSphere->GetOverlappingActors(pickups, APickupActor::StaticClass());
-
-	if (pickups.Num() > 0)
-	{
-		for (int i = 0; i < pickups.Num(); i++)
-		{
-			InventoryComponent->AddToInventory(Cast<APickupActor>(pickups[i]));
-		}
-	}
-}

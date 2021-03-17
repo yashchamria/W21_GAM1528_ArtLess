@@ -9,18 +9,7 @@ Name - Jonathan Sime
 			   Move methods call the parent's move methods for movement code.
 			   Move methods are called by the PlayerController.
 
-*******************************************************************************************************************
-Team - ArtLess Games - Section 010
-
-Name - Xiyang Chen
-
- Module:  Player Character
-
- Description - A Spherecomponent is used for overlapping detection of PickupActors.
-			   After pickup, the PickupActor will be stored in the inventory.
-			   The inventory can equip the PickupActor using PageUp and PageDown Keys. 
-
-******************************************************************************************************************/
+*******************************************************************************************************************/
 
 #pragma once
 
@@ -48,20 +37,15 @@ public:
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
-	UFUNCTION()
-		void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Pickup")
-		class USphereComponent* PickupSphere;
-
+	class UAG_InventoryComponent* InventoryComponent;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Pickup")
 		class USceneComponent* ItemHolder;
 
-	UPROPERTY(VisibleAnywhere, Category = "AG_PickUp")
-		class USoundBase* PickUpSound;
-	
-	class UInventoryComponent* InventoryComponent;
-
 	void NextInventoryItem();
 	void PreviousInventoryItem();
+
+///---------------------------------------Audio Setup----------------------------------------------------------///
+	//UPROPERTY(VisibleAnywhere, Category = "AG_PickUp")
+	//	class USoundBase* PickUpSound;
 };
