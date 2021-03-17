@@ -5,7 +5,8 @@ Name - Xiyang Chen
 
  Module:  Inventory System
 
- Description -
+ Description - The PickupActor will be stored in the inventory.
+			   The inventory can equip the PickupActor using PageUp and PageDown Keys.
 
 ******************************************************************************************************************/
 
@@ -24,7 +25,7 @@ class AG_COLDNITES_API UInventoryComponent : public UActorComponent
 public:	
 	UInventoryComponent();
 
-	void AddToInventory(class APickupActor* pickup);
+	void AddToInventory(class AAG_PickupActor* pickup);
 
 	int GetInventoryCount();
 
@@ -35,20 +36,20 @@ public:
 		virtual void PreviousInventoryItem();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_Inventory")
-		class APickupActor* GetCurrentInventory() const;
+		class AAG_PickupActor* GetCurrentInventory() const;
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Inventory")
-		class APickupActor* CurrentInventoryItem;
+		class AAG_PickupActor* CurrentInventoryItem;
 
-	void EquipNewInventoryItem(APickupActor* NewItem);
+	void EquipNewInventoryItem(AAG_PickupActor* NewItem);
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	TArray< class APickupActor* > Inventory;
+	TArray< class AAG_PickupActor* > Inventory;
 
 	void ResetCurrentInventory();
 		

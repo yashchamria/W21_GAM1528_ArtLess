@@ -5,7 +5,18 @@ Name - Vrund Soni
 
  Module:
 
- Description -
+ Description - Created the body and implemented AutoReposition feature. Also, actor registers to the TileMap.
+
+*******************************************************************************************************************
+
+Team - ArtLess Games - Section 010
+
+Name - Yash Chamria
+
+Module :
+
+Description - Removed the collision component. All the collision/overlaps for the BaseActor will be now handled by the TileMap Registeration System.
+			  Added feature such Player or Actor Detection. Added Player variable. Also created some Registerion related helper functions.
 
 ******************************************************************************************************************/
 
@@ -23,13 +34,14 @@ class AG_COLDNITES_API AAG_BaseGridActor : public AActor
 public:	
 	AAG_BaseGridActor();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
-		class UBoxComponent* CollisionBox;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
-		class UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_BaseComponents")
+		class USceneComponent* BaseRootTransformation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_BaseComponents")
+		class UStaticMeshComponent* BaseMesh;
 
 	class AAG_TileMap* TileMap;
+	class AAG_PlayableCharacter* PlayerCharacter;
 	
 	FIntPoint CurrentTileCoord;
 	FVector TargetTileWorldLocation;
@@ -45,5 +57,11 @@ public:
 
 	void AutoRepositionToTileCenter();
 
+	bool CheckActorOnTheTile(FName ActorTag);
+
+	bool CheckPlayerOnTheTile();
+
+	void UnRegisterToTileMap();
+	
 	virtual void Delete();
 };

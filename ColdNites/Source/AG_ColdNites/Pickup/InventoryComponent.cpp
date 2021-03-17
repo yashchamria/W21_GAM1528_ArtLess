@@ -1,5 +1,5 @@
 #include "InventoryComponent.h"
-#include "PickupActor.h"
+#include "AG_ColdNites/Pickup/AG_PickupActor.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -10,7 +10,7 @@ UInventoryComponent::UInventoryComponent()
 }
 
 
-void UInventoryComponent::AddToInventory(APickupActor* pickup)
+void UInventoryComponent::AddToInventory(AAG_PickupActor* pickup)
 {
 	Inventory.AddUnique(pickup);
 	pickup->Disable();
@@ -27,7 +27,7 @@ void UInventoryComponent::NextInventoryItem()
 	{
 		return;
 	}
-	APickupActor* InventoryItemToEquip = nullptr;
+	AAG_PickupActor* InventoryItemToEquip = nullptr;
 
 	int32 Index = 0;
 	if (CurrentInventoryItem)
@@ -48,7 +48,7 @@ void UInventoryComponent::PreviousInventoryItem()
 	{
 		return;
 	}
-	APickupActor* InventoryItemToEquip = nullptr;
+	AAG_PickupActor* InventoryItemToEquip = nullptr;
 	int32 Index = Inventory.Num() - 1;
 	if (CurrentInventoryItem != nullptr)
 	{
@@ -63,7 +63,7 @@ void UInventoryComponent::PreviousInventoryItem()
 	EquipNewInventoryItem(InventoryItemToEquip);
 }
 
-APickupActor* UInventoryComponent::GetCurrentInventory() const
+AAG_PickupActor* UInventoryComponent::GetCurrentInventory() const
 {
 	return CurrentInventoryItem;
 }
@@ -74,7 +74,7 @@ void UInventoryComponent::BeginPlay()
 }
 
 
-void UInventoryComponent::EquipNewInventoryItem(APickupActor* NewItem)
+void UInventoryComponent::EquipNewInventoryItem(AAG_PickupActor* NewItem)
 {
 	if (CurrentInventoryItem)
 	{
@@ -87,9 +87,7 @@ void UInventoryComponent::EquipNewInventoryItem(APickupActor* NewItem)
 		NewItem->Enable();
 
 		AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
-		NewItem->AttachToComponent(OwningActor->ItemHolder,
-			FAttachmentTransformRules::SnapToTargetIncludingScale,
-			"AttachPoint");
+		NewItem->AttachToComponent(OwningActor->ItemHolder, FAttachmentTransformRules::SnapToTargetIncludingScale, "AttachPoint");
 	}
 	CurrentInventoryItem = NewItem;
 }

@@ -2,20 +2,19 @@
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
+#include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 AAG_BaseGridActor::AAG_BaseGridActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>("Collision Box");
-	RootComponent = CollisionBox;
-	CollisionBox->SetBoxExtent(FVector(50, 50, 50));
-	CollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-	Mesh->SetupAttachment(RootComponent);
-	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	BaseRootTransformation = CreateDefaultSubobject<USceneComponent>("Scene Component");
+	RootComponent = BaseRootTransformation;
+	
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("Base Mesh");
+	BaseMesh->SetupAttachment(RootComponent);
+	BaseMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AAG_BaseGridActor::PostInitializeComponents()
@@ -42,6 +41,10 @@ void AAG_BaseGridActor::PostInitializeComponents()
 void AAG_BaseGridActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Getting the Spawned TileMap Actor from the World
+	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
 }
 
 void AAG_BaseGridActor::Tick(float DeltaTime)
@@ -63,6 +66,30 @@ void AAG_BaseGridActor::AutoRepositionToTileCenter()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("--> Actor placed on Unwalkable tile <--")));
 	}
+}
+
+bool AAG_BaseGridActor::CheckActorOnTheTile(FName ActorTag)
+{
+	if (TileMap->IsRegistered(ActorTag, CurrentTileCoord))
+	{
+		GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "Actor On Pickup Tile !!!");
+		return true;
+	}
+	return false;
+}
+
+bool AAG_BaseGridActor::CheckPlayerOnTheTile()
+{
+	if(CheckActorOnTheTile("AG_PlayableCharacter"))
+	{
+		return true;
+	}
+	return false;
+}
+
+void AAG_BaseGridActor::UnRegisterToTileMap()
+{
+	TileMap->UnRegister(this, CurrentTileCoord);
 }
 
 void AAG_BaseGridActor::Delete()

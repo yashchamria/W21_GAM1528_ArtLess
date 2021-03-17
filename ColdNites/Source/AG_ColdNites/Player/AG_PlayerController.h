@@ -3,29 +3,16 @@ Team - ArtLess Games - Section 010
 
 Name - Jonathan Sime
 
- Module:  Player Character, UI
+ Module:  Player Character
 
  Description -
 
-******************************************************************************************************************/
-
-/******************************************************************************************************************
+*******************************************************************************************************************
 Team - ArtLess Games - Section 010
 
 Name - Vrund Soni
 
- Module:  Player Character, UI
-
- Description -
-
-******************************************************************************************************************/
-
-/******************************************************************************************************************
-Team - ArtLess Games - Section 010
-
-Name - Xiyang Chen
-
- Module:  Player Character, UI
+ Module:  UI
 
  Description -
 
@@ -55,6 +42,11 @@ protected:
 	class AAG_TileMap* TileMap;
 	
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
+public:
+	void EnableGamePlayInput(bool GamePlayInput = true);
+	
+	void SetCanMove(bool canMove) { bCanPlayerMove = canMove; }
+	
 protected:
 
 	void MoveRight();
@@ -71,18 +63,15 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
-public:
-	void SetCanMove(bool canMove) { bCanPlayerMove = canMove; }
-///******************************************************************************************************************///
+
+private:
+	bool bGamePlayInput = true;
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 protected:
 	
 	void NextInventoryItem();
 	void PreviousInventoryItem();
-
-///******************************************************************************************************************///
-
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
 public:
@@ -97,7 +86,10 @@ public:
 
 	UUserWidget* ResOptionsMenu;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 	bool bPauseMenuVisible;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 	bool bResOptionsMenuVisible;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
@@ -107,18 +99,22 @@ public:
 		bool bCanPlayerMove;
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	void EnableUIInput(bool UIInput = true);
+
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HidePauseMenu();
 	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void ShowResOptionsMenu();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AG_Widgets")
+	UFUNCTION(BlueprintCallable, Category = "AG_Widgets")
 	void HideResOptionsMenu();
 
 	void ShowPauseMenu();
+
 	void TogglePauseMenu();
-	void Esc_KeyDown();
-	
-///******************************************************************************************************************///
+	void OnEscKeyPressed();
+
+private:
+	bool bUIInput = true;
 };

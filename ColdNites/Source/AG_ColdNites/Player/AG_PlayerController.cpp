@@ -4,14 +4,15 @@
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "AG_PlayableCharacter.h"
-#include "AG_ColdNites/Pickup/InventoryComponent.h"
-
 
 AAG_PlayerController::AAG_PlayerController()
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
 
+	bGamePlayInput = true;
+	bUIInput = true;
+	
 	bCanPlayerMove = false;
 }
 
@@ -33,7 +34,6 @@ void AAG_PlayerController::BeginPlay()
 	if (ResOptionsMenuTemplate)
 	{
 		ResOptionsMenu = CreateWidget<UUserWidget>(this, ResOptionsMenuTemplate);
-		ResOptionsMenu->AddToViewport();
 		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 
@@ -54,57 +54,91 @@ void AAG_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction("MoveForward", IE_Pressed, this, &AAG_PlayerController::MoveForward);
-	InputComponent->BindAction("MoveForward", IE_Released, this, &AAG_PlayerController::StopMove);
+	//if (bGamePlayInput)
+	{
+		InputComponent->BindAction("MoveForward", IE_Pressed, this, &AAG_PlayerController::MoveForward);
+		InputComponent->BindAction("MoveForward", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	InputComponent->BindAction("MoveBackward", IE_Pressed, this, &AAG_PlayerController::MoveBackward);
-	InputComponent->BindAction("MoveBackward", IE_Released, this, &AAG_PlayerController::StopMove);
+		InputComponent->BindAction("MoveBackward", IE_Pressed, this, &AAG_PlayerController::MoveBackward);
+		InputComponent->BindAction("MoveBackward", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	InputComponent->BindAction("MoveRight", IE_Pressed, this, &AAG_PlayerController::MoveRight);
-	InputComponent->BindAction("MoveRight", IE_Released, this, &AAG_PlayerController::StopMove);
+		InputComponent->BindAction("MoveRight", IE_Pressed, this, &AAG_PlayerController::MoveRight);
+		InputComponent->BindAction("MoveRight", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	InputComponent->BindAction("MoveLeft", IE_Pressed, this, &AAG_PlayerController::MoveLeft);
-	InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
+		InputComponent->BindAction("MoveLeft", IE_Pressed, this, &AAG_PlayerController::MoveLeft);
+		InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);
+		InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
+		InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);
 
-	InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
-	InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
+		InputComponent->BindAction("Next", IE_Pressed, this, &AAG_PlayerController::NextInventoryItem);
+		InputComponent->BindAction("Prev", IE_Pressed, this, &AAG_PlayerController::PreviousInventoryItem);
+	}
 
-	InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::Esc_KeyDown); 
+	//if(bUIInput)
+	{
+		InputComponent->BindAction("ESC", IE_Pressed, this, &AAG_PlayerController::OnEscKeyPressed);
+	}
 }
 
 void AAG_PlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
-
-	//disable mouse input if any menu is open
-	if (bPauseMenuVisible || bResOptionsMenuVisible)
-	{
-		bMoveToMouseCursor = false;
-	}
 }
 
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
+
+void AAG_PlayerController::EnableGamePlayInput(bool GamePlayInput)
+{
+	bGamePlayInput = GamePlayInput;
+}
+
 void AAG_PlayerController::MoveRight()
 {
-	if (Player && bCanPlayerMove) { Player->MoveRight(); bCanPlayerMove = false; }
+	if(bGamePlayInput)
+	{
+		if (Player && bCanPlayerMove)
+		{
+			Player->MoveRight();
+			bCanPlayerMove = false;
+		}
+	}
 }
 
 void AAG_PlayerController::MoveLeft()
 {
-	if (Player && bCanPlayerMove) { Player->MoveLeft(); bCanPlayerMove = false; }
+	if (bGamePlayInput)
+	{
+		if (Player && bCanPlayerMove)
+		{
+			Player->MoveLeft();
+			bCanPlayerMove = false;
+		}
+	}
 }
 
 void AAG_PlayerController::MoveForward()
 {
-	if (Player && bCanPlayerMove) { Player->MoveForward(); bCanPlayerMove = false; }
+	if (bGamePlayInput)
+	{
+		if (Player && bCanPlayerMove)
+		{
+			Player->MoveForward();
+			bCanPlayerMove = false;
+		}
+	}
 }
 
 void AAG_PlayerController::MoveBackward()
 {
-	if (Player && bCanPlayerMove) { Player->MoveBackward(); bCanPlayerMove = false; }
+	if (bGamePlayInput)
+	{
+		if (Player && bCanPlayerMove)
+		{
+			Player->MoveBackward();
+			bCanPlayerMove = false;
+		}
+	}
 }
 
 //Requires an Empty function to feed on KeyRelease after Player Movement
@@ -112,50 +146,68 @@ void AAG_PlayerController::StopMove(){}
 
 void AAG_PlayerController::MoveToMouseCursor()
 {
-	FHitResult Hit;
-	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-
-	if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player && bCanPlayerMove)
+	if (bGamePlayInput)
 	{
-		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
-		FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
+		FHitResult Hit;
+		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-		bool IsTileNeighbouring = TileMap->IsTileNeighbouring(TargetTileCoord, Player->GetActorLocation(), Player->GetActorForwardVector(), Player->GetActorRightVector());
-
-		if (IsTileNeighbouring)
+		if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player && bCanPlayerMove)
 		{
-			FVector TargetTileWorldPosition = TileMap->GetTileWorldPosition(TargetTileCoord);
-			FVector CurrentTileWorldPosition = TileMap->GetTileWorldPosition(CurrentTileCoord);
-			FVector TargetDirection = TargetTileWorldPosition - CurrentTileWorldPosition;
-			
-			Player->MoveTile(TargetDirection);
-			bCanPlayerMove = false;
+			FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
+			FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
+
+			bool IsTileNeighbouring = TileMap->IsTileNeighbouring(TargetTileCoord, Player->GetActorLocation(), Player->GetActorForwardVector(), Player->GetActorRightVector());
+
+			if (IsTileNeighbouring)
+			{
+				FVector TargetTileWorldPosition = TileMap->GetTileWorldPosition(TargetTileCoord);
+				FVector CurrentTileWorldPosition = TileMap->GetTileWorldPosition(CurrentTileCoord);
+				FVector TargetDirection = TargetTileWorldPosition - CurrentTileWorldPosition;
+
+				Player->MoveTile(TargetDirection);
+				bCanPlayerMove = false;
+			}
 		}
 	}
 }
-///******************************************************************************************************************///
 
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
+
 void AAG_PlayerController::NextInventoryItem()
 {
-	if(Player) { Player->NextInventoryItem(); }
+	if (bGamePlayInput)
+	{
+		if (Player)
+		{
+			Player->NextInventoryItem();
+		}
+	}
 }
 
 void AAG_PlayerController::PreviousInventoryItem()
 {
-	if (Player) { Player->PreviousInventoryItem(); }
+	if (bGamePlayInput)
+	{
+		if (Player)
+		{
+			Player->PreviousInventoryItem();
+		}
+	}
 }
-///******************************************************************************************************************///
-
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
 
-void AAG_PlayerController::Esc_KeyDown()
+void AAG_PlayerController::EnableUIInput(bool UIInput)
 {
-	/*if (GetWorld()->GetMapName() != L"UEDPIE_0_MainMenu")
+	bUIInput = UIInput;
+}
+
+void AAG_PlayerController::OnEscKeyPressed()
+{
+	if(bUIInput)
 	{
-	}*/
-	TogglePauseMenu();
+		TogglePauseMenu();
+	}
 }
 
 
@@ -165,19 +217,15 @@ void AAG_PlayerController::ShowPauseMenu()
 	{
 		bPauseMenuVisible = true;
 		PauseMenu->SetVisibility(ESlateVisibility::Visible);
-		DefaultMouseCursor = EMouseCursor::Default;
-		SetShowMouseCursor(true);
 	}
 }
 
-void AAG_PlayerController::HidePauseMenu_Implementation()
+void AAG_PlayerController::HidePauseMenu()
 {
 	if (PauseMenu)
 	{
 		bPauseMenuVisible = false;
 		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
-		DefaultMouseCursor = EMouseCursor::Crosshairs;
-		//SetShowMouseCursor(false);
 	}
 }
 
@@ -185,52 +233,39 @@ void AAG_PlayerController::TogglePauseMenu()
 {
 	if(bPauseMenuVisible)
 	{
-		HidePauseMenu_Implementation();
+		HidePauseMenu();
 	}
 	else
 	{
 		if(!bResOptionsMenuVisible)
 		{
-			//ShowPauseMenu();
-			if (PauseMenu)
-			{
-				bPauseMenuVisible = true;
-				PauseMenu->SetVisibility(ESlateVisibility::Visible);
-				DefaultMouseCursor = EMouseCursor::Default;
-				SetShowMouseCursor(true);
-			}
+			ShowPauseMenu();
 		}
 	}
 }
 
-void AAG_PlayerController::ShowResOptionsMenu_Implementation()
+void AAG_PlayerController::ShowResOptionsMenu()
 {
 	if (ResOptionsMenu)
 	{
-		bResOptionsMenuVisible = true;
-		ResOptionsMenu->SetVisibility(ESlateVisibility::Visible);
-
 		bPauseMenuVisible = false;
 		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 
-		DefaultMouseCursor = EMouseCursor::Default;
-		SetShowMouseCursor(true);
+		bResOptionsMenuVisible = true;
+		ResOptionsMenu->AddToViewport();
+		ResOptionsMenu->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 
-void AAG_PlayerController::HideResOptionsMenu_Implementation()
+void AAG_PlayerController::HideResOptionsMenu()
 {
 	if (ResOptionsMenu)
 	{
 		bResOptionsMenuVisible = false;
+		ResOptionsMenu->RemoveFromParent();
 		ResOptionsMenu->SetVisibility(ESlateVisibility::Hidden);
 
 		bPauseMenuVisible = true;
 		PauseMenu->SetVisibility(ESlateVisibility::Visible);
-
-		DefaultMouseCursor = EMouseCursor::Crosshairs;
-		SetShowMouseCursor(true);
 	}
 }
-
-///******************************************************************************************************************///

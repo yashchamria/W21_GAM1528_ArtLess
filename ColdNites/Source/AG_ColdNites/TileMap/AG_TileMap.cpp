@@ -1,6 +1,5 @@
 #include "AG_TileMap.h"
 #include "AG_Tile.h"
-#include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AAG_TileMap::AAG_TileMap()
