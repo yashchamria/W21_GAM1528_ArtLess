@@ -14,6 +14,10 @@ AAG_PlayerController::AAG_PlayerController()
 	bUIInput = true;
 	
 	bCanPlayerMove = false;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB3(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk_On_Tile'"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB3.Succeeded()) { WalkSound = USB3.Object; }
 }
 
 void AAG_PlayerController::BeginPlay()
@@ -86,6 +90,14 @@ void AAG_PlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 }
 
+void AAG_PlayerController::PlayWalkSound()
+{
+	if (WalkSound != nullptr)
+	{
+			UGameplayStatics::PlaySoundAtLocation(this, WalkSound, Player->GetActorLocation());	
+	}
+}
+
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 
 void AAG_PlayerController::EnableGamePlayInput(bool GamePlayInput)
@@ -101,6 +113,7 @@ void AAG_PlayerController::MoveRight()
 		{
 			Player->MoveRight();
 			bCanPlayerMove = false;
+			PlayWalkSound();
 		}
 	}
 }
@@ -113,6 +126,7 @@ void AAG_PlayerController::MoveLeft()
 		{
 			Player->MoveLeft();
 			bCanPlayerMove = false;
+			PlayWalkSound();
 		}
 	}
 }
@@ -125,6 +139,7 @@ void AAG_PlayerController::MoveForward()
 		{
 			Player->MoveForward();
 			bCanPlayerMove = false;
+			PlayWalkSound();
 		}
 	}
 }
@@ -137,6 +152,7 @@ void AAG_PlayerController::MoveBackward()
 		{
 			Player->MoveBackward();
 			bCanPlayerMove = false;
+			PlayWalkSound();
 		}
 	}
 }

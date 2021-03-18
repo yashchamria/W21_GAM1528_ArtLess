@@ -38,6 +38,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AG_Inventory")
 		class AAG_PickupActor* GetCurrentInventory() const;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Inventory_Sound")
+		class USoundBase* PickUpSound;
+
+	UPROPERTY(VisibleAnywhere, Category = "AG_Inventory_Sound")
+		class USoundBase* InventorySound;
+
 protected:
 	virtual void BeginPlay() override;
 

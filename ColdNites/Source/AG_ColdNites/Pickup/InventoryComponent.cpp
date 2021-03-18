@@ -7,6 +7,14 @@
 UInventoryComponent::UInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB1(TEXT("Pickup Sound '/Game/Audio/UnCategorize/PickUp'"));
+	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pickup Sound"));
+	if (USB1.Succeeded()) { PickUpSound = USB1.Object; }
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB2(TEXT("Inventory Sound '/Game/Audio/UnCategorize/Inventory_Switch'"));
+	InventorySound = CreateDefaultSubobject<USoundBase>(TEXT("Inventory Sound"));
+	if (USB2.Succeeded()) { InventorySound = USB2.Object; }
 }
 
 
@@ -14,6 +22,11 @@ void UInventoryComponent::AddToInventory(AAG_PickupActor* pickup)
 {
 	Inventory.AddUnique(pickup);
 	pickup->Disable();
+	AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
+	if (PickUpSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, OwningActor->GetActorLocation());
+	}
 }
 
 int UInventoryComponent::GetInventoryCount()
@@ -88,6 +101,10 @@ void UInventoryComponent::EquipNewInventoryItem(AAG_PickupActor* NewItem)
 
 		AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 		NewItem->AttachToComponent(OwningActor->ItemHolder, FAttachmentTransformRules::SnapToTargetIncludingScale, "AttachPoint");
+		if (InventorySound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, InventorySound, OwningActor->GetActorLocation());
+		}
 	}
 	CurrentInventoryItem = NewItem;
 }

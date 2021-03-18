@@ -98,6 +98,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
 		bool bCanPlayerMove;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Sound")
+		class USoundBase* WalkSound;
+
 public:
 	void EnableUIInput(bool UIInput = true);
 
@@ -114,6 +117,8 @@ public:
 
 	void TogglePauseMenu();
 	void OnEscKeyPressed();
+
+	void PlayWalkSound();
 
 private:
 	bool bUIInput = true;
