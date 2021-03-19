@@ -59,7 +59,7 @@ public:
 		bool IsStartTile = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool IsWalkable = true;
+		bool IsWalkable = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
 		bool IsTransportable = false;
