@@ -47,13 +47,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 ///---------------------------------------Character Setup----------------------------------------------------------///
-public:
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
-	//	class USceneComponent* BaseRootTransformation;
-	
+public:	
 	class AAG_TileMap* TileMap;
 
 	class AAG_ColdNitesGameModeBase* GameMode;
+	
 	
 	void MoveTile(FVector DirectionVector, uint32 TileLeap = 1);
 	void MoveForward();
@@ -72,7 +70,8 @@ public:
 	bool bRotate = false;
 	bool bKnockOut = false;
 	bool bDestroy = false;
-
+	
+	bool bIsReached = true;
 	bool bShouldRegister = true;
 	bool bShouldDestroy = true;
 

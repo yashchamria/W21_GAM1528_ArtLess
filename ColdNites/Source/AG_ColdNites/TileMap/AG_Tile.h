@@ -47,7 +47,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_TileComponents")
 		class UStaticMeshComponent* TileMesh;
 
-
 	//Tile Properties
 	UFUNCTION(CallInEditor, BlueprintCallable, Category = "AG_TileProperty")
 		void AutoConfigurePropertyToggle();
@@ -65,35 +64,11 @@ public:
 		bool IsTransportable = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool CanKill = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool HasPickup = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool HasTriggerEvent = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool IsCrackable = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool IsCracked = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
-		bool CanSlide = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
 		bool IsWinTile = false;
 
 	//Tile Aesthetics
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_TileAesthetic")
-		class UStaticMesh* NewTileMesh = nullptr;
-
 	UFUNCTION(CallInEditor, Category = "AG_TileAesthetic")
 		void RotateMesh();
-
-	UFUNCTION(CallInEditor, Category = "AG_TileAesthetic")
-		void RegenerateMesh();
 
 
 	void SetTileCoordinates(FIntPoint coord) { TileCoordinate.X = coord.X; TileCoordinate.Y = coord.Y; }
