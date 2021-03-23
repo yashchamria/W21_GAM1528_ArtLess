@@ -66,9 +66,11 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		if ((TargetDistance.X > ErrorRange || TargetDistance.X < -ErrorRange) || (TargetDistance.Y > ErrorRange || TargetDistance.Y < -ErrorRange))
 		{
 			AddMovementInput(TargetDirection);
+			bIsReached = false;
 		}
 		else
 		{
+			bIsReached = true;
 			bWalk = false;
 			GameMode->FinishTurn();
 		}

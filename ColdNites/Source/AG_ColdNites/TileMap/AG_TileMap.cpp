@@ -134,13 +134,7 @@ bool AAG_TileMap::GetTileProperty(FIntPoint TileCoord, AG_TileProperty TilePrope
 		if (TileProperty == AG_TileProperty::IsStartTile) { return Tiles[index]->IsStartTile; }
 		else if (TileProperty == AG_TileProperty::IsWalkable) { return Tiles[index]->IsWalkable; }
 		else if (TileProperty == AG_TileProperty::IsTransportable) { return Tiles[index]->IsTransportable; }
-		else if (TileProperty == AG_TileProperty::CanKill) { return Tiles[index]->CanKill; }
-		else if (TileProperty == AG_TileProperty::HasPickup) { return Tiles[index]->HasPickup; }
-		else if (TileProperty == AG_TileProperty::HasTriggerEvent) { return Tiles[index]->HasTriggerEvent; }
 		else if (TileProperty == AG_TileProperty::NullTile) { return Tiles[index]->NullTile; }
-		else if (TileProperty == AG_TileProperty::IsCrackable) { return Tiles[index]->IsCrackable; }
-		else if (TileProperty == AG_TileProperty::IsCracked) { return Tiles[index]->IsCracked; }
-		else if (TileProperty == AG_TileProperty::CanSlide) { return Tiles[index]->CanSlide; }
 		else if (TileProperty == AG_TileProperty::IsWinTile) { return Tiles[index]->IsWinTile; }
 	}
 	else
@@ -166,7 +160,6 @@ void AAG_TileMap::Register(AActor* Actor, FIntPoint TileCoord)
 }
 
 
-///WIP CODE------>
 void AAG_TileMap::UnRegister(AActor* Actor, FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);

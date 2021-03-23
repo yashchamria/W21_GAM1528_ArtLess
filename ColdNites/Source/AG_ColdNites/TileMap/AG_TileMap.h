@@ -20,16 +20,10 @@ Name - Yash Chamria
 UENUM()
 enum class AG_TileProperty : uint8
 {
+	NullTile			 UMETA(DisplayName = "NullTile"),
 	IsStartTile			 UMETA(DisplayName = "IsStartTile"),
 	IsWalkable			 UMETA(DisplayName = "IsWalkable"),
 	IsTransportable		 UMETA(DisplayName = "IsTransportable"),
-	CanKill				 UMETA(DisplayName = "CanKill"),
-	HasPickup			 UMETA(DisplayName = "HasPickup"),
-	HasTriggerEvent		 UMETA(DisplayName = "HasTriggerEvent"),
-	NullTile			 UMETA(DisplayName = "NullTile"),
-	IsCrackable			 UMETA(DisplayName = "IsCrackable"),
-	IsCracked			 UMETA(DisplayName = "IsCracked"),
-	CanSlide			 UMETA(DisplayName = "CanSlide"),
 	IsWinTile			 UMETA(DisplayName = "IsWinTile"),
 };
 
