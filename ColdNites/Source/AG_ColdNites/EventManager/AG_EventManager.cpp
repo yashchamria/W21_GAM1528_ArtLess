@@ -62,9 +62,12 @@ void AAG_EventManager::CameraSwitchEventUpdate()
 
 FName AAG_EventManager::GetSwitchCameraTag()
 {
-	if(TileMap && TileMap->IsTileCoordVaild(PlayerCurrentTileCoord))
+	if(TileMap)
 	{
-		return CurrentCameraTag;
+		if(TileMap->IsTileCoordVaild(PlayerCurrentTileCoord))
+		{
+			return CurrentCameraTag;
+		}
 	}
 	
 	return "None";

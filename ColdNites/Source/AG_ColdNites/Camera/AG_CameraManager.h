@@ -31,6 +31,9 @@ public:
 
 	UFUNCTION(CallInEditor, Category = "AG_CameraSetting")
 		void AddCamera();
+
+	UFUNCTION(CallInEditor, Category = "AG_CameraSetting")
+		void ClearAllCameras();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_CameraSetting")
 		TArray<class AAG_BaseCamera*> Cameras;
@@ -42,9 +45,9 @@ public:
 private:
 	FName CurrentCameraActorTag;
 	
-	class AAG_PlayerController* PlayerController;
-	
 	class AAG_EventManager* EventManager;
+	class AAG_PlayerController* PlayerController;
+	class AAG_UIController* UIController;
 	
 	void SwitchCamera(FName CameraActorTag, float blendTime = 1.0f);
 };

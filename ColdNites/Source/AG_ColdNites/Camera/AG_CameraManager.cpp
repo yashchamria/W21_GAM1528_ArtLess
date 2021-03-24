@@ -1,6 +1,7 @@
 #include "AG_CameraManager.h"
 #include "AG_BaseCamera.h"
 #include "AG_ColdNites/Player/AG_PlayerController.h"
+#include "AG_ColdNites/3DMenu/AG_UIController.h"
 #include "AG_ColdNites/EventManager/AG_EventManager.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -19,6 +20,7 @@ void AAG_CameraManager::BeginPlay()
 	//Getting PlayerController
 	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
+	if (CurrentController) { UIController = Cast<AAG_UIController>(CurrentController); }
 
 	//Getting EventManager
 	TArray<AActor*> EventManagerActor;
@@ -33,10 +35,13 @@ void AAG_CameraManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(CurrentCameraActorTag != EventManager->GetSwitchCameraTag())
+	if (EventManager)
 	{
-		CurrentCameraActorTag = EventManager->GetSwitchCameraTag();
-		SwitchCamera(CurrentCameraActorTag, CameraBlendTime);
+		if (CurrentCameraActorTag != EventManager->GetSwitchCameraTag())
+		{
+			CurrentCameraActorTag = EventManager->GetSwitchCameraTag();
+			SwitchCamera(CurrentCameraActorTag, CameraBlendTime);
+		}
 	}
 }
 
@@ -51,13 +56,29 @@ void AAG_CameraManager::AddCamera()
 	Cameras.Add(SpawnedCamera);
 }
 
+void AAG_CameraManager::ClearAllCameras()
+{
+	for (int i = 0; i < Cameras.Num(); i++)
+	{
+		Cameras[i]->Destroy();
+	}
+	Cameras.Empty();
+}
+
 void AAG_CameraManager::SwitchCamera(FName CameraActorTag, float blendTime)
 {
-	for(AAG_BaseCamera* CameraActor : Cameras)
+	for (AAG_BaseCamera* CameraActor : Cameras)
 	{
-		if(CameraActor->ActorHasTag(CameraActorTag))
+		if (CameraActor->ActorHasTag(CameraActorTag))
 		{
-			PlayerController->SetViewTargetWithBlend(CameraActor, blendTime);
+			if (PlayerController)
+			{
+				PlayerController->SetViewTargetWithBlend(CameraActor, blendTime);
+			}
+			if(UIController)
+			{
+				UIController->SetViewTargetWithBlend(CameraActor, blendTime);
+			}
 		}
 	}
 }
