@@ -48,8 +48,14 @@ public:
 		class UStaticMeshComponent* TileMesh;
 
 	//Tile Properties
+	UFUNCTION(CallInEditor, Category = "AG_TileProperty")
+		void RotateMesh();
+	
 	UFUNCTION(CallInEditor, BlueprintCallable, Category = "AG_TileProperty")
 		void AutoConfigurePropertyToggle();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty")
+		FName CameraActorTag;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty")
 		bool NullTile = false;
@@ -65,10 +71,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "!NullTile"))
 		bool IsWinTile = false;
-
-	//Tile Aesthetics
-	UFUNCTION(CallInEditor, Category = "AG_TileAesthetic")
-		void RotateMesh();
 
 
 	void SetTileCoordinates(FIntPoint coord) { TileCoordinate.X = coord.X; TileCoordinate.Y = coord.Y; }

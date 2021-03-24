@@ -22,8 +22,17 @@ private:
 	class AAG_TileMap* TileMap;
 	class AAG_PlayableCharacter* PlayerCharacter;
 	class AAG_PlayerController* PlayerController;
-
+	class AAG_CameraManager* CameraManager;
+	
 	FIntPoint PlayerCurrentTileCoord;
+
+//CameraSwitchEvent
+public:
+	FName GetSwitchCameraTag();
+	
+private:
+	FName CurrentCameraTag;
+	void CameraSwitchEventUpdate();
 
 //Win Event
 public:

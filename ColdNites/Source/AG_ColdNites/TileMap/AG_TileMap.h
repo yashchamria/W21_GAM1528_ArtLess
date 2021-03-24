@@ -84,6 +84,8 @@ public:
 
 	AG_TileInDirection GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor);
 
+	FName GetTileCameraTag(FIntPoint TileCoord);
+
 protected:
 	virtual void BeginPlay() override;
 

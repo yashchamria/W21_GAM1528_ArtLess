@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
+#include "AG_ColdNites/Camera/AG_CameraManager.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/Player/AG_PlayerController.h"
 
@@ -22,6 +23,11 @@ void AAG_EventManager::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_TileMap::StaticClass(), TileMapActor);
 	if (TileMapActor.Num() > 0) { TileMap = Cast<AAG_TileMap>(TileMapActor[0]); }
 
+	//Getting Camera Manager
+	TArray<AActor*> CameraManagerActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_CameraManager::StaticClass(), CameraManagerActor);
+	if (CameraManagerActor.Num() > 0) { CameraManager = Cast<AAG_CameraManager>(CameraManagerActor[0]); }
+	
 	//Getting Player
 	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
@@ -41,8 +47,27 @@ void AAG_EventManager::Tick(float DeltaTime)
 
 	PlayerCurrentTileCoord = TileMap->GetTileCoord(PlayerCharacter->GetActorLocation());
 
+	CameraSwitchEventUpdate();
 	LevelWonEventUpdate(DeltaTime);
 	LevelLoseEventUpdate(DeltaTime);
+}
+
+void AAG_EventManager::CameraSwitchEventUpdate()
+{
+	if (PlayerCharacter->bIsReached)
+	{
+		CurrentCameraTag = TileMap->GetTileCameraTag(PlayerCurrentTileCoord);
+	}
+}
+
+FName AAG_EventManager::GetSwitchCameraTag()
+{
+	if(TileMap && TileMap->IsTileCoordVaild(PlayerCurrentTileCoord))
+	{
+		return CurrentCameraTag;
+	}
+	
+	return "None";
 }
 
 void AAG_EventManager::LevelWonEventInit()

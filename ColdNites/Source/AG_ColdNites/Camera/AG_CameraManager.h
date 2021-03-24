@@ -30,5 +30,17 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_CameraComponent")
-		TArray<class AActor*> Cameras;
+		TArray<class AAG_BaseCamera*> Cameras;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_CameraSetting")
+	float CameraBlendTime = 1.0f;
+	
+private:
+	FName CurrentCameraActorTag;
+	
+	class AAG_PlayerController* PlayerController;
+	
+	class AAG_EventManager* EventManager;
+	
+	void SwitchCamera(FName CameraActorTag);
 };

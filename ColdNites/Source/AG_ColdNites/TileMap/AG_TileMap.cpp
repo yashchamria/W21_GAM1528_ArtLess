@@ -243,6 +243,17 @@ AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint NextTileCoord, AAct
 	return AG_TileInDirection::TileAtInvalidDirection;
 }
 
+FName AAG_TileMap::GetTileCameraTag(FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		return Tiles[TileIndex]->CameraActorTag;
+	}
+	return "None";
+}
+
 //Future Possibility
 
 //void Restore // Restore previous tileMap

@@ -8,14 +8,14 @@ AAG_BaseCamera::AAG_BaseCamera()
 
 	DefaultCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Default Camera Arm"));
 	DefaultCameraArm->SetUsingAbsoluteRotation(true);
-	DefaultCameraArm->TargetArmLength = 4500.f;
+	DefaultCameraArm->TargetArmLength = 900.f;
 	DefaultCameraArm->bDoCollisionTest = false;
 
 	DefaultCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Default Camera"));
 	DefaultCamera->SetupAttachment(DefaultCameraArm, USpringArmComponent::SocketName);
 	DefaultCamera->bUsePawnControlRotation = false;
 	DefaultCamera->bConstrainAspectRatio = true;
-	DefaultCamera->SetFieldOfView(30.0f);
+	DefaultCamera->SetFieldOfView(90.0f);
 	//DefaultCamera->SetProjectionMode(ECameraProjectionMode::Orthographic); ---> Down the line will not allow many postprocessing effects and depth effect
 	Tags.Add("Camera");
 }
