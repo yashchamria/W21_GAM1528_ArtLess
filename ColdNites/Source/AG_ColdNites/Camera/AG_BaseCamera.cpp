@@ -17,7 +17,7 @@ AAG_BaseCamera::AAG_BaseCamera()
 	DefaultCamera->bConstrainAspectRatio = true;
 	DefaultCamera->SetFieldOfView(90.0f);
 	//DefaultCamera->SetProjectionMode(ECameraProjectionMode::Orthographic); ---> Down the line will not allow many postprocessing effects and depth effect
-	Tags.Add("Camera");
+	Tags.Add("Camera00");
 }
 
 void AAG_BaseCamera::BeginPlay()

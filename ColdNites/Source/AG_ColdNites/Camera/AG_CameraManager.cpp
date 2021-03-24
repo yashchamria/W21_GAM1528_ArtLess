@@ -16,18 +16,6 @@ void AAG_CameraManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Getting all the Camera actors.
-	TArray<AActor*> CameraActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_BaseCamera::StaticClass(), CameraActors);
-
-	if (CameraActors.Num() > 0)
-	{
-		for (int i = 0; i < CameraActors.Num(); i++)
-		{
-			Cameras.Insert(Cast<AAG_BaseCamera>(CameraActors[i]), i);
-		}
-	}
-
 	//Getting PlayerController
 	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
@@ -37,8 +25,8 @@ void AAG_CameraManager::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_EventManager::StaticClass(), EventManagerActor);
 	if (EventManagerActor.Num() > 0) { EventManager = Cast<AAG_EventManager>(EventManagerActor[0]); }
 	
-	CurrentCameraActorTag = "Camera01";
-	SwitchCamera(CurrentCameraActorTag);
+	CurrentCameraActorTag = "Camera00";
+	SwitchCamera(CurrentCameraActorTag, 0);
 }
 
 void AAG_CameraManager::Tick(float DeltaTime)
@@ -48,17 +36,28 @@ void AAG_CameraManager::Tick(float DeltaTime)
 	if(CurrentCameraActorTag != EventManager->GetSwitchCameraTag())
 	{
 		CurrentCameraActorTag = EventManager->GetSwitchCameraTag();
-		SwitchCamera(CurrentCameraActorTag);
+		SwitchCamera(CurrentCameraActorTag, CameraBlendTime);
 	}
 }
 
-void AAG_CameraManager::SwitchCamera(FName CameraActorTag)
+void AAG_CameraManager::AddCamera()
+{
+	FActorSpawnParameters CameraParams;
+	AAG_BaseCamera* SpawnedCamera = GetWorld()->SpawnActor<AAG_BaseCamera>(FVector::ZeroVector, FRotator::ZeroRotator, CameraParams);
+
+	FAttachmentTransformRules TileTransformRules(EAttachmentRule::KeepWorld, true);
+	SpawnedCamera->AttachToActor(this, TileTransformRules);
+
+	Cameras.Add(SpawnedCamera);
+}
+
+void AAG_CameraManager::SwitchCamera(FName CameraActorTag, float blendTime)
 {
 	for(AAG_BaseCamera* CameraActor : Cameras)
 	{
 		if(CameraActor->ActorHasTag(CameraActorTag))
 		{
-			PlayerController->SetViewTargetWithBlend(CameraActor, CameraBlendTime);
+			PlayerController->SetViewTargetWithBlend(CameraActor, blendTime);
 		}
 	}
 }
