@@ -21,10 +21,10 @@ UENUM()
 enum class AG_TileProperty : uint8
 {
 	NullTile			 UMETA(DisplayName = "NullTile"),
-	IsStartTile			 UMETA(DisplayName = "IsStartTile"),
-	IsWalkable			 UMETA(DisplayName = "IsWalkable"),
-	IsTransportable		 UMETA(DisplayName = "IsTransportable"),
-	IsWinTile			 UMETA(DisplayName = "IsWinTile"),
+	IsStartTile			 UMETA(DisplayName = "StartTile"),
+	IsWalkable			 UMETA(DisplayName = "Walkable"),
+	IsTransportable		 UMETA(DisplayName = "Transportable"),
+	IsWinTile			 UMETA(DisplayName = "WinTile"),
 };
 
 UENUM()
@@ -85,7 +85,8 @@ public:
 	AG_TileInDirection GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor);
 
 	FName GetTileCameraTag(FIntPoint TileCoord);
-
+	FIntPoint GetStartTileCoord();
+	
 protected:
 	virtual void BeginPlay() override;
 

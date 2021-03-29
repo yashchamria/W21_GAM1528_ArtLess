@@ -151,22 +151,28 @@ uint32 AAG_TileMap::GetArrayIndexFromCoord(FIntPoint TileCoord)
 
 void AAG_TileMap::Register(AActor* Actor, FIntPoint TileCoord)
 {
-	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
-
-	if (Tiles.Num() > 0)
+	if (IsTileCoordVaild(TileCoord))
 	{
-		Tiles[TileIndex]->Register(Actor);
+		const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+		if (Tiles.Num() > 0)
+		{
+			Tiles[TileIndex]->Register(Actor);
+		}
 	}
 }
 
 
 void AAG_TileMap::UnRegister(AActor* Actor, FIntPoint TileCoord)
 {
-	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
-
-	if (Tiles.IsValidIndex(TileIndex))
+	if (IsTileCoordVaild(TileCoord))
 	{
-		Tiles[TileIndex]->UnRegister(Actor);
+		const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+		if (Tiles.IsValidIndex(TileIndex))
+		{
+			Tiles[TileIndex]->UnRegister(Actor);
+		}
 	}
 }
 
@@ -252,6 +258,20 @@ FName AAG_TileMap::GetTileCameraTag(FIntPoint TileCoord)
 		return Tiles[TileIndex]->CameraActorTag;
 	}
 	return "None";
+}
+
+FIntPoint AAG_TileMap::GetStartTileCoord()
+{
+	for(AAG_Tile* Tile : Tiles)
+	{
+		if(Tile->IsStartTile)
+		{
+			return Tile->TileCoordinate;
+		}
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "No StartTile Found!");
+	return (-1, -1);
 }
 
 //Future Possibility

@@ -2,6 +2,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
+#include "Engine/StaticMeshActor.h"
 
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "AG_ColdNites/Camera/AG_CameraManager.h"
@@ -31,11 +32,28 @@ void AAG_EventManager::BeginPlay()
 	//Getting Player
 	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
+	
+	if(PlayerCharacter && TileMap)
+	{
+		FVector PlayerStartLocation = TileMap->GetTileWorldPosition(TileMap->GetStartTileCoord());
+		PlayerCharacter->SetActorLocation(PlayerStartLocation);
+	}
 
 	//Getting PlayerController
 	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
 
+	TArray<AActor*> AllStaticMeshActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStaticMeshActor::StaticClass(), AllStaticMeshActor);
+	if (AllStaticMeshActor.Num() > 0)
+	{
+		for (AActor* StaticMeshActor : AllStaticMeshActor)
+		{
+			StaticMeshActor->SetActorEnableCollision(false);
+			StaticMeshActor->UpdateOverlaps(false);
+		}
+	}
+	
 	//Event Inits
 	LevelWonEventInit();
 	LevelLoseEventInit();
