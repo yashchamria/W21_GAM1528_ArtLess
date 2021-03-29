@@ -36,9 +36,8 @@ public:
 	void MoveForward();
 	void MoveBackward();
 
-	bool bIsPlayerInRange = false;
+	bool bIsPlayerInRange(uint32 TileRange = 1);
 	bool IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange);
-	void DetectPlayer(uint32 TileRange = 1);
 	void KnockOutPlayer(FVector ForwardDirection);
 
 	bool bIsAITurn = false;

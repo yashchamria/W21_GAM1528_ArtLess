@@ -87,26 +87,34 @@ bool AAG_AIBaseGridCharacter::IsActorInRange(FName ActorTag, FVector InDirection
 	return false;
 }
 
-void AAG_AIBaseGridCharacter::DetectPlayer(uint32 TileRange)
+bool AAG_AIBaseGridCharacter::bIsPlayerInRange(uint32 TileRange)
 {
 	for (uint32 i = 1; i <= TileRange; i++)
 	{
 		if (IsActorInRange("AG_PlayableCharacter", GetActorForwardVector(), i))
 		{
-			bIsPlayerInRange = true;
-			break;
+			return true;
 		}
-		bIsPlayerInRange = false;
 	}
+	return false;
 }
 
 void AAG_AIBaseGridCharacter::KnockOutPlayer(FVector ForwardDirection)
 {
-	MoveForward();
-	PlayerCharacter->KnockOut(ForwardDirection);
-	PlayerController->EnableGamePlayInput(false);
+	if (PlayerCharacter->bIsReached)
+	{
+		MoveForward();
 
-	GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "Player Caught !!!");
+		AAG_AIBaseGridCharacter* AICharacter = Cast<AAG_AIBaseGridCharacter>(GetInstigator());
+		
+		if (AICharacter->bIsReached)
+		{
+			PlayerCharacter->KnockOut(ForwardDirection);
+			PlayerController->EnableGamePlayInput(false);
+
+			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "Player Caught !!!");
+		}
+	}
 }
 
 void AAG_AIBaseGridCharacter::ResetOnTurnEnd()

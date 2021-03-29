@@ -14,9 +14,13 @@ AAG_BaseCamera::AAG_BaseCamera()
 	DefaultCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Default Camera"));
 	DefaultCamera->SetupAttachment(DefaultCameraArm, USpringArmComponent::SocketName);
 	DefaultCamera->bUsePawnControlRotation = false;
+	
 	DefaultCamera->bConstrainAspectRatio = true;
 	DefaultCamera->SetFieldOfView(90.0f);
-	//DefaultCamera->SetProjectionMode(ECameraProjectionMode::Orthographic); ---> Down the line will not allow many postprocessing effects and depth effect
+
+	DefaultCamera->PostProcessSettings.AutoExposureMinBrightness = 1.2f;
+	DefaultCamera->PostProcessSettings.AutoExposureMaxBrightness = 1.2f;
+	
 	Tags.Add("Camera00");
 }
 
