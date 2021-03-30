@@ -1,7 +1,7 @@
 #include "AG_AITurnManager.h"
 
 #include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
-#include "AG_ColdNites/BaseGridClasses/AG_AIBaseGridCharacter.h"
+#include "AG_ColdNites/AI/AG_AIBaseGridCharacter.h"
 
 AAG_AITurnManager::AAG_AITurnManager()
 {

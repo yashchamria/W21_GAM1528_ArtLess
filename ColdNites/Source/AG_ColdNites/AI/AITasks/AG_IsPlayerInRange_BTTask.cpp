@@ -1,6 +1,6 @@
 #include "AG_IsPlayerInRange_BTTask.h"
 #include "AG_ColdNites/AI/AG_BaseGridAIController.h"
-#include "AG_ColdNites/BaseGridClasses/AG_AIBaseGridCharacter.h"
+#include "AG_ColdNites/AI/AG_AIBaseGridCharacter.h"
 
 UAG_IsPlayerInRange_BTTask::UAG_IsPlayerInRange_BTTask()
 {

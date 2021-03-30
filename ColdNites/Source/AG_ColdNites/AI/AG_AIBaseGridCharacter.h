@@ -44,4 +44,17 @@ public:
 	bool bIsMyTurn = false;
 
 	virtual void ResetOnTurnEnd() override;
+
+
+//Patrol AI variables
+public:
+	uint8 PatrolIndex = 0;
+
+	FIntPoint CurrentPatrolTileCoord;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_PatrolProperty")
+		bool CanPatrol = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_PatrolProperty", meta = (EditCondition = "CanPatrol"))
+		TArray<FIntPoint> PatrolTileCoords;
 };
