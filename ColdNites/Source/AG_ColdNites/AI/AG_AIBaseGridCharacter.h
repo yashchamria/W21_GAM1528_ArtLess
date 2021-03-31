@@ -43,7 +43,7 @@ public:
 //Patrol AI variables
 public:
 	uint8 PatrolIndex = 0;
-
+	
 	FIntPoint CurrentPatrolTileCoord;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_PatrolProperty")

@@ -155,6 +155,7 @@ void AAG_PlayerController::StopMove()
 		{
 			if (Player->bIsMyTurn && Player->bMoveSucceeded)
 			{
+				PlayerTurnCount++;
 				Player->bIsMyTurn = false;
 			}
 		}

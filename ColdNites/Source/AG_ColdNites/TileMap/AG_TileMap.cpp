@@ -219,34 +219,90 @@ AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
 	return nullptr;
 }
 
-AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor)
+AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor, uint32 TileLeap)
 {
-	if (!IsTileCoordVaild(NextTileCoord))
-	{
-		return AG_TileInDirection::TileAtInvalidDirection;
-	}
-
-	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorForwardVector()) == NextTileCoord)
+	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorForwardVector(), TileLeap) == NextTileCoord)
 	{
 		return AG_TileInDirection::TileAtForward;
 	}
 
-	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorForwardVector()) == NextTileCoord)
+	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorForwardVector(), TileLeap) == NextTileCoord)
 	{
 		return AG_TileInDirection::TileAtBackward;
 	}
 
-	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorRightVector()) == NextTileCoord)
+	if (GetNextTileCoord(Actor->GetActorLocation(), Actor->GetActorRightVector(), TileLeap) == NextTileCoord)
 	{
 		return AG_TileInDirection::TileAtRight;
 	}
 
-	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorRightVector()) == NextTileCoord)
+	if (GetNextTileCoord(Actor->GetActorLocation(), -Actor->GetActorRightVector(), TileLeap) == NextTileCoord)
 	{
 		return AG_TileInDirection::TileAtLeft;
 	}
 
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "Invalid Tile Direction");
 	return AG_TileInDirection::TileAtInvalidDirection;
+}
+
+AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint CurrentTileCoord, FIntPoint NextTileCoord, FVector ForwardVector)
+{
+	AG_TileInDirection TileDirection;
+	
+	if(CurrentTileCoord.X == NextTileCoord.X)
+	{
+		if (CurrentTileCoord.Y < NextTileCoord.Y)
+		{
+			//in +ve Y Axis
+			TileDirection = AG_TileInDirection::TileAtLeft;
+		}
+		else
+		{
+			//in -ve Y Axis
+			TileDirection = AG_TileInDirection::TileAtRight;
+		}
+	}
+
+	if (CurrentTileCoord.Y == NextTileCoord.Y)
+	{
+		if (CurrentTileCoord.X < NextTileCoord.X)
+		{
+			//in +ve X Axis
+			TileDirection = AG_TileInDirection::TileAtForward;
+		}
+		else
+		{
+			//in -ve X Axis
+			TileDirection = AG_TileInDirection::TileAtBackward;
+		}
+	}
+
+	if(FVector::DotProduct(FVector::ForwardVector, ForwardVector) > 0.5f)
+	{
+		return TileDirection;
+	}
+
+	if(FVector::DotProduct(FVector::ForwardVector, ForwardVector) < - 0.5f)
+	{
+			 if (TileDirection == AG_TileInDirection::TileAtForward) { TileDirection = AG_TileInDirection::TileAtBackward; }
+		else if (TileDirection == AG_TileInDirection::TileAtBackward) { TileDirection = AG_TileInDirection::TileAtForward; }
+		else if (TileDirection == AG_TileInDirection::TileAtRight) { TileDirection = AG_TileInDirection::TileAtLeft; }
+		else if (TileDirection == AG_TileInDirection::TileAtLeft) { TileDirection = AG_TileInDirection::TileAtRight; }
+	}
+
+	if (FVector::DotProduct(FVector::ForwardVector, ForwardVector) == 0.0f)
+	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "Perpendicular");
+
+		//if (TileDirection == AG_TileInDirection::TileAtForward) { TileDirection = AG_TileInDirection::TileAtBackward; }
+		//else if (TileDirection == AG_TileInDirection::TileAtBackward) { TileDirection = AG_TileInDirection::TileAtForward; }
+		//else if (TileDirection == AG_TileInDirection::TileAtRight) { TileDirection = AG_TileInDirection::TileAtLeft; }
+		//else if (TileDirection == AG_TileInDirection::TileAtLeft) { TileDirection = AG_TileInDirection::TileAtRight; }
+	}
+	
+	return TileDirection;
+	
 }
 
 FName AAG_TileMap::GetTileCameraTag(FIntPoint TileCoord)

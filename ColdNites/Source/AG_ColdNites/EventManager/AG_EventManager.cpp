@@ -54,7 +54,6 @@ void AAG_EventManager::BeginPlay()
 
 	
 	//Event Inits
-	
 	SetDecorMeshProperty();
 	SetPlayerIntialTile();
 	SetFirstTurn(AG_TurnState::IsPlayerTurn);

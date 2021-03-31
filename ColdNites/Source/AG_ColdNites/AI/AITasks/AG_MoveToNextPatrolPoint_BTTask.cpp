@@ -23,6 +23,7 @@ EBTNodeResult::Type UAG_MoveToNextPatrolPoint_BTTask::ExecuteTask(UBehaviorTreeC
 	{
 		if (AICharacter->PatrolTileCoords.Num() > 0)
 		{
+			//For Movement
 			if ((AICharacter->PatrolIndex) < (AICharacter->PatrolTileCoords.Num() - 1))
 			{
 				AICharacter->PatrolIndex++;
@@ -34,25 +35,32 @@ EBTNodeResult::Type UAG_MoveToNextPatrolPoint_BTTask::ExecuteTask(UBehaviorTreeC
 			
 			AICharacter->CurrentPatrolTileCoord = AICharacter->PatrolTileCoords[AICharacter->PatrolIndex];
 
-			if (AG_TileInDirection::TileAtForward == AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter))
+			//Handles Movement
+			AG_TileInDirection PatrolDirection = AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter);
+
+			switch(PatrolDirection)
 			{
+			case AG_TileInDirection::TileAtForward:
 				AICharacter->MoveForward();
-			}
-			else if (AG_TileInDirection::TileAtBackward == AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter))
-			{
+				break;
+
+			case AG_TileInDirection::TileAtBackward:
 				AICharacter->MoveBackward();
-			}
-			else if (AG_TileInDirection::TileAtRight == AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter))
-			{
-				AICharacter->MoveRight();
-			}
-			else if (AG_TileInDirection::TileAtLeft == AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter))
-			{
+				AICharacter->Rotate(180);
+				break;
+
+			case AG_TileInDirection::TileAtLeft:
 				AICharacter->MoveLeft();
-			}
-			else if (AG_TileInDirection::TileAtInvalidDirection == AICharacter->TileMap->GetTileInDirection(AICharacter->CurrentPatrolTileCoord, AICharacter))
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0, FColor::Orange, "InValid Patrol Direction");
+				AICharacter->Rotate(-90);
+				break;
+
+			case AG_TileInDirection::TileAtRight:
+				AICharacter->MoveRight();
+				AICharacter->Rotate(90);
+				break;
+
+			default:
+				GEngine->AddOnScreenDebugMessage(-1, 10.0, FColor::Red, "InValid Patrol Direction");
 			}
 		}
 	}

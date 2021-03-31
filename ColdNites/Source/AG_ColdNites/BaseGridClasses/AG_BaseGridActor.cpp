@@ -3,6 +3,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
+#include "AG_ColdNites/Player/AG_PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
 AAG_BaseGridActor::AAG_BaseGridActor()
@@ -34,6 +35,10 @@ void AAG_BaseGridActor::PostInitializeComponents()
 		CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 		TileMap->Register(this, CurrentTileCoord);
 	}
+
+	//Getting PlayerController
+	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
 
 	if (bAutoRepositionToTileCenter) { AutoRepositionToTileCenter(); }
 }

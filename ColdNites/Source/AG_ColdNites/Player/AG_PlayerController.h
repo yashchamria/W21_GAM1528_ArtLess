@@ -114,4 +114,11 @@ public:
 
 private:
 	bool bUIInput = true;
+
+	//----------Turn Count-------//
+
+	uint32 PlayerTurnCount = 0;
+
+public:
+	FORCEINLINE uint32 GetPlayerTurnCount() { return PlayerTurnCount; }
 };

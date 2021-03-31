@@ -41,11 +41,13 @@ public:
 
 	class AAG_TileMap* TileMap;
 	class AAG_PlayableCharacter* PlayerCharacter;
+	class AAG_PlayerController* PlayerController;
 
 	FIntPoint CurrentTileCoord;
 	FVector TargetTileWorldLocation;
 
 	bool bAutoRepositionToTileCenter = true;
+	
 protected:
 	virtual void BeginPlay() override;
 
