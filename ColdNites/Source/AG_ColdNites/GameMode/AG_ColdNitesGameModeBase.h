@@ -17,15 +17,12 @@ Name - Jonathan Sime
 #include "GameFramework/GameModeBase.h"
 #include "AG_ColdNitesGameModeBase.generated.h"
 
-class AAG_PlayerController;
-
-enum TurnState : uint32
+//Turn System.
+enum AG_TurnState : uint32
 {
-	IsPendingNewTurn    UMETA(DisplayName = "IsPendingNewTurn"),
-	IsNewTurn			UMETA(DisplayName = "IsNewTurn"),
+	IdleTurn			UMETA(DisplayName = "IdleTurn"),
 	IsPlayerTurn		UMETA(DisplayName = "IsPlayerTurn"),
 	IsAITurn			UMETA(DisplayName = "IsAITurn"),
-	IsEndTurn			UMETA(DisplayName = "IsEndTurn"),
 };
 
 
@@ -34,24 +31,14 @@ class AG_COLDNITES_API AAG_ColdNitesGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-private:
-
-	int TurnState;
-
-	AAG_PlayerController* PlayerController;
-
 public:
 	AAG_ColdNitesGameModeBase();
 
-	virtual void BeginPlay() override;
-	
-	void FinishTurn();
+//Turn System.
+private:
+	AG_TurnState CurrentTurnState;
 
-	void NewTurn();
-	
-	void EndTurn();
-
-	void AllowPlayerMove();
-	
-	int GetTurnState() { return TurnState; }
+public:
+	void SetCurrentTurnState(AG_TurnState NewTurnState) { CurrentTurnState = NewTurnState; }
+	FORCEINLINE AG_TurnState GetCurrentTurnState() { return CurrentTurnState; }
 };

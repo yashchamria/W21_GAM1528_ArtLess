@@ -40,12 +40,6 @@ public:
 	bool IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange);
 	void KnockOutPlayer(FVector ForwardDirection);
 
-	bool bIsAITurn = false;
-	bool bIsMyTurn = false;
-
-	virtual void ResetOnTurnEnd() override;
-
-
 //Patrol AI variables
 public:
 	uint8 PatrolIndex = 0;

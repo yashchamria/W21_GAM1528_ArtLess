@@ -4,7 +4,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/Player/AG_PlayerController.h"
-#include "AG_ColdNites/AI/AG_AITurnManager.h"
 
 AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
 {
@@ -27,31 +26,11 @@ void AAG_AIBaseGridCharacter::BeginPlay()
 	//Getting PlayerController
 	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }
-
-	//Getting AIManager
-	TArray<AActor*> AIActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_AITurnManager::StaticClass(), AIActor);
-	if (AIActor.Num() > 0)
-	{
-		AITurnManager = Cast<AAG_AITurnManager>(AIActor[0]);
-	}
-
-	AITurnManager->RegisterToAIManager(this);
 }
 
 void AAG_AIBaseGridCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (GameMode->GetTurnState() == TurnState::IsAITurn)
-	{
-		bIsAITurn = true;
-	}
-	else
-	{
-		bIsAITurn = false;
-		ResetOnTurnEnd();
-	}
 }
 
 void AAG_AIBaseGridCharacter::MoveRight()
@@ -115,11 +94,4 @@ void AAG_AIBaseGridCharacter::KnockOutPlayer(FVector ForwardDirection)
 			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "Player Caught !!!");
 		}
 	}
-}
-
-void AAG_AIBaseGridCharacter::ResetOnTurnEnd()
-{
-	Super::ResetOnTurnEnd();
-
-	bIsMyTurn = true;
 }

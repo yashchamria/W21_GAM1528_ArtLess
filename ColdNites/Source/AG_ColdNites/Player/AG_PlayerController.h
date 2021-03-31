@@ -47,11 +47,6 @@ protected:
 public:
 	void EnableGamePlayInput(bool GamePlayInput = true);
 	
-	UPROPERTY(BlueprintReadOnly, Category = "Movement")
-		bool bCanPlayerMove;
-
-	void SetCanMove(bool canMove) { bCanPlayerMove = canMove; }
-	
 protected:
 
 	void MoveRight();

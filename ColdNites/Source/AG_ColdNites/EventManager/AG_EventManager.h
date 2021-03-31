@@ -4,6 +4,8 @@
 #include "GameFramework/Actor.h"
 #include "AG_EventManager.generated.h"
 
+enum AG_TurnState : unsigned;
+
 UCLASS()
 class AG_COLDNITES_API AAG_EventManager : public AActor
 {
@@ -20,12 +22,27 @@ public:
 
 private:
 	class AAG_TileMap* TileMap;
+	class AAG_ColdNitesGameModeBase* GameMode;
 	class AAG_PlayableCharacter* PlayerCharacter;
 	class AAG_PlayerController* PlayerController;
 	class AAG_CameraManager* CameraManager;
-	
+	TArray<class AAG_AIBaseGridCharacter*> AICharacters;
+
 	FIntPoint PlayerCurrentTileCoord;
 
+//Miscellaneous Events
+	void SetPlayerIntialTile();
+	void SetDecorMeshProperty();
+	
+//Turn Events
+	void SetFirstTurn(AG_TurnState NewTurnState);
+	void SwitchTurnStateUpdate();
+	void ChangeTurnState(AG_TurnState NewTurnState);
+	bool CheckIsAITurnOver();
+	void SetPlayerTurnEvent();
+	void SetAITurnEvent();
+	void SetIdleTurnEvent();
+	
 //CameraSwitchEvent
 public:
 	FName GetSwitchCameraTag();

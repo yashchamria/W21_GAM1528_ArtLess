@@ -1,6 +1,5 @@
 #include "AG_BaseGridCharacter.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
-#include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
@@ -48,8 +47,6 @@ void AAG_BaseGridCharacter::PostInitializeComponents()
 void AAG_BaseGridCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GameMode = Cast<AAG_ColdNitesGameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
 void AAG_BaseGridCharacter::Tick(float DeltaTime)
@@ -60,6 +57,8 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 
 	if (bWalk)
 	{
+		bMoveSucceeded = true;
+		
 		TargetDistance.X = TargetTileWorldLocation.X - GetActorLocation().X;
 		TargetDistance.Y = TargetTileWorldLocation.Y - GetActorLocation().Y;
 
@@ -72,7 +71,7 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		{
 			bIsReached = true;
 			bWalk = false;
-			GameMode->FinishTurn();
+			//GameMode->FinishTurn();
 		}
 	}
 
@@ -233,4 +232,5 @@ void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
 void AAG_BaseGridCharacter::ResetOnTurnEnd()
 {
 	bAlreadyRotated = false;
+	bMoveSucceeded = false;
 }

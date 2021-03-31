@@ -50,8 +50,7 @@ public:
 public:	
 	class AAG_TileMap* TileMap;
 
-	class AAG_ColdNitesGameModeBase* GameMode;
-	
+	bool bIsMyTurn = false;
 	
 	void MoveTile(FVector DirectionVector, uint32 TileLeap = 1);
 	void MoveForward();
@@ -72,6 +71,8 @@ public:
 	bool bDestroy = false;
 	
 	bool bIsReached = true;
+	bool bMoveSucceeded = false;
+	
 	bool bShouldRegister = true;
 	bool bShouldDestroy = true;
 

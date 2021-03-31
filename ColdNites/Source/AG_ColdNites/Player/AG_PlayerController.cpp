@@ -12,8 +12,6 @@ AAG_PlayerController::AAG_PlayerController()
 
 	bGamePlayInput = true;
 	bUIInput = true;
-	
-	bCanPlayerMove = false;
 }
 
 void AAG_PlayerController::BeginPlay()
@@ -97,10 +95,12 @@ void AAG_PlayerController::MoveRight()
 {
 	if(bGamePlayInput)
 	{
-		if (Player && bCanPlayerMove)
+		if (Player)
 		{
-			Player->MoveRight();
-			bCanPlayerMove = false;
+			if (Player->bIsMyTurn)
+			{
+				Player->MoveRight();
+			}
 		}
 	}
 }
@@ -109,10 +109,12 @@ void AAG_PlayerController::MoveLeft()
 {
 	if (bGamePlayInput)
 	{
-		if (Player && bCanPlayerMove)
+		if (Player)
 		{
-			Player->MoveLeft();
-			bCanPlayerMove = false;
+			if (Player->bIsMyTurn)
+			{
+				Player->MoveLeft();
+			}
 		}
 	}
 }
@@ -121,10 +123,12 @@ void AAG_PlayerController::MoveForward()
 {
 	if (bGamePlayInput)
 	{
-		if (Player && bCanPlayerMove)
+		if (Player)
 		{
-			Player->MoveForward();
-			bCanPlayerMove = false;
+			if (Player->bIsMyTurn)
+			{
+				Player->MoveForward();
+			}
 		}
 	}
 }
@@ -133,16 +137,29 @@ void AAG_PlayerController::MoveBackward()
 {
 	if (bGamePlayInput)
 	{
-		if (Player && bCanPlayerMove)
+		if (Player)
 		{
-			Player->MoveBackward();
-			bCanPlayerMove = false;
+			if (Player->bIsMyTurn)
+			{
+				Player->MoveBackward();
+			}
 		}
 	}
 }
 
-//Requires an Empty function to feed on KeyRelease after Player Movement
-void AAG_PlayerController::StopMove(){}
+void AAG_PlayerController::StopMove()
+{
+	if (bGamePlayInput)
+	{
+		if (Player)
+		{
+			if (Player->bIsMyTurn && Player->bMoveSucceeded)
+			{
+				Player->bIsMyTurn = false;
+			}
+		}
+	}
+}
 
 void AAG_PlayerController::MoveToMouseCursor()
 {
@@ -151,21 +168,23 @@ void AAG_PlayerController::MoveToMouseCursor()
 		FHitResult Hit;
 		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
 
-		if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player && bCanPlayerMove)
+		if (Hit.bBlockingHit && Hit.Actor->ActorHasTag("AG_Tile") && TileMap && Player)
 		{
-			FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
-			FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
-
-			bool IsTileNeighbouring = TileMap->IsTileNeighbouring(TargetTileCoord, Player->GetActorLocation(), Player->GetActorForwardVector(), Player->GetActorRightVector());
-
-			if (IsTileNeighbouring)
+			if (Player->bIsMyTurn)
 			{
-				FVector TargetTileWorldPosition = TileMap->GetTileWorldPosition(TargetTileCoord);
-				FVector CurrentTileWorldPosition = TileMap->GetTileWorldPosition(CurrentTileCoord);
-				FVector TargetDirection = TargetTileWorldPosition - CurrentTileWorldPosition;
+				FIntPoint CurrentTileCoord = TileMap->GetTileCoord(Player->GetActorLocation());
+				FIntPoint TargetTileCoord = TileMap->GetTileCoord(Hit.ImpactPoint);
 
-				Player->MoveTile(TargetDirection);
-				bCanPlayerMove = false;
+				bool IsTileNeighbouring = TileMap->IsTileNeighbouring(TargetTileCoord, Player->GetActorLocation(), Player->GetActorForwardVector(), Player->GetActorRightVector());
+
+				if (IsTileNeighbouring)
+				{
+					FVector TargetTileWorldPosition = TileMap->GetTileWorldPosition(TargetTileCoord);
+					FVector CurrentTileWorldPosition = TileMap->GetTileWorldPosition(CurrentTileCoord);
+					FVector TargetDirection = TargetTileWorldPosition - CurrentTileWorldPosition;
+
+					Player->MoveTile(TargetDirection);
+				}
 			}
 		}
 	}
