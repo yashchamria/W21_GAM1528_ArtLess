@@ -14,13 +14,7 @@ void UAG_ColdNitesGameInstance::Init()
 {
 	Super::Init();
 
-	UAG_ColdNitesSaveGame* LoadedGameInstance = Cast<UAG_ColdNitesSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex));
-
-	if (LoadedGameInstance)
-	{
-		CompletedLevels = LoadedGameInstance->CompletedLevels;
-		UE_LOG(LogTemp, Warning, TEXT("GameLoaded!"));
-	}
+	LoadGame();
 }
 
 void UAG_ColdNitesGameInstance::OpenNextLevel()
@@ -90,6 +84,17 @@ void UAG_ColdNitesGameInstance::SaveGame()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("GameSaved!"));
 		}
+	}
+}
+
+void UAG_ColdNitesGameInstance::LoadGame()
+{
+	UAG_ColdNitesSaveGame* LoadedGameInstance = Cast<UAG_ColdNitesSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex));
+
+	if (LoadedGameInstance)
+	{
+		CompletedLevels = LoadedGameInstance->CompletedLevels;
+		UE_LOG(LogTemp, Warning, TEXT("GameLoaded!"));
 	}
 }
 

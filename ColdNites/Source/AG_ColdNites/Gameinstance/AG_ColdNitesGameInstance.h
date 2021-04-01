@@ -28,6 +28,7 @@ public:
 	void NotifyLevelCompleted(FString LevelName);
 
 	void SaveGame();
+	void LoadGame();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_Levels")
 	void OpenNextLevel();
