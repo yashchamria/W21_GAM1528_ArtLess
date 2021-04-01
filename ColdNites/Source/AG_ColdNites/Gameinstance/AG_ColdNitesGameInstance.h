@@ -10,6 +10,7 @@ class AG_COLDNITES_API UAG_ColdNitesGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
+public:
 	UAG_ColdNitesGameInstance();
 
 private:
@@ -18,7 +19,16 @@ private:
 
 	FString LevelBaseString;
 
+	FString SaveSlotName;
+	int UserIndex;
+
 public:
+	bool IsLevelUnlocked(int Level);
+	
+	void NotifyLevelCompleted(FString LevelName);
+
+	void SaveGame();
+
 	UFUNCTION(BlueprintCallable, Category = "AG_Levels")
 	void OpenNextLevel();
 
@@ -28,7 +38,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AG_Levels")
 	void OpenSelectedLevel(int Level);
 
-	void NotifyLevelCompleted(FString LevelName);
-
-	bool IsLevelUnlocked(int Level);
+protected:
+	virtual void Init() override;
 };

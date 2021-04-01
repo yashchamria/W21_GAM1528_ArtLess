@@ -1,10 +1,26 @@
 #include "AG_ColdNitesGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/DefaultValueHelper.h"
+#include "AG_ColdNites/SaveAndLoad/AG_ColdNitesSaveGame.h"
 
 UAG_ColdNitesGameInstance::UAG_ColdNitesGameInstance()
 {
 	LevelBaseString = "AG_ColdNites_Level_";
+	SaveSlotName = "SaveSlot_One";
+	UserIndex = 0;
+}
+
+void UAG_ColdNitesGameInstance::Init()
+{
+	Super::Init();
+
+	UAG_ColdNitesSaveGame* LoadedGameInstance = Cast<UAG_ColdNitesSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex));
+
+	if (LoadedGameInstance)
+	{
+		CompletedLevels = LoadedGameInstance->CompletedLevels;
+		UE_LOG(LogTemp, Warning, TEXT("GameLoaded!"));
+	}
 }
 
 void UAG_ColdNitesGameInstance::OpenNextLevel()
@@ -41,11 +57,14 @@ void UAG_ColdNitesGameInstance::OpenSelectedLevel(int Level)
 	}
 	else
 	{
+		UE_LOG(LogTemp, Warning, TEXT("TRYING TO OPEN LEVEL: %d"), Level);
 		UE_LOG(LogTemp, Warning, TEXT("UNLOCK PREVIOUS LEVELS!"));
+
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("LVLS COMPLETED : %d"), CompletedLevels.Num());
 }
+
 
 void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 {
@@ -56,6 +75,22 @@ void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 
 	UE_LOG(LogTemp, Warning, TEXT("LVL COMPLETED : %d"), LevelNum);
 	UE_LOG(LogTemp, Warning, TEXT("TOTAL LVLS COMPLETED : %d"), CompletedLevels.Num());
+
+	SaveGame();
+}
+
+void UAG_ColdNitesGameInstance::SaveGame()
+{
+	UAG_ColdNitesSaveGame* SaveGameInstance = Cast<UAG_ColdNitesSaveGame>(UGameplayStatics::CreateSaveGameObject(UAG_ColdNitesSaveGame::StaticClass()));
+
+	if (SaveGameInstance)
+	{
+		SaveGameInstance->CompletedLevels = CompletedLevels;
+		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveSlotName, UserIndex))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GameSaved!"));
+		}
+	}
 }
 
 bool UAG_ColdNitesGameInstance::IsLevelUnlocked(int Level)
