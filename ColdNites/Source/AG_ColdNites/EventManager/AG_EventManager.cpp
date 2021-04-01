@@ -37,7 +37,7 @@ void AAG_EventManager::BeginPlay()
 	if (CameraManagerActor.Num() > 0) { CameraManager = Cast<AAG_CameraManager>(CameraManagerActor[0]); }
 
 	//Getting Player
-	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	if (Player) { PlayerCharacter = Cast<AAG_PlayableCharacter>(Player); }
 	
 	//Getting PlayerController
@@ -250,7 +250,7 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 {
 	if (TileMap->GetTileProperty(PlayerCurrentTileCoord, AG_TileProperty::IsWinTile))
 	{
-		bWon = true;
+		bHasPlayerWon = true;
 	
 		if(PlayerCharacter->bIsReached)
 		{
@@ -287,7 +287,7 @@ void AAG_EventManager::LevelLoseEventInit()
 
 void AAG_EventManager::LevelLoseEventUpdate(float DeltaTime)
 {
-	if (PlayerCharacter->bKnockOut && !bWon)
+	if (PlayerCharacter->bIsKnockedOut && !bHasPlayerWon)
 	{
 		if (PlayerCharacter->bIsReached)
 		{

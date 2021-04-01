@@ -30,15 +30,23 @@ protected:
 	void FloatingEffect(float delta);
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Property")
+		bool bCanFloat = true;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Property")
+		int ActorHeight = 10.0f;
+	
 	void Disable();
 	void Enable();
 
 private:
+	bool bCollected = false;
+	
+	bool bTriggerCollection = false;
+	float CollectDelay = 2.65;
+	
+	//Floating Variables
 	float RunningTime = 0.0f;
 	float MoveOnZ = 16.0f;
 	float Speed = 5.0f;
-	bool bTriggerCollection = false;
-	bool bCollected = false;
-	float CollectDelay = 2.65;
 };

@@ -9,18 +9,11 @@ UAG_KnockOutPlayer_BTTask::UAG_KnockOutPlayer_BTTask()
 
 EBTNodeResult::Type UAG_KnockOutPlayer_BTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAG_BaseGridAIController* const AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
+	AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
 
-	AAG_AIBaseGridCharacter* AICharacter = nullptr;
-	
 	if (AIController)
 	{
-		AICharacter = Cast<AAG_AIBaseGridCharacter>(AIController->GetPawn());
-	}
-
-	if (AICharacter)
-	{
-		AICharacter->KnockOutPlayer(AICharacter->GetActorForwardVector());
+		AIController->AICharacter->KnockOutPlayer(AIController->AICharacter->GetActorForwardVector());
 	}
 	
 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

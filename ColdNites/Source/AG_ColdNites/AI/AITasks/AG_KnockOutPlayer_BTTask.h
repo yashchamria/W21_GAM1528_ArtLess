@@ -12,6 +12,8 @@ class AG_COLDNITES_API UAG_KnockOutPlayer_BTTask : public UBTTaskNode
 public:
 	UAG_KnockOutPlayer_BTTask();
 
+	class AAG_BaseGridAIController* AIController;
+
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 };

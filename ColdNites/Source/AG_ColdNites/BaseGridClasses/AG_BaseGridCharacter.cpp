@@ -8,9 +8,8 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	ErrorRange = 3.15f; //Don't lower it any further...movement will end up miss some update calls and will not stop
-	KnockOutDelay = 1.65f; //Based On Player WalkSpeed and AddedMovement
-	GetCharacterMovement()->MaxWalkSpeed = 200.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 250.0f;
+	ErrorRange = 6.0f; //Don't lower it any further...movement will might miss some update calls and not stop
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);	
 
 	//Temp Hack to display desired mesh without skeletal animation
@@ -27,14 +26,13 @@ void AAG_BaseGridCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
-	//Getting the Spawned TileMap Actor from the World
+	//Getting TileMap
 	TArray<AActor*> TileMapActor;
-
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_TileMap::StaticClass(), TileMapActor);
+	if (TileMapActor.Num() > 0) { TileMap = Cast<AAG_TileMap>(TileMapActor[0]); }
 
-	if (TileMapActor.Num() > 0)
+	if (TileMap)
 	{
-		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
 
 		FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
@@ -42,6 +40,7 @@ void AAG_BaseGridCharacter::PostInitializeComponents()
 
 		AutoRepositionToTileCenter(CurrentTileCoord);
 	}
+	
 }
 
 void AAG_BaseGridCharacter::BeginPlay()
@@ -71,7 +70,6 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		{
 			bIsReached = true;
 			bWalk = false;
-			//GameMode->FinishTurn();
 		}
 	}
 
@@ -80,27 +78,21 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		SetActorRotation(TargetRotation);
 		bRotate = false;
 	}
-	
+
 	KnockOutDelay -= DeltaTime;
-	if(bKnockOut && KnockOutDelay <= 0.0f)
+	if (bKnockOut && KnockOutDelay <= 0.0f)
 	{
-		if(AG_TempMesh->GetRelativeRotation().Roll > 70.0f || AG_TempMesh->GetRelativeRotation().Roll < -70.0f)
+		AG_TempMesh->SetRelativeRotation(KnockedOutAngle);
+
+		if (bShouldDestroy)
 		{
-			bKnockOut = false;
+			bDestroy = true;
+			DestroyDelay = 1.0f;
 		}
-		else
-		{
-			AG_TempMesh->SetRelativeRotation(KnockedOutAngle);
-		}
-		
 	}
 
 	DestroyDelay -= DeltaTime;
 	if (bDestroy && DestroyDelay <= 0.0f) { Destroy(); }
-
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetDistance: %s"), *TargetDistance.ToString()));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("TargetTileWorldLocation: %s"), *TargetTileWorldLocation.ToString()));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.01, FColor::Orange, FString::Printf(TEXT("GetActorLocation: %s"), *GetActorLocation().ToString()));
 }
 
 void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -168,21 +160,11 @@ void AAG_BaseGridCharacter::Rotate(float Rotation)
 
 void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
 {
-	FRotator FallAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
-	OnKnockOut(FallAngle);
-}
+	bIsKnockedOut = true;
 
-void AAG_BaseGridCharacter::OnKnockOut(FRotator KnockOutAngle)
-{
 	bKnockOut = true;
-	KnockedOutAngle = KnockOutAngle;
 	KnockOutDelay = 1.65f;
-
-	if (bShouldDestroy)
-	{
-		bDestroy = true;
-		DestroyDelay = 1.0f;
-	}
+	KnockedOutAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
 }
 
 //void AAG_BaseGridCharacter::WalkSoundEffect()
@@ -225,7 +207,7 @@ void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("--> Character placed on Unwalkable tile <--")));
+		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("Character placed on Unwalkable tile")));
 	}
 }
 

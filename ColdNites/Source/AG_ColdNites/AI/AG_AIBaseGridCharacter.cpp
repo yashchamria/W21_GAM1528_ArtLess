@@ -78,6 +78,11 @@ bool AAG_AIBaseGridCharacter::bIsPlayerInRange(uint32 TileRange)
 	return false;
 }
 
+bool AAG_AIBaseGridCharacter::IsPlayerInRange()
+{
+	return IsActorInRange("AG_PlayableCharacter", GetActorForwardVector());
+}
+
 void AAG_AIBaseGridCharacter::KnockOutPlayer(FVector ForwardDirection)
 {
 	if (PlayerCharacter->bIsReached)

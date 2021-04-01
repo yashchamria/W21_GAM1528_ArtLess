@@ -61,54 +61,55 @@ public:
 	void Rotate(float Rotation);
 	
 	void KnockOut(FVector FallDirection);
-	void OnKnockOut(FRotator KnockOutAngle);
-	
-	FRotator KnockedOutAngle = FRotator::ZeroRotator;
 
+	bool bIsReached = true;
+	bool bMoveSucceeded = false;
+	bool bIsKnockedOut = false;
+	bool bShouldRegister = true;
+	bool bShouldDestroy = true;
+	
+	virtual void ResetOnTurnEnd();
+	
+private:
 	bool bWalk = false;
 	bool bRotate = false;
 	bool bKnockOut = false;
 	bool bDestroy = false;
+	bool bAlreadyRotated = false;
 	
-	bool bIsReached = true;
-	bool bMoveSucceeded = false;
+	float ErrorRange = 0.0f;
+	float KnockOutDelay = 0.0f;
+	float DestroyDelay = 0.0f;
 	
-	bool bShouldRegister = true;
-	bool bShouldDestroy = true;
-
 	FVector TargetTileWorldLocation;
 	FVector TargetDistance = FVector::ZeroVector;
 	FVector TargetDirection = FVector::ZeroVector;
+	
 	FRotator TargetRotation = FRotator::ZeroRotator;
+	FRotator KnockedOutAngle = FRotator::ZeroRotator;
 
-
+	
 	//Animation Stuff ---> No Implementation Yet
 	bool bAnimate = true;
 	void Animate();
 	void SetAnimation(AG_AnimationStates NewState);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AG_Animation")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Animation", meta = (AllowPrivateAccess = "true"))
 		AG_AnimationStates CurrentAnimationState = AG_AnimationStates::Idle;
 
 	UFUNCTION()
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
-
-	virtual void ResetOnTurnEnd();
 	
-private:
-	float ErrorRange = 0.0f;
-	float KnockOutDelay = 0.0f;
-	float DestroyDelay = 0.0f;
-	bool bAlreadyRotated = false;
 
 //Temp Hack to display desired mesh without skeletal animation
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
 		class UStaticMeshComponent* AG_TempMesh;
 
-	//Audio Stuff ---> No Proper Implementation Yet
-	//UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
-	//	class USoundBase* WalkSound;
 	
-	//void WalkSoundEffect();
+//Audio Stuff ---> No Proper Implementation Yet
+	/*UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
+		class USoundBase* WalkSound;
+	
+	void WalkSoundEffect();*/
 };

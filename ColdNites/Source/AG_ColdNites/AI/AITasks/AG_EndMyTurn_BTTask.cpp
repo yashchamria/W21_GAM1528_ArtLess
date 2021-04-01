@@ -9,18 +9,11 @@ UAG_EndMyTurn_BTTask::UAG_EndMyTurn_BTTask()
 
 EBTNodeResult::Type UAG_EndMyTurn_BTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAG_BaseGridAIController* const AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
-
-	AAG_AIBaseGridCharacter* AICharacter = nullptr;
+	AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
 
 	if (AIController)
 	{
-		AICharacter = Cast<AAG_AIBaseGridCharacter>(AIController->GetPawn());
-	}
-
-	if (AICharacter)
-	{
-		AICharacter->bIsMyTurn = false;
+		AIController->AICharacter->bIsMyTurn = false;
 	}
 	
 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

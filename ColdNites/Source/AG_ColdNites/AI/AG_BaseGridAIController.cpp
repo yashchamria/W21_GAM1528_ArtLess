@@ -2,12 +2,10 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "AG_ColdNites/AI/AG_AIBaseGridCharacter.h"
 
 AAG_BaseGridAIController::AAG_BaseGridAIController(FObjectInitializer const& ObjectInitializer)
 {
-	//static ConstructorHelpers::FObjectFinder<UBehaviorTree> BehaviorTreeAsset(TEXT("BehaviorTree'/Game/Blueprints/AI/BT_StillAI.BT_StillAI'"));
-	//if (BehaviorTreeAsset.Succeeded()) { BehaviorTree = BehaviorTreeAsset.Object; }
 	BehaviorTree = ObjectInitializer.CreateDefaultSubobject<UBehaviorTree>(this, TEXT("Behavior Tree"));
 
 	BehaviorTreeComponent = ObjectInitializer.CreateDefaultSubobject<UBehaviorTreeComponent>(this, TEXT("Behavior Tree Component"));
@@ -27,6 +25,8 @@ void AAG_BaseGridAIController::BeginPlay()
 void AAG_BaseGridAIController::OnPossess(APawn* const pawn)
 {
 	Super::OnPossess(pawn);
+
+	AICharacter = Cast<AAG_AIBaseGridCharacter>(pawn);
 	
 	if (BlackBoardComponent)
 	{

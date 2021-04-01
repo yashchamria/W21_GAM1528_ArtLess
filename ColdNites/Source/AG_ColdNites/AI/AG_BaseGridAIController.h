@@ -27,6 +27,5 @@ public:
 
 	FORCEINLINE class UBlackboardComponent* GetBlackboardComponent() const { return BlackBoardComponent; }
 
-	
-	
+	class AAG_AIBaseGridCharacter* AICharacter;
 };

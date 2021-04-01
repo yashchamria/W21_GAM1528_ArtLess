@@ -10,17 +10,14 @@ UAG_MoveToNextPatrolPoint_BTTask::UAG_MoveToNextPatrolPoint_BTTask()
 
 EBTNodeResult::Type UAG_MoveToNextPatrolPoint_BTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAG_BaseGridAIController* const AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
+	AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
 
-	AAG_AIBaseGridCharacter* AICharacter = nullptr;
 
 	if (AIController)
 	{
-		AICharacter = Cast<AAG_AIBaseGridCharacter>(AIController->GetPawn());
-	}
-
-	if (AICharacter)
-	{
+		AAG_AIBaseGridCharacter* AICharacter = AIController->AICharacter;
+		
+		
 		if (AICharacter->PatrolTileCoords.Num() > 0)
 		{
 			//For Movement

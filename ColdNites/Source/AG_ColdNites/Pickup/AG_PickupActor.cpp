@@ -1,5 +1,4 @@
 #include "AG_PickupActor.h"
-
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/Pickup/AG_InventoryComponent.h"
@@ -18,14 +17,17 @@ void AAG_PickupActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetActorLocation(GetActorLocation() + 10.0f);
+	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + ActorHeight));
 }
 
 void AAG_PickupActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FloatingEffect(DeltaTime);
+	if (bCanFloat)
+	{
+		FloatingEffect(DeltaTime);
+	}
 	
 	if (!bCollected)
 	{

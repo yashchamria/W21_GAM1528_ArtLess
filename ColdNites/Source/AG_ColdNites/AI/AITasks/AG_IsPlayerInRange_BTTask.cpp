@@ -9,18 +9,11 @@ UAG_IsPlayerInRange_BTTask::UAG_IsPlayerInRange_BTTask()
 
 EBTNodeResult::Type UAG_IsPlayerInRange_BTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAG_BaseGridAIController* const AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
+	AIController = Cast<AAG_BaseGridAIController>(OwnerComp.GetAIOwner());
 
-	AAG_AIBaseGridCharacter* AICharacter = nullptr;
-	
 	if (AIController)
 	{
-		AICharacter = Cast<AAG_AIBaseGridCharacter>(AIController->GetPawn());
-	}
-	
-	if (AICharacter)
-	{
-		if (AICharacter->bIsPlayerInRange())
+		if (AIController->AICharacter->IsPlayerInRange())
 		{
 			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 			return EBTNodeResult::Succeeded;

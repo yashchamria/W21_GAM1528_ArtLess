@@ -55,13 +55,14 @@ private:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		TSubclassOf<UUserWidget> WinWidgetTemplate;
+
+	bool bHasPlayerWon = false;
 	
 private:	
 	void LevelWonEventInit();
 	void LevelWonEventUpdate(float DeltaTime);
 
 	class UUserWidget* WinWidget;
-	bool bWon = false;
 
 //Lose Event
 public:

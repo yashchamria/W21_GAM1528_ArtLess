@@ -36,8 +36,9 @@ public:
 	void MoveForward();
 	void MoveBackward();
 
+	bool IsPlayerInRange();
 	bool bIsPlayerInRange(uint32 TileRange = 1);
-	bool IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange);
+	bool IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange = 1);
 	void KnockOutPlayer(FVector ForwardDirection);
 
 //Patrol AI variables

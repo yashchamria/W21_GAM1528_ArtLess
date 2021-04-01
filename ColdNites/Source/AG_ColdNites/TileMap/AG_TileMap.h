@@ -83,7 +83,6 @@ public:
 	AActor* GetAllRegisteredActors(FIntPoint TileCoord);
 
 	AG_TileInDirection GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor, uint32  = 1);
-	AG_TileInDirection GetTileInDirection(FIntPoint CurrentTileCoord, FIntPoint NextTileCoord, FVector ForwardVector);
 
 	FName GetTileCameraTag(FIntPoint TileCoord);
 	FIntPoint GetStartTileCoord();
