@@ -250,7 +250,7 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 	if (TileMap->GetTileProperty(PlayerCurrentTileCoord, AG_TileProperty::IsWinTile))
 	{
 		bWon = true;
-
+	
 		if(PlayerCharacter->bIsReached)
 		{
 			if (WinWidgetTemplate)
@@ -259,7 +259,7 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 				PlayerController->EnableUIInput(false);
 			}
 		}
-
+	
 		PlayerController->EnableGamePlayInput(false);
 	}
 }
