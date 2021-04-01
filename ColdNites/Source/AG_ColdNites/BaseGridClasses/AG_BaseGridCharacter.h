@@ -30,6 +30,15 @@ enum class AG_AnimationStates : uint8
 	Attack		 UMETA(DisplayName = "Attack"),
 };
 
+enum class AG_PreviousMove : uint8
+{
+	Forward		 UMETA(DisplayName = "F"),
+	Backward	 UMETA(DisplayName = "B"),
+	Left		 UMETA(DisplayName = "L"),
+	Right		 UMETA(DisplayName = "R"),
+};
+
+
 UCLASS()
 class AG_COLDNITES_API	AAG_BaseGridCharacter : public ACharacter
 {
@@ -94,6 +103,9 @@ public:
 	void AutoRepositionToTileCenter(FIntPoint TileCoord);
 
 	virtual void ResetOnTurnEnd();
+
+
+	AG_PreviousMove Prev;
 	
 private:
 	float ErrorRange = 0.0f;

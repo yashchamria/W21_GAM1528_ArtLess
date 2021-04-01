@@ -133,6 +133,7 @@ void AAG_BaseGridCharacter::MoveForward()
 {
 	//bRotate = false;
 	MoveTile(GetActorForwardVector());
+	Prev = AG_PreviousMove::Forward;
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
@@ -140,6 +141,7 @@ void AAG_BaseGridCharacter::MoveBackward()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
+	Prev = AG_PreviousMove::Backward;
 }
 
 void AAG_BaseGridCharacter::MoveRight()
@@ -147,6 +149,7 @@ void AAG_BaseGridCharacter::MoveRight()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
+	Prev = AG_PreviousMove::Right;
 }
 
 void AAG_BaseGridCharacter::MoveLeft()
@@ -154,6 +157,7 @@ void AAG_BaseGridCharacter::MoveLeft()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
+	Prev = AG_PreviousMove::Left;
 }
 
 void AAG_BaseGridCharacter::Rotate(float Rotation)
