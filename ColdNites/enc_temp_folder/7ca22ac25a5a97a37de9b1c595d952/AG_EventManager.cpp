@@ -260,8 +260,9 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 				PlayerController->EnableUIInput(false);
 			}
 			
-			//Notify the GameInstance of Level Completion
+			//TODO: GameInstance
 			UAG_ColdNitesGameInstance* GameInstance = Cast<UAG_ColdNitesGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
 			if (GameInstance)
 			{
 				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);

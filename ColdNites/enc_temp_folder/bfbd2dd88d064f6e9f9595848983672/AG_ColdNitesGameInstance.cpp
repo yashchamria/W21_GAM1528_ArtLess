@@ -13,7 +13,7 @@ void UAG_ColdNitesGameInstance::OpenNextLevel()
 	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 
 	int LevelNum;
-	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), LevelNum); //this will get Level num of the level that you just completed
+	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), LevelNum);
 
 	LevelNum++; // increment to set number to next level number
 	NextLevelToLoad.AppendInt(LevelNum);
@@ -54,13 +54,21 @@ void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 
 	CompletedLevels.AddUnique(LevelNum);
 
+	//for (int completedLevel : CompletedLevels)
+	//{
+	//	if (completedLevel != LevelNum)
+	//	{
+	//		CompletedLevels.Push(LevelNum);
+	//	}
+	//}
+
 	UE_LOG(LogTemp, Warning, TEXT("LVL COMPLETED : %d"), LevelNum);
 	UE_LOG(LogTemp, Warning, TEXT("TOTAL LVLS COMPLETED : %d"), CompletedLevels.Num());
 }
 
 bool UAG_ColdNitesGameInstance::IsLevelUnlocked(int Level)
 {
-	if (Level == 1) //return true as the 1st level needs to be always unlocked
+	if (Level == 1) //return true as the 1st level will always be unlocked
 	{
 		return true;
 	}
