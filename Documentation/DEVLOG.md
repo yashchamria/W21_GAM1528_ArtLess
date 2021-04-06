@@ -76,4 +76,10 @@ AITurnManager -> Rewrote the entire Manager System. Now, it inherits from a basi
 
 RotatingAI -> It rotates 180 in each turn. It only attacks when the player is right in front of the AI when it is looking at him.
 
-PatrollingAI -> Very WIP
+/--------------------------------------------------------------- Yash(23th March 2021)----------------------------------------------------------/
+
+CameraManager -> Finished CameraManager Implementation. Now CameraManager will itself spawn the base camera and will be attached to the manager. 
+		 You can spawn the camera by AddCamera button in CameraManager Editor. It will handle the camera switching based on the CameraActorTag setup.
+		
+Base Camera Actor -> The Base Camera Actor is a basic camera that has a spring arm attached to it.
+		     It comes with some of the camera properties and values predefined in the code which allows a consistent look throughout the game and ease of camera creation.

@@ -208,7 +208,7 @@ bool AAG_TileMap::IsRegistered(FName ActorTag, FIntPoint TileCoord)
 	return false;
 }
 
-AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
+AActor* AAG_TileMap::	GetAllRegisteredActors(FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 

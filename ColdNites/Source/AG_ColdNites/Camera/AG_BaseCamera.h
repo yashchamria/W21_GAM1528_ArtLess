@@ -5,8 +5,8 @@ Name - Yash Chamria
 
  Module:  CameraManager
 
- Description - WIP ---> Will be reponsible for all the camera transition throughout the level and the game.
-
+ Description - The Base Camera Actor is a basic camera that has a spring arm attached to it.
+			   It comes with some of the camera properties and values predefined in the code which allows a consistent look throughout the game and ease of camera creation.
 ******************************************************************************************************************/
 
 #pragma once

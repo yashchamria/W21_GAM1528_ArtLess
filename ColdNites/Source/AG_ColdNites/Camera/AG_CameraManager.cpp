@@ -75,6 +75,7 @@ void AAG_CameraManager::SwitchCamera(FName CameraActorTag, float blendTime)
 			{
 				PlayerController->SetViewTargetWithBlend(CameraActor, blendTime);
 			}
+			
 			if(UIController)
 			{
 				UIController->SetViewTargetWithBlend(CameraActor, blendTime);
