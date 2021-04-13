@@ -1,4 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/******************************************************************************************************************************************
+	Team: ArtLess Games - Section 010
+	
+	Name: Vrund Soni
+	
+	Module: Level Management System
+	
+	Description: The 'UAG_ColdNitesGameInstance' class is the part of level management system module. This class is responsible for: 
+				     - To determine which next level to load when a certain level is completed.
+				     - To not allow the player to go to the next level if the current level is not completed.
+				     - To save and load the completed levels progress.
+				       (The game will save the progress each time when a level is completed).
+********************************************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -14,12 +27,11 @@ public:
 	UAG_ColdNitesGameInstance();
 
 private:
-	
 	TArray<int> CompletedLevels;
 
 	FString LevelBaseString;
-
 	FString SaveSlotName;
+	
 	int UserIndex;
 
 public:
@@ -41,4 +53,12 @@ public:
 
 protected:
 	virtual void Init() override;
+
+private:
+	uint8 TotalCollectedStars = 0;
+	uint32 NumberOfTurns = 0;
+
+public:
+	uint8 StarsCollectedPerLevel = 0;
+	void ResetLevelStars();
 };

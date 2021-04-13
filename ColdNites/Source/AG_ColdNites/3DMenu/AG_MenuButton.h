@@ -3,9 +3,9 @@ Team - ArtLess Games - Section 010
 
 Name - Vrund Soni
 
- Module: Menu System	
+Module: Menu System	
 
- Description - Single 3D button actor used in 3D Menu
+Description - Single 3D button actor used in 3D Menu
 
 ******************************************************************************************************************/
 

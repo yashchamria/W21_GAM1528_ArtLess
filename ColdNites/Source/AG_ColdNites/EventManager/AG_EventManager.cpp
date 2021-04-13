@@ -246,6 +246,8 @@ void AAG_EventManager::LevelWonEventInit()
 	}
 }
 
+
+
 void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 {
 	if (TileMap->GetTileProperty(PlayerCurrentTileCoord, AG_TileProperty::IsWinTile))
@@ -266,7 +268,11 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 			{
 				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 				GameInstance->NotifyLevelCompleted(LevelName);
+
+				GameInstance->ResetLevelStars();
 			}
+
+
 		}
 	
 		PlayerController->EnableGamePlayInput(false);

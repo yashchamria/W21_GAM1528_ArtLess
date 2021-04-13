@@ -1,3 +1,13 @@
+/*************************************************************************************************************************************
+    Team - ArtLess Games - Section 010
+    
+    Name - Vrund Soni
+    
+    Module - Level Management System
+    
+    Description - The 'UAG_ColdNitesSaveGame' class is a part level management system module. This class is responsible for
+                  saving the counts of completed levels given by the Game Instance in an array of int called 'completedLevels'.
+**************************************************************************************************************************************/
 #pragma once
 
 #include "CoreMinimal.h"
@@ -20,4 +30,8 @@ public:
 
     UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
         uint32 UserIndex;
+
+    uint8 TotalCollectedStars = 0;
+
+    uint8 StarsPerLevel = 0;
 };

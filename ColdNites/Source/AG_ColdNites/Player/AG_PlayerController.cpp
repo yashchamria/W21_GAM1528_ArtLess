@@ -241,7 +241,6 @@ void AAG_PlayerController::TogglePauseMenu()
 	}
 }
 
-
 void AAG_PlayerController::ShowPauseMenu()
 {
 	if(PauseMenu)
