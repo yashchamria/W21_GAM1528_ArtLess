@@ -32,7 +32,7 @@ protected:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Property")
 		bool bCanFloat = true;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Property")
 		int ActorHeight = 10.0f;
 	

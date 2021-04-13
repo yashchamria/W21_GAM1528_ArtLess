@@ -42,7 +42,8 @@ protected:
 
 	class AAG_PlayableCharacter* Player;
 	class AAG_TileMap* TileMap;
-	
+	class AAG_EventManager* EventManager;
+
 ///---------------------------------------Player Movement Setup----------------------------------------------------------///
 public:
 	void EnableGamePlayInput(bool GamePlayInput = true);
@@ -114,11 +115,4 @@ public:
 
 private:
 	bool bUIInput = true;
-
-	//----------Turn Count-------//
-
-	uint32 PlayerTurnCount = 0;
-
-public:
-	FORCEINLINE uint32 GetPlayerTurnCount() { return PlayerTurnCount; }
 };

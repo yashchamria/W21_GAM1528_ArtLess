@@ -2,6 +2,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
+#include "AG_ColdNites/EventManager/AG_EventManager.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/Player/AG_PlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,18 +25,21 @@ void AAG_BaseGridActor::PostInitializeComponents()
 
 	//Getting the Spawned TileMap Actor from the World
 	TArray<AActor*> TileMapActor;
-
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_TileMap::StaticClass(), TileMapActor);
+	if (TileMapActor.Num() > 0) { TileMap = Cast<AAG_TileMap>(TileMapActor[0]); }
 
-	if (TileMapActor.Num() > 0)
+	if(TileMap) //Setting Position and Registering to the TileMap
 	{
-		TileMap = Cast<AAG_TileMap>(TileMapActor[0]);
 		TargetTileWorldLocation = TileMap->GetTileWorldPosition(TileMap->GetTileCoord(GetActorLocation()));
-
 		CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
 		TileMap->Register(this, CurrentTileCoord);
 	}
 
+	//Getting EventManager
+	TArray<AActor*> EventManagerActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_EventManager::StaticClass(), EventManagerActor);
+	if (EventManagerActor.Num() > 0) { EventManager = Cast<AAG_EventManager>(EventManagerActor[0]); }
+	
 	//Getting PlayerController
 	APlayerController* CurrentController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (CurrentController) { PlayerController = Cast<AAG_PlayerController>(CurrentController); }

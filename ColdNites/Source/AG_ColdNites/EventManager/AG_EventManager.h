@@ -23,6 +23,7 @@ public:
 private:
 	class AAG_TileMap* TileMap;
 	class AAG_ColdNitesGameModeBase* GameMode;
+	class UAG_ColdNitesGameInstance* GameInstance;
 	class AAG_PlayableCharacter* PlayerCharacter;
 	class AAG_PlayerController* PlayerController;
 	class AAG_CameraManager* CameraManager;
@@ -50,6 +51,11 @@ public:
 private:
 	FName CurrentCameraTag;
 	void CameraSwitchEventUpdate();
+
+//Scoring Event
+public:
+	void UpdateStarCount(uint8 StarIncrement = 1);
+	void UpdateTurnCount(uint8 TurnIncrement = 1);
 
 //Win Event
 public:

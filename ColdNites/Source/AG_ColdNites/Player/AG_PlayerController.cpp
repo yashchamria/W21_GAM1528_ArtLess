@@ -1,7 +1,9 @@
 #include "AG_PlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+
 #include "AG_ColdNites/TileMap/AG_TileMap.h"
+#include "AG_ColdNites/EventManager/AG_EventManager.h"
 #include "AG_PlayableCharacter.h"
 
 AAG_PlayerController::AAG_PlayerController()
@@ -16,6 +18,11 @@ AAG_PlayerController::AAG_PlayerController()
 void AAG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Getting EventManager
+	TArray<AActor*> EventManagerActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_EventManager::StaticClass(), EventManagerActor);
+	if (EventManagerActor.Num() > 0) { EventManager = Cast<AAG_EventManager>(EventManagerActor[0]); }
 	
 	bPauseMenuVisible = false;
 	bMainMenuVisible = false;
@@ -154,7 +161,7 @@ void AAG_PlayerController::StopMove()
 		{
 			if (Player->bIsMyTurn && Player->bMoveSucceeded)
 			{
-				PlayerTurnCount++;
+				EventManager->UpdateTurnCount();
 				Player->bIsMyTurn = false;
 			}
 		}

@@ -30,7 +30,10 @@ void AAG_EventManager::BeginPlay()
 	
 	//Getting GameMode
 	GameMode = Cast<AAG_ColdNitesGameModeBase>(GetWorld()->GetAuthGameMode());
-	
+
+	//Getting GameInstance
+	GameInstance = Cast<UAG_ColdNitesGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
 	//Getting Camera Manager
 	TArray<AActor*> CameraManagerActor;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAG_CameraManager::StaticClass(), CameraManagerActor);
@@ -72,6 +75,10 @@ void AAG_EventManager::Tick(float DeltaTime)
 	CameraSwitchEventUpdate();
 	LevelWonEventUpdate(DeltaTime);
 	LevelLoseEventUpdate(DeltaTime);
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Red, FString::Printf(TEXT("Level, %d"), GameInstance->StarsCollectedPerLevel));
+	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Red, FString::Printf(TEXT("Total, %d"), GameInstance->TotalCollectedStars));
+
 }
 
 //Miscellaneous Events
@@ -221,6 +228,7 @@ void AAG_EventManager::CameraSwitchEventUpdate()
 	}
 }
 
+
 FName AAG_EventManager::GetSwitchCameraTag()
 {
 	if(TileMap)
@@ -234,6 +242,18 @@ FName AAG_EventManager::GetSwitchCameraTag()
 	return "None";
 }
 
+//Scoring Event
+
+void AAG_EventManager::UpdateStarCount(uint8 StarIncrement)
+{
+	GameInstance->StarsCollectedPerLevel += StarIncrement;
+}
+
+void AAG_EventManager::UpdateTurnCount(uint8 TurnIncrement)
+{
+	GameInstance->TotalTurnPerformed += TurnIncrement;
+}
+
 //Level Won Event.
 
 void AAG_EventManager::LevelWonEventInit()
@@ -245,8 +265,6 @@ void AAG_EventManager::LevelWonEventInit()
 		WinWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
-
-
 
 void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 {
@@ -263,16 +281,13 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 			}
 			
 			//Notify the GameInstance of Level Completion
-			UAG_ColdNitesGameInstance* GameInstance = Cast<UAG_ColdNitesGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 			if (GameInstance)
 			{
 				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 				GameInstance->NotifyLevelCompleted(LevelName);
 
-				GameInstance->ResetLevelStars();
+				GameInstance->ResetScoringParameters();
 			}
-
-
 		}
 	
 		PlayerController->EnableGamePlayInput(false);
@@ -303,5 +318,6 @@ void AAG_EventManager::LevelLoseEventUpdate(float DeltaTime)
 				PlayerController->EnableUIInput(false);
 			}
 		}
+		GameInstance->ResetScoringParameters();
 	}
 }

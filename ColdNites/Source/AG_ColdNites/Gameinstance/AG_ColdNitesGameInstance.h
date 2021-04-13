@@ -54,11 +54,14 @@ public:
 protected:
 	virtual void Init() override;
 
+//Scoring System
 private:
-	uint8 TotalCollectedStars = 0;
+	const uint8 TotalAvailableStars = 15;
 	uint32 NumberOfTurns = 0;
 
 public:
+	uint32 TotalTurnPerformed = 0;
+	uint8 TotalCollectedStars = 0;
 	uint8 StarsCollectedPerLevel = 0;
-	void ResetLevelStars();
+	void ResetScoringParameters();
 };

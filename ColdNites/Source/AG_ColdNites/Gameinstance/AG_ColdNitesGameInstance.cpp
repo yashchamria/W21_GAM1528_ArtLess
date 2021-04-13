@@ -16,10 +16,12 @@ void UAG_ColdNitesGameInstance::Init()
 	LoadGame();
 }
 
-void UAG_ColdNitesGameInstance::ResetLevelStars()
+void UAG_ColdNitesGameInstance::ResetScoringParameters()
 {
 	TotalCollectedStars += StarsCollectedPerLevel;
 	StarsCollectedPerLevel = 0;
+
+	NumberOfTurns = 0;
 }
 
 void UAG_ColdNitesGameInstance::OpenNextLevel()
@@ -27,11 +29,11 @@ void UAG_ColdNitesGameInstance::OpenNextLevel()
 	FString NextLevelToLoad = LevelBaseString;
 	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 
-	int LevelNum;
-	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), LevelNum); //this will get Level num of the level that you just completed
+	int CurrentLevelNum;
+	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), CurrentLevelNum); //this will get Level num of the level that you just completed
 
-	LevelNum++; // increment this variable set it to next level number
-	NextLevelToLoad.AppendInt(LevelNum);
+	int NextLevelNum = CurrentLevelNum + 1; 
+	NextLevelToLoad.AppendInt(NextLevelNum);
 
 	UE_LOG(LogTemp, Warning, TEXT("LVL-NAME : %s"), *NextLevelToLoad);
 	UGameplayStatics::OpenLevel(this, FName(NextLevelToLoad));
@@ -42,6 +44,9 @@ void UAG_ColdNitesGameInstance::OpenSameLevel()
 	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 	
 	UE_LOG(LogTemp, Warning, TEXT("LVL-NAME: %s"), *CurrentLevelName);
+
+	ResetScoringParameters();
+	
 	UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 

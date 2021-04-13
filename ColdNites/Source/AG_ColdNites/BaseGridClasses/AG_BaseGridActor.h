@@ -40,6 +40,7 @@ public:
 		class UStaticMeshComponent* BaseMesh;
 
 	class AAG_TileMap* TileMap;
+	class AAG_EventManager* EventManager;
 	class AAG_PlayableCharacter* PlayerCharacter;
 	class AAG_PlayerController* PlayerController;
 
