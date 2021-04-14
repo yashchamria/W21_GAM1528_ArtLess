@@ -88,7 +88,6 @@ private:
 	
 	FRotator TargetRotation = FRotator::ZeroRotator;
 	FRotator KnockedOutAngle = FRotator::ZeroRotator;
-
 	
 	//Animation Stuff ---> No Implementation Yet
 	bool bAnimate = true;
