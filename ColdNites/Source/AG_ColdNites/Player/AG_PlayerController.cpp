@@ -72,6 +72,9 @@ void AAG_PlayerController::SetupInputComponent()
 		InputComponent->BindAction("MoveLeft", IE_Pressed, this, &AAG_PlayerController::MoveLeft);
 		InputComponent->BindAction("MoveLeft", IE_Released, this, &AAG_PlayerController::StopMove);
 
+		InputComponent->BindAction("SewerTeleport", IE_Pressed, this, &AAG_PlayerController::TransportThroughSewer);
+		InputComponent->BindAction("SewerTeleport", IE_Released, this, &AAG_PlayerController::StopMove);
+
 		InputComponent->BindAction("SetDestination", IE_Pressed, this, &AAG_PlayerController::MoveToMouseCursor);
 		InputComponent->BindAction("SetDestination", IE_Released, this, &AAG_PlayerController::StopMove);
 
@@ -163,6 +166,20 @@ void AAG_PlayerController::StopMove()
 			{
 				EventManager->UpdateTurnCount();
 				Player->bIsMyTurn = false;
+			}
+		}
+	}
+}
+
+void AAG_PlayerController::TransportThroughSewer()
+{
+	if (bGamePlayInput)
+	{
+		if (Player)
+		{
+			if (Player->bIsMyTurn)
+			{
+				Player->TransportThroughSewer();
 			}
 		}
 	}

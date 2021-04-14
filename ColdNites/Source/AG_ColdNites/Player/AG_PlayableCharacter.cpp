@@ -1,5 +1,6 @@
 #include "AG_PlayableCharacter.h"
 #include "AG_ColdNites/Pickup/AG_InventoryComponent.h"
+#include "AG_ColdNites/TileMap/AG_TileMap.h"
 //#include "Components/AudioComponent.h"
 //#include "Kismet/GameplayStatics.h"
 
@@ -32,6 +33,12 @@ void AAG_PlayableCharacter::Tick(float DeltaTime)
 
 void AAG_PlayableCharacter::MoveForward() { Super::MoveForward(); }
 void AAG_PlayableCharacter::MoveBackward() { Super::MoveBackward(); }
+
+void AAG_PlayableCharacter::TransportThroughSewer()
+{
+	Teleport();
+}
+
 void AAG_PlayableCharacter::MoveRight() { Super::MoveRight(); }
 void AAG_PlayableCharacter::MoveLeft() { Super::MoveLeft(); }
 

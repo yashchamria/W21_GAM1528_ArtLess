@@ -148,6 +148,30 @@ void AAG_BaseGridCharacter::MoveLeft()
 	MoveTile(-GetActorRightVector());
 }
 
+void AAG_BaseGridCharacter::Teleport()
+{
+	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
+
+	bool IsCurrentTileTransportable = TileMap->GetTileProperty(CurrentTileCoord, AG_TileProperty::IsTransportable);
+
+	if(IsCurrentTileTransportable)
+	{
+		FIntPoint TargetTileCoord = TileMap->GetSewerPairCoord(CurrentTileCoord);
+		FVector TargetTileWorldPosition = TileMap->GetTileWorldPosition(TargetTileCoord);
+
+		SetActorLocation(TargetTileWorldPosition);
+
+		if (bShouldRegister)
+		{
+			TileMap->UnRegister(this, CurrentTileCoord);
+			TileMap->Register(this, TargetTileCoord);
+		}
+		
+		bIsReached = true;
+		bMoveSucceeded = true;
+	}
+}
+
 void AAG_BaseGridCharacter::Rotate(float Rotation)
 {
 	if (!bAlreadyRotated)

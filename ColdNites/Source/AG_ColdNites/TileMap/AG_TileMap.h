@@ -86,6 +86,8 @@ public:
 
 	FName GetTileCameraTag(FIntPoint TileCoord);
 	FIntPoint GetStartTileCoord();
+
+	FIntPoint GetSewerPairCoord(FIntPoint CurrentTileCoord);
 	
 protected:
 	virtual void BeginPlay() override;

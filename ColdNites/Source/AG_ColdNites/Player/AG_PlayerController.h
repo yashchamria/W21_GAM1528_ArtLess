@@ -54,7 +54,10 @@ protected:
 	void MoveLeft();
 	void MoveForward();
 	void MoveBackward();
+	void TransportThroughSewer();
+	
 	void StopMove();
+
 	
 	uint32 bMoveToMouseCursor : 1;
 

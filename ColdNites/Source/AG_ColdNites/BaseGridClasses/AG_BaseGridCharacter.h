@@ -57,7 +57,8 @@ public:
 	void MoveBackward();
 	void MoveRight();
 	void MoveLeft();
-
+	void Teleport();
+	
 	void Rotate(float Rotation);
 	
 	void KnockOut(FVector FallDirection);

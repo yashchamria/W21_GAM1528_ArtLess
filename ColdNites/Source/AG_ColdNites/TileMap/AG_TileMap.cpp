@@ -270,6 +270,30 @@ FIntPoint AAG_TileMap::GetStartTileCoord()
 	return (-1, -1);
 }
 
+FIntPoint AAG_TileMap::GetSewerPairCoord(FIntPoint CurrentTileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(CurrentTileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		FName CurrentSewerID = Tiles[TileIndex]->SewerID;
+
+		for (AAG_Tile* Tile : Tiles)
+		{
+			if(Tile->SewerID == CurrentSewerID)
+			{
+				if(!(Tile->TileCoordinate == CurrentTileCoord))
+				{
+					return Tile->TileCoordinate;
+				}
+			}
+		}
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, "Sewer Pair Missing");
+	return (-1, -1);
+}
+
 //Future Possibility
 
 //void Restore // Restore previous tileMap

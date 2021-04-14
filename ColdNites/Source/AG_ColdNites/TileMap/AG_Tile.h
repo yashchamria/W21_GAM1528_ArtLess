@@ -55,8 +55,11 @@ public:
 		void AutoConfigurePropertyToggle();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty")
-		FName CameraActorTag;
+		FName CameraActorTag = "None";
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty", meta = (EditCondition = "IsTransportable"))
+		FName SewerID = "None";
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_TileProperty")
 		bool NullTile = false;
 

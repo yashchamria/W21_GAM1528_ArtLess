@@ -70,7 +70,7 @@ void AAG_EventManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PlayerCurrentTileCoord = TileMap->GetTileCoord(PlayerCharacter->GetActorLocation());
-
+	
 	SwitchTurnStateUpdate();
 	CameraSwitchEventUpdate();
 	LevelWonEventUpdate(DeltaTime);
@@ -107,7 +107,6 @@ void AAG_EventManager::SetDecorMeshProperty()
 		}
 	}
 }
-
 
 //Switch Turn Event.
 

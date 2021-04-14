@@ -43,7 +43,7 @@ private:
 	void SetPlayerTurnEvent();
 	void SetAITurnEvent();
 	void SetIdleTurnEvent();
-	
+
 //CameraSwitchEvent
 public:
 	FName GetSwitchCameraTag();

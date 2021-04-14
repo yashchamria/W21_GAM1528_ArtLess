@@ -35,6 +35,7 @@ public:
 	void MoveForward();
 	void MoveBackward();
 
+	void TransportThroughSewer();
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
 	class UAG_InventoryComponent* InventoryComponent;
