@@ -35,12 +35,14 @@ private:
 	int UserIndex;
 
 public:
-	bool IsLevelUnlocked(int Level);
 	
 	void NotifyLevelCompleted(FString LevelName);
 
 	void SaveGame();
 	void LoadGame();
+	
+	UFUNCTION(BlueprintCallable, Category = "AG_Levels")
+	bool IsLevelUnlocked(int Level);
 
 	UFUNCTION(BlueprintCallable, Category = "AG_Levels")
 	void OpenNextLevel();
@@ -58,8 +60,8 @@ protected:
 private:
 	const uint8 TotalAvailableStars = 15;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Levels")
-	TArray<uint16> MinimunRequiredTurnsForLevel;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Levels", meta = (AllowPrivateAccess = "true"))
+	TArray<int> MinimunRequiredTurnsForLevel;
 	
 	uint16 NumberOfTurns = 0;
 
