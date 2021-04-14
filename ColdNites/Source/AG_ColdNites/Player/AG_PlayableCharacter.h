@@ -17,6 +17,8 @@ Name - Jonathan Sime
 #include "AG_ColdNites/BaseGridClasses/AG_BaseGridCharacter.h"
 #include "AG_PlayableCharacter.generated.h"
 
+class AAG_AIBaseGridCharacter;
+
 UCLASS()
 class AG_COLDNITES_API AAG_PlayableCharacter : public AAG_BaseGridCharacter
 {
@@ -36,6 +38,8 @@ public:
 	void MoveBackward();
 
 	void TransportThroughSewer();
+
+	void KnockOutAI(AAG_AIBaseGridCharacter* AiToKnockout);
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
 	class UAG_InventoryComponent* InventoryComponent;
