@@ -75,10 +75,6 @@ void AAG_EventManager::Tick(float DeltaTime)
 	CameraSwitchEventUpdate();
 	LevelWonEventUpdate(DeltaTime);
 	LevelLoseEventUpdate(DeltaTime);
-
-	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Red, FString::Printf(TEXT("Level, %d"), GameInstance->StarsCollectedPerLevel));
-	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Red, FString::Printf(TEXT("Total, %d"), GameInstance->TotalCollectedStars));
-
 }
 
 //Miscellaneous Events
@@ -245,12 +241,12 @@ FName AAG_EventManager::GetSwitchCameraTag()
 
 void AAG_EventManager::UpdateStarCount(uint8 StarIncrement)
 {
-	GameInstance->StarsCollectedPerLevel += StarIncrement;
+	CollectedStar++;
 }
 
 void AAG_EventManager::UpdateTurnCount(uint8 TurnIncrement)
 {
-	GameInstance->TotalTurnPerformed += TurnIncrement;
+	TurnPerformed++;
 }
 
 //Level Won Event.
@@ -273,6 +269,13 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 	
 		if(PlayerCharacter->bIsReached)
 		{
+			CollectedStar++;
+
+			if(TurnPerformed <= GameInstance->GetLevelMinimunTurnRequired())
+			{
+				CollectedStar++;
+			}
+			
 			if (WinWidgetTemplate)
 			{
 				WinWidget->SetVisibility(ESlateVisibility::Visible);
@@ -284,8 +287,6 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 			{
 				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 				GameInstance->NotifyLevelCompleted(LevelName);
-
-				GameInstance->ResetScoringParameters();
 			}
 		}
 	
@@ -317,6 +318,5 @@ void AAG_EventManager::LevelLoseEventUpdate(float DeltaTime)
 				PlayerController->EnableUIInput(false);
 			}
 		}
-		GameInstance->ResetScoringParameters();
 	}
 }

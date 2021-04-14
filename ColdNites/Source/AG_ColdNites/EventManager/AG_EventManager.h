@@ -53,7 +53,11 @@ private:
 	void CameraSwitchEventUpdate();
 
 //Scoring Event
-public:
+private:
+	uint16 TurnPerformed = 0;
+	uint8 CollectedStar = 0;
+
+	public:
 	void UpdateStarCount(uint8 StarIncrement = 1);
 	void UpdateTurnCount(uint8 TurnIncrement = 1);
 

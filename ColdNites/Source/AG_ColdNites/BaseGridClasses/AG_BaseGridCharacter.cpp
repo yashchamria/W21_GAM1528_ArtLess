@@ -8,8 +8,8 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	GetCharacterMovement()->MaxWalkSpeed = 250.0f;
-	ErrorRange = 6.0f; //Don't lower it any further...movement will might miss some update calls and not stop
+	GetCharacterMovement()->MaxWalkSpeed = 275.0f;
+	ErrorRange = 6.5f; //Don't lower it any further...movement will might miss some update calls and not stop
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);	
 
 	//Temp Hack to display desired mesh without skeletal animation

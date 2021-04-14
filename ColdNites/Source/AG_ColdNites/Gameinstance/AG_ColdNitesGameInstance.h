@@ -61,13 +61,12 @@ private:
 	const uint8 TotalAvailableStars = 15;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Levels", meta = (AllowPrivateAccess = "true"))
-	TArray<int> MinimunRequiredTurnsForLevel;
+	TArray<int> LevelMinimunRequiredTurns;
 	
 	uint16 NumberOfTurns = 0;
 
 public:
-	uint16 TotalTurnPerformed = 0;
 	uint8 TotalCollectedStars = 0;
-	uint8 StarsCollectedPerLevel = 0;
-	void ResetScoringParameters();
+
+	uint16 GetLevelMinimunTurnRequired();
 };

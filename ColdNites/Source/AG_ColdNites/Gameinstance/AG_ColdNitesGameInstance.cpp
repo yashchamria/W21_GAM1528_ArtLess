@@ -13,15 +13,31 @@ UAG_ColdNitesGameInstance::UAG_ColdNitesGameInstance()
 void UAG_ColdNitesGameInstance::Init()
 {
 	Super::Init();
+	
 	LoadGame();
+
+	LevelMinimunRequiredTurns.Reserve(10);
+
+	LevelMinimunRequiredTurns.Insert(3, 0);
+	LevelMinimunRequiredTurns.Insert(6, 1);
+	LevelMinimunRequiredTurns.Insert(10, 2);
+	LevelMinimunRequiredTurns.Insert(10, 3);
+	LevelMinimunRequiredTurns.Insert(10, 4);
+	LevelMinimunRequiredTurns.Insert(10, 5);
+	LevelMinimunRequiredTurns.Insert(10, 6);
+	LevelMinimunRequiredTurns.Insert(10, 7);
+	LevelMinimunRequiredTurns.Insert(10, 8);
+	LevelMinimunRequiredTurns.Insert(10, 9);
 }
 
-void UAG_ColdNitesGameInstance::ResetScoringParameters()
+uint16 UAG_ColdNitesGameInstance::GetLevelMinimunTurnRequired()
 {
-	TotalCollectedStars += StarsCollectedPerLevel;
-	StarsCollectedPerLevel = 0;
+	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 
-	NumberOfTurns = 0;
+	int CurrentLevelNum;
+	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), CurrentLevelNum);
+	
+	return LevelMinimunRequiredTurns[CurrentLevelNum - 1];
 }
 
 void UAG_ColdNitesGameInstance::OpenNextLevel()
@@ -45,8 +61,6 @@ void UAG_ColdNitesGameInstance::OpenSameLevel()
 	
 	UE_LOG(LogTemp, Warning, TEXT("LVL-NAME: %s"), *CurrentLevelName);
 
-	ResetScoringParameters();
-	
 	UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 

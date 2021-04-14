@@ -14,35 +14,40 @@ Team Members --> Xiyang Chen   | Project Manager/Programmer
 	     --> Vrund Soni    | Programmer
 	     --> Yash Chamria  | Programmer
 
-
-
 Alpha 01 Modules --> 
 
-1. TileMap 	     | Yash
-2. TurnBase System   | Jonathan
-3. BaseGrid Classes  | Yash
-4. PlayerCharacter   | Jonathan
-5. Inventory System  | Xiyang
-6. Menu System       | Vrund
+01. TileMap 	     | Yash
+02. TurnBase System   | Jonathan
+03. BaseGrid Classes  | Yash
+04. PlayerCharacter   | Jonathan
+05. Inventory System  | Xiyang
+06. Menu System       | Vrund
 
-**Other feature that might be present in submission but not ready for Alpha01 -> AI/Enemy, Camera Manager, Audio System, Pickup & BaseGrid Actor, Level Manager, Event System
+Alpha 02 Modules --> 
+
+07. AI System	     | Yash
+08. Event Manager     | Yash
+09. Camera Manager    | Yash
+10. Level Management | Yash
 
 
 Setup Instructions -->
-The correct level should load itself. The game will start with 3D Main Menu. Leading to one Alpha01 gameplay prototype level.
-Though rebuilding the light for each of this levels manually is prefered.
-In case, to manually load the levels, all the Alpha01 levels are located in Content/Maps/ALPHA01/...
+The correct level should load itself. The game will start with 3D Main Menu. Leading to Level Selection Screen.
+In case, to manually load the levels, all the levels are located in Content/Maps/GameLevels/...
 
 
 Player Controls -->
 
-Character Movements(Only Possible if the next tile is valid to walk on) -->
+Movements(Only Possible if the next tile is valid to walk on) -->
 Forward  -> W,  Up-Arrow,     Mouse-Clicking on Forward Tile
 Left     -> A,  Left-Arrow,   Mouse-Clicking on Left Tile
 Backward -> S,  Down-Arrow,   Mouse-Clicking on Backward Tile
 Right    -> D,  Right-Arrow,  Mouse-Clicking on Right Tile
 
-Character Inventory(Only if you have collected pickups) -->
+Transport(Only Possible if the player is on sewers) -->
+Transport -> E
+
+Inventory(Only if you have collected pickups) -->
 Scroll Up Throw the Inventory(collected pickups)   -> PageUp
 Scroll Down Throw the Inventory(collected pickups) -> PageDown
 
@@ -51,19 +56,15 @@ Pause(Menu Screen) -> Esc/Q
 Resume -> Esc/Q
 NOTE: The Esc key is disabled to stop PlayInEditor. To Exit the game use the 3D Exit Button in the 3D MainMenu.
 
-Known Bugs for Alpha01 -->
+Known Bugs for Alpha02 -->
 
 Individual Tile is not aware of its TileType(i.e. Fourway, Threeway, corner or straight), it just checks if the next tile is walkable or not. 
 Results in walking over a visual gap between two walkable tiles even in the cases it should not possible.
 
 Multiple consequence presses in the beginning 3D main menu screen might result in 3D Props losing their desired position.
 
-
-
-Current(Alpha01) Limitations -->
+Current Limitations -->
 
 No Animation is available for any characters.
-Player cannot knock out AI just yet.
-AI is still work in progress.
-Pickup is currently proof of working, more game specific features will be added later on.
+Player cannot knock out AI yet.
 
