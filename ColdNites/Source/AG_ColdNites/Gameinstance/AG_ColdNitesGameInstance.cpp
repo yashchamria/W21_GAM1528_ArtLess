@@ -20,7 +20,7 @@ void UAG_ColdNitesGameInstance::Init()
 
 	LevelMinimunRequiredTurns.Insert(3 , 0);
 	LevelMinimunRequiredTurns.Insert(6 , 1);
-	LevelMinimunRequiredTurns.Insert(6 , 2);
+	LevelMinimunRequiredTurns.Insert(12 , 2);
 	LevelMinimunRequiredTurns.Insert(10, 3);
 	LevelMinimunRequiredTurns.Insert(10, 4);
 	LevelMinimunRequiredTurns.Insert(10, 5);

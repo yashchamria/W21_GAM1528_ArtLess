@@ -87,7 +87,7 @@ void AAG_BaseGridCharacter::Tick(float DeltaTime)
 		if (bShouldDestroy)
 		{
 			bDestroy = true;
-			DestroyDelay = 1.0f;
+			DestroyDelay = 0.5f;
 		}
 	}
 
@@ -193,7 +193,7 @@ void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
 	bIsKnockedOut = true;
 
 	bKnockOut = true;
-	KnockOutDelay = 1.65f;
+	KnockOutDelay = 0.8f;
 	KnockedOutAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
 }
 

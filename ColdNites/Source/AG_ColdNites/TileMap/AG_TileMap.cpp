@@ -199,9 +199,12 @@ bool AAG_TileMap::IsRegistered(FName ActorTag, FIntPoint TileCoord)
 	{
 		for (AActor* RegisteredActor : Tiles[TileIndex]->RegisteredActors)
 		{
-			if (RegisteredActor->ActorHasTag(ActorTag))
+			if (RegisteredActor)
 			{
-				return true;
+				if (RegisteredActor->ActorHasTag(ActorTag))
+				{
+					return true;
+				}
 			}
 		}
 	}

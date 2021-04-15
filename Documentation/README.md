@@ -29,6 +29,7 @@ Alpha 02 Modules -->
 08. Event Manager     | Yash
 09. Camera Manager    | Yash
 10. Level Management  | Vrund
+11. Scoring System    | Vrund
 
 
 Setup Instructions -->

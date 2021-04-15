@@ -13,10 +13,13 @@ EBTNodeResult::Type UAG_IsPlayerInRange_BTTask::ExecuteTask(UBehaviorTreeCompone
 
 	if (AIController)
 	{
-		if (AIController->AICharacter->IsPlayerInRange())
+		if (AIController->AICharacter)
 		{
-			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-			return EBTNodeResult::Succeeded;
+			if (AIController->AICharacter->IsPlayerInRange())
+			{
+				FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+				return EBTNodeResult::Succeeded;
+			}
 		}
 	}
 	
