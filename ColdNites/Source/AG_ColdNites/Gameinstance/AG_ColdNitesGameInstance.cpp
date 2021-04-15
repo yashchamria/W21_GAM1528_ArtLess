@@ -18,9 +18,9 @@ void UAG_ColdNitesGameInstance::Init()
 
 	LevelMinimunRequiredTurns.Reserve(10);
 
-	LevelMinimunRequiredTurns.Insert(3, 0);
-	LevelMinimunRequiredTurns.Insert(6, 1);
-	LevelMinimunRequiredTurns.Insert(10, 2);
+	LevelMinimunRequiredTurns.Insert(3 , 0);
+	LevelMinimunRequiredTurns.Insert(6 , 1);
+	LevelMinimunRequiredTurns.Insert(6 , 2);
 	LevelMinimunRequiredTurns.Insert(10, 3);
 	LevelMinimunRequiredTurns.Insert(10, 4);
 	LevelMinimunRequiredTurns.Insert(10, 5);
@@ -82,6 +82,19 @@ void UAG_ColdNitesGameInstance::OpenSelectedLevel(int Level)
 	UE_LOG(LogTemp, Warning, TEXT("LVLS COMPLETED : %d"), CompletedLevels.Num());
 }
 
+void UAG_ColdNitesGameInstance::UpdateTotalStars(int CollectedStarsFromCurrenetLevel)
+{
+	int PreviousTotalStarCount = TotalStars.Num();
+
+	for (int i = PreviousTotalStarCount; i < PreviousTotalStarCount + CollectedStarsFromCurrenetLevel; i++)
+	{
+		TotalStars.AddUnique(i);
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("TOTAL STARS COLLECTED: %d"), TotalStars.Num());
+}
+
+
 void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 {
 	int LevelNum;
@@ -102,6 +115,7 @@ void UAG_ColdNitesGameInstance::SaveGame()
 	if (SaveGameInstance)
 	{
 		SaveGameInstance->CompletedLevels = CompletedLevels;
+		SaveGameInstance->TotalCollectedStars = TotalStars;
 		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveSlotName, UserIndex))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("GameSaved!"));
@@ -116,6 +130,7 @@ void UAG_ColdNitesGameInstance::LoadGame()
 	if (LoadedGameInstance)
 	{
 		CompletedLevels = LoadedGameInstance->CompletedLevels;
+		TotalStars = LoadedGameInstance->TotalCollectedStars;
 		UE_LOG(LogTemp, Warning, TEXT("GameLoaded!"));
 	}
 }

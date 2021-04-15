@@ -26,12 +26,11 @@ public:
         TArray<int> CompletedLevels;
 
     UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
+        TArray<int> TotalCollectedStars;
+
+    UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
         FString SaveSlotName;
 
     UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
         uint32 UserIndex;
-
-    uint8 TotalCollectedStars = 0;
-
-    uint8 StarsPerLevel = 0;
 };

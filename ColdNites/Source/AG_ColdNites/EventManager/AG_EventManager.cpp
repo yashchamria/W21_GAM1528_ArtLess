@@ -17,6 +17,7 @@ AAG_EventManager::AAG_EventManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	bLockLocation = true;
+	bIsAlreadyNotified = false;
 }
 
 void AAG_EventManager::BeginPlay()
@@ -63,6 +64,7 @@ void AAG_EventManager::BeginPlay()
 	SetFirstTurn(AG_TurnState::IsPlayerTurn);
 	LevelWonEventInit();
 	LevelLoseEventInit();
+
 }
 
 void AAG_EventManager::Tick(float DeltaTime)
@@ -239,14 +241,14 @@ FName AAG_EventManager::GetSwitchCameraTag()
 
 //Scoring Event
 
-void AAG_EventManager::UpdateStarCount(uint8 StarIncrement)
-{
-	CollectedStar++;
-}
-
-void AAG_EventManager::UpdateTurnCount(uint8 TurnIncrement)
+void AAG_EventManager::UpdateTurnCount()
 {
 	TurnPerformed++;
+}
+
+int AAG_EventManager::GetLevelStarCount()
+{
+	return CollectedStars.Num();
 }
 
 //Level Won Event.
@@ -269,24 +271,27 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 	
 		if(PlayerCharacter->bIsReached)
 		{
-			CollectedStar++;
-
-			if(TurnPerformed <= GameInstance->GetLevelMinimunTurnRequired())
+			if (TurnPerformed <= GameInstance->GetLevelMinimunTurnRequired())
 			{
-				CollectedStar++;
+				CollectedStars.AddUnique(2); //give star for level completed in minimum possible turns
+				UE_LOG(LogTemp, Warning, TEXT("Turns: %d"), TurnPerformed);
 			}
-			
+
+			//Notify the GameInstance of Level Completion
+			if (GameInstance && !bIsAlreadyNotified)
+			{
+				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+				
+				CollectedStars.AddUnique(3); //give star for level completion
+				GameInstance->UpdateTotalStars(CollectedStars.Num());
+				GameInstance->NotifyLevelCompleted(LevelName);
+				bIsAlreadyNotified = true;
+			}
+
 			if (WinWidgetTemplate)
 			{
 				WinWidget->SetVisibility(ESlateVisibility::Visible);
 				PlayerController->EnableUIInput(false);
-			}
-			
-			//Notify the GameInstance of Level Completion
-			if (GameInstance)
-			{
-				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-				GameInstance->NotifyLevelCompleted(LevelName);
 			}
 		}
 	

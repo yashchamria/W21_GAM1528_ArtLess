@@ -64,9 +64,9 @@ private:
 	TArray<int> LevelMinimunRequiredTurns;
 	
 	uint16 NumberOfTurns = 0;
+	TArray<int> TotalStars;
 
 public:
-	uint8 TotalCollectedStars = 0;
-
 	uint16 GetLevelMinimunTurnRequired();
+	void UpdateTotalStars(int CollectedStarsFromCurrenetLevel);
 };

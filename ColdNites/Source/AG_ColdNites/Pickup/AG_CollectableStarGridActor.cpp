@@ -32,8 +32,7 @@ void AAG_CollectableStarGridActor::Tick(float DeltaTime)
 
 void AAG_CollectableStarGridActor::OnCollected()
 {
-	EventManager->UpdateStarCount();
-
+	EventManager->CollectedStars.AddUnique(1); //give star on picking up a collectible item
 	Destroy();
 }
 

@@ -55,11 +55,13 @@ private:
 //Scoring Event
 private:
 	uint16 TurnPerformed = 0;
-	uint8 CollectedStar = 0;
 
-	public:
-	void UpdateStarCount(uint8 StarIncrement = 1);
-	void UpdateTurnCount(uint8 TurnIncrement = 1);
+public:
+	TArray<int> CollectedStars;
+	void UpdateTurnCount();
+
+	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
+	int GetLevelStarCount();
 
 //Win Event
 public:
@@ -67,7 +69,7 @@ public:
 		TSubclassOf<UUserWidget> WinWidgetTemplate;
 
 	bool bHasPlayerWon = false;
-	
+	bool bIsAlreadyNotified = false;
 private:	
 	void LevelWonEventInit();
 	void LevelWonEventUpdate(float DeltaTime);
