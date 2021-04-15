@@ -69,4 +69,11 @@ Art Link - https://sketchfab.com/3d-models/streets-of-montmartre-prop-preview-6e
 
 Created own textures for all of these.
 
-/--------------------------------------------------------------- ------------- ----------------------------------------------------------/
+/--------------------------------------------------------------- Vrund Soni (15th April 2021) ----------------------------------------------------------/
+
+Added Star sprites used for indicating stars earned in the level.
+
+Art - "Hyper Casual UI - Free"
+Art Link - https://swapnilrane24.itch.io/hyper-casual-ui-free
+
+/--------------------------------------------------------------- --------------------------- ----------------------------------------------------------/
