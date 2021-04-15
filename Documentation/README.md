@@ -16,7 +16,7 @@ Team Members --> Xiyang Chen   | Project Manager/Programmer
 
 Alpha 01 Modules --> 
 
-01. TileMap 	     | Yash
+01. TileMap 	      | Yash
 02. TurnBase System   | Jonathan
 03. BaseGrid Classes  | Yash
 04. PlayerCharacter   | Jonathan
@@ -25,10 +25,10 @@ Alpha 01 Modules -->
 
 Alpha 02 Modules --> 
 
-07. AI System	     | Yash
+07. AI System	      | Yash
 08. Event Manager     | Yash
 09. Camera Manager    | Yash
-10. Level Management | Yash
+10. Level Management  | Vrund
 
 
 Setup Instructions -->
