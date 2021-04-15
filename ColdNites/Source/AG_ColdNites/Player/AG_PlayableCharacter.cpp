@@ -30,19 +30,6 @@ void AAG_PlayableCharacter::BeginPlay()
 void AAG_PlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (TileMap->IsRegistered("AG_AICharacter", TileMap->GetTileCoord(GetActorLocation())) && this->bIsKnockedOut == false)
-	{
-		AActor* Ai = TileMap->GetAllRegisteredActors(TileMap->GetTileCoord(GetActorLocation()));
-		if (Ai != nullptr)
-		{
-			AAG_AIBaseGridCharacter* AiToKnockout = Cast<AAG_AIBaseGridCharacter>(Ai);
-			if (AiToKnockout->IsPlayerInRange() == false && AiToKnockout->bIsKnockedOut == false)
-			{
-				KnockOutAI(AiToKnockout);
-			}
-		}
-	}
 }
 
 void AAG_PlayableCharacter::MoveForward() { Super::MoveForward(); }
@@ -53,13 +40,29 @@ void AAG_PlayableCharacter::TransportThroughSewer()
 	Teleport();
 }
 
+void AAG_PlayableCharacter::AIKnockOut(FIntPoint TileCoord)
+{
+	if (TileMap->IsRegistered("AG_AICharacter", TileCoord))
+	{
+ 		TArray<AActor*> RegisteredAIActors;
+
+		TileMap->GetAllRegisteredActorArrayOfTag(TileCoord, "AG_AICharacter" , RegisteredAIActors);
+
+		if(RegisteredAIActors.Num() > 0)
+		{
+			for(AActor* AIActors : RegisteredAIActors)
+			{
+				AAG_AIBaseGridCharacter* AI = Cast<AAG_AIBaseGridCharacter>(AIActors);
+
+				if (AI) { AI->KnockOut(GetActorForwardVector()); }
+			}
+
+ 		}
+	}
+}
+
 void AAG_PlayableCharacter::MoveRight() { Super::MoveRight(); }
 void AAG_PlayableCharacter::MoveLeft() { Super::MoveLeft(); }
-
-void AAG_PlayableCharacter::KnockOutAI(AAG_AIBaseGridCharacter* AiToKnockout)
-{
-	AiToKnockout->KnockOut(AiToKnockout->GetActorForwardVector());
-}
 
 void AAG_PlayableCharacter::NextInventoryItem() { InventoryComponent->NextInventoryItem(); }
 void AAG_PlayableCharacter::PreviousInventoryItem() { InventoryComponent->PreviousInventoryItem(); }

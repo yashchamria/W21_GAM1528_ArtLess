@@ -80,8 +80,12 @@ public:
 	void UnRegister(AActor* Actor, FIntPoint TileCoord);
 	bool IsRegistered(AActor* Actor, FIntPoint TileCoord);
 	bool IsRegistered(FName ActorTag, FIntPoint TileCoord);
+	
 	AActor* GetAllRegisteredActors(FIntPoint TileCoord);
-
+	void GetAllRegisteredActorArray(FIntPoint TileCoord, TArray<AActor*>& RegisteredActors);
+	void GetAllRegisteredActorArrayOfTag(FIntPoint TileCoord, FName ActorTag, TArray<AActor*>& RegisteredActors);
+	uint8 GetNumberOfRegisteredActors(FIntPoint TileCoord);
+	
 	AG_TileInDirection GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor, uint32  = 1);
 
 	FName GetTileCameraTag(FIntPoint TileCoord);

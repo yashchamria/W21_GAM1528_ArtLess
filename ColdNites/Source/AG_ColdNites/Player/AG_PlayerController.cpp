@@ -165,6 +165,11 @@ void AAG_PlayerController::StopMove()
 			if (Player->bIsMyTurn && Player->bMoveSucceeded)
 			{
 				EventManager->UpdateTurnCount();
+
+				//Knock Out AI if possible before ending the turn
+				
+				Player->AIKnockOut(Player->NextTileCoord);
+				
 				Player->bIsMyTurn = false;
 			}
 		}

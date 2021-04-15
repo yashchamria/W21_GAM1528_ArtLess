@@ -208,7 +208,7 @@ bool AAG_TileMap::IsRegistered(FName ActorTag, FIntPoint TileCoord)
 	return false;
 }
 
-AActor* AAG_TileMap::	GetAllRegisteredActors(FIntPoint TileCoord)
+AActor* AAG_TileMap::GetAllRegisteredActors(FIntPoint TileCoord)
 {
 	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
 
@@ -217,6 +217,53 @@ AActor* AAG_TileMap::	GetAllRegisteredActors(FIntPoint TileCoord)
 		return Tiles[TileIndex]->RegisteredActors[0];
 	}
 	return nullptr;
+}
+
+void AAG_TileMap::GetAllRegisteredActorArray(FIntPoint TileCoord, TArray<AActor*>& RegisteredActors)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		uint8 RegisterActorNum = GetNumberOfRegisteredActors(TileCoord);
+
+		RegisteredActors.Reserve(RegisterActorNum);
+		
+		for(int i = 0; i < RegisterActorNum; i++)
+		{
+			RegisteredActors.Insert(Tiles[TileIndex]->RegisteredActors[i], i);
+		}
+	}	
+}
+
+void AAG_TileMap::GetAllRegisteredActorArrayOfTag(FIntPoint TileCoord, FName ActorTag, TArray<AActor*>& RegisteredActors)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		uint8 RegisterActorNum = GetNumberOfRegisteredActors(TileCoord);
+
+		for(AActor* RegisteredAI : Tiles[TileIndex]->RegisteredActors)
+		{
+			if(RegisteredAI->ActorHasTag(ActorTag))
+			{
+				RegisteredActors.Add(RegisteredAI);
+			}
+		}
+	}
+}
+
+uint8 AAG_TileMap::GetNumberOfRegisteredActors(FIntPoint TileCoord)
+{
+	const uint32 TileIndex = GetArrayIndexFromCoord(TileCoord);
+
+	if (Tiles.IsValidIndex(TileIndex))
+	{
+		return Tiles[TileIndex]->RegisteredActors.Num();
+	}
+
+	return 0;
 }
 
 AG_TileInDirection AAG_TileMap::GetTileInDirection(FIntPoint NextTileCoord, AActor* Actor, uint32 TileLeap)

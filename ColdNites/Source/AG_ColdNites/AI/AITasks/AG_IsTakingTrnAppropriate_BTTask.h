@@ -12,8 +12,10 @@ class AG_COLDNITES_API UAG_IsTakingTrnAppropriate_BTTask : public UBTTaskNode
 public:
 	UAG_IsTakingTrnAppropriate_BTTask();
 
+	class AAG_BaseGridAIController* AIController;
 	class AAG_PlayableCharacter* PlayerCharacter;
 	class AAG_EventManager* EventManager;
+
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };

@@ -30,6 +30,15 @@ enum class AG_AnimationStates : uint8
 	Attack		 UMETA(DisplayName = "Attack"),
 };
 
+UENUM()
+enum class AG_Direction : uint8
+{
+	Left		 UMETA(DisplayName = "Left"),
+	Right		 UMETA(DisplayName = "Right"),
+	Forward	     UMETA(DisplayName = "Forward"),
+	Backward     UMETA(DisplayName = "Backward"),
+};
+
 UCLASS()
 class AG_COLDNITES_API	AAG_BaseGridCharacter : public ACharacter
 {
@@ -62,6 +71,8 @@ public:
 	void Rotate(float Rotation);
 	
 	void KnockOut(FVector FallDirection);
+	
+	FIntPoint NextTileCoord = FIntPoint(-1,-1);
 
 	bool bIsReached = true;
 	bool bMoveSucceeded = false;
@@ -88,6 +99,8 @@ private:
 	
 	FRotator TargetRotation = FRotator::ZeroRotator;
 	FRotator KnockedOutAngle = FRotator::ZeroRotator;
+
+	AG_Direction MoveInDirection;
 	
 	//Animation Stuff ---> No Implementation Yet
 	bool bAnimate = true;

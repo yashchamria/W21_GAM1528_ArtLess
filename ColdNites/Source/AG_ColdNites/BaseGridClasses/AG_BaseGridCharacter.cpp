@@ -103,20 +103,22 @@ void AAG_BaseGridCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 void AAG_BaseGridCharacter::MoveTile(FVector DirectionVector, uint32 TileLeap)
 {
 	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
-	FIntPoint NextTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), DirectionVector, TileLeap);
+	FIntPoint NextTargetTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), DirectionVector, TileLeap);
 
-	bool IsNextTileWalkable = TileMap->GetTileProperty(NextTileCoord, AG_TileProperty::IsWalkable);
+	bool IsNextTileWalkable = TileMap->GetTileProperty(NextTargetTileCoord, AG_TileProperty::IsWalkable);
 
 	if (IsNextTileWalkable)
 	{
 		bWalk = true;
-		TargetTileWorldLocation = TileMap->GetTileWorldPosition(NextTileCoord);
+		TargetTileWorldLocation = TileMap->GetTileWorldPosition(NextTargetTileCoord);
 		TargetDirection = DirectionVector;
 
+		NextTileCoord = NextTargetTileCoord;
+		
 		if (bShouldRegister)
 		{
 			TileMap->UnRegister(this, CurrentTileCoord);
-			TileMap->Register(this, NextTileCoord);
+			TileMap->Register(this, NextTargetTileCoord);
 		}
 	}
 }
@@ -125,6 +127,7 @@ void AAG_BaseGridCharacter::MoveForward()
 {
 	//bRotate = false;
 	MoveTile(GetActorForwardVector());
+	MoveInDirection = AG_Direction::Forward;
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
@@ -132,6 +135,7 @@ void AAG_BaseGridCharacter::MoveBackward()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
+	MoveInDirection = AG_Direction::Backward;
 }
 
 void AAG_BaseGridCharacter::MoveRight()
@@ -139,6 +143,7 @@ void AAG_BaseGridCharacter::MoveRight()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
+	MoveInDirection = AG_Direction::Right;
 }
 
 void AAG_BaseGridCharacter::MoveLeft()
@@ -146,6 +151,7 @@ void AAG_BaseGridCharacter::MoveLeft()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
+	MoveInDirection = AG_Direction::Left;
 }
 
 void AAG_BaseGridCharacter::Teleport()
@@ -239,4 +245,5 @@ void AAG_BaseGridCharacter::ResetOnTurnEnd()
 {
 	bAlreadyRotated = false;
 	bMoveSucceeded = false;
+	NextTileCoord = FIntPoint(-1, -1);
 }

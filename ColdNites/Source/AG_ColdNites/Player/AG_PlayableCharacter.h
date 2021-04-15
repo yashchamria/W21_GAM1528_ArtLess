@@ -39,7 +39,9 @@ public:
 
 	void TransportThroughSewer();
 
-	void KnockOutAI(AAG_AIBaseGridCharacter* AiToKnockout);
+	void AIKnockOut(FIntPoint TileCoord);
+	bool bIsAIDectected = false;
+	
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
 	class UAG_InventoryComponent* InventoryComponent;

@@ -55,9 +55,9 @@ void AAG_AIBaseGridCharacter::MoveBackward()
 bool AAG_AIBaseGridCharacter::IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange)
 {
 	FIntPoint CurrentTileCoord = TileMap->GetTileCoord(GetActorLocation());
-	FIntPoint NextTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), InDirection, TileRange);
+	FIntPoint NextTargetTileCoord = TileMap->GetNextTileCoord(GetActorLocation(), InDirection, TileRange);
 
-	if (TileMap->IsRegistered(ActorTag, NextTileCoord))
+	if (TileMap->IsRegistered(ActorTag, NextTargetTileCoord))
 	{
 		GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "Actor In Range !!!");
 		return true;
