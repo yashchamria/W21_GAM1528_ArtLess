@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "AG_ColdNites/Gameinstance/AG_ColdNitesGameInstance.h"
 #include "AG_EventManager.generated.h"
 
 enum AG_TurnState : unsigned;
@@ -63,13 +64,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
 	int GetLevelStarCount();
 
+	void AddStar(AG_StarType Star);
 //Win Event
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-		TSubclassOf<UUserWidget> WinWidgetTemplate;
+	TSubclassOf<UUserWidget> WinWidgetTemplate;
 
 	bool bHasPlayerWon = false;
 	bool bIsAlreadyNotified = false;
+
 private:	
 	void LevelWonEventInit();
 	void LevelWonEventUpdate(float DeltaTime);
@@ -79,7 +82,7 @@ private:
 //Lose Event
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
-		TSubclassOf<UUserWidget> LoseWidgetTemplate;
+	TSubclassOf<UUserWidget> LoseWidgetTemplate;
 	
 private:	
 	void LevelLoseEventInit();

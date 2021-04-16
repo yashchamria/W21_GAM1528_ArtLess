@@ -18,6 +18,14 @@
 #include "Engine/GameInstance.h"
 #include "AG_ColdNitesGameInstance.generated.h"
 
+UENUM()
+enum class AG_StarType : uint8
+{
+	TurnStar				 UMETA(DisplayName = "TurnStar"),
+	CollectibleStar			 UMETA(DisplayName = "CollectibleStar"),
+	LevelCompletionStar		 UMETA(DisplayName = "LevelCompletionStar"),
+};
+
 UCLASS()
 class AG_COLDNITES_API UAG_ColdNitesGameInstance : public UGameInstance
 {
@@ -66,17 +74,17 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_ScoringSystem", meta = (AllowPrivateAccess = "true"))
 	TArray<int> LevelMaximumStarPossible;
 
-	TArray<int> TotalStars;
-
 	int TotalMaximumStars = 0;
 
+	TMultiMap<FString, AG_StarType> CollectedTotalStars;
 public:
 	uint16 GetLevelMinimunTurnRequired();
-	void UpdateTotalStars(int CollectedStarsFromCurrenetLevel);
 
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
 	int GetTotalMaximumStars();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
 	int GetTotalCollectedStars();
+
+	void AddStar(AG_StarType Star);
 };

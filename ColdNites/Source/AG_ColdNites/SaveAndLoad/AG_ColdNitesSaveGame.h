@@ -26,7 +26,7 @@ public:
         TArray<int> CompletedLevels;
 
     UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
-        TArray<int> TotalCollectedStars;
+        TMultiMap<FString, AG_StarType> CollectedLevelStars;
 
     UPROPERTY(VisibleAnywhere, Category = "AG_SaveGame")
         FString SaveSlotName;

@@ -14,6 +14,14 @@ void UAG_ColdNitesGameInstance::Init()
 {
 	Super::Init();
 	
+	if (LevelMaximumStarPossible.Num() > 0)
+	{
+		for (int NumStars : LevelMaximumStarPossible)
+		{
+			TotalMaximumStars += NumStars;
+		}
+	}
+
 	LoadGame();
 }
 
@@ -38,16 +46,12 @@ void UAG_ColdNitesGameInstance::OpenNextLevel()
 	int NextLevelNum = CurrentLevelNum + 1; 
 	NextLevelToLoad.AppendInt(NextLevelNum);
 
-	UE_LOG(LogTemp, Warning, TEXT("LVL-NAME : %s"), *NextLevelToLoad);
 	UGameplayStatics::OpenLevel(this, FName(NextLevelToLoad));
 }
 
 void UAG_ColdNitesGameInstance::OpenSameLevel()
 {
 	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	
-	UE_LOG(LogTemp, Warning, TEXT("LVL-NAME: %s"), *CurrentLevelName);
-
 	UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 
@@ -60,44 +64,23 @@ void UAG_ColdNitesGameInstance::OpenSelectedLevel(int Level)
 		LevelToLoad.AppendInt(Level);
 		UGameplayStatics::OpenLevel(this, FName(LevelToLoad));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TRYING TO OPEN LEVEL: %d"), Level);
-		UE_LOG(LogTemp, Warning, TEXT("UNLOCK PREVIOUS LEVELS!"));
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("LVLS COMPLETED : %d"), CompletedLevels.Num());
-}
-
-void UAG_ColdNitesGameInstance::UpdateTotalStars(int CollectedStarsFromCurrenetLevel)
-{
-	int PreviousTotalStarCount = TotalStars.Num();
-
-	for (int i = PreviousTotalStarCount; i < PreviousTotalStarCount + CollectedStarsFromCurrenetLevel; i++)
-	{
-		TotalStars.AddUnique(i);
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("TOTAL STARS COLLECTED: %d"), TotalStars.Num());
 }
 
 int UAG_ColdNitesGameInstance::GetTotalMaximumStars()
 {
-	if (LevelMaximumStarPossible.Num() > 0)
-	{
-		for (int NumStars : LevelMaximumStarPossible)
-		{
-			TotalMaximumStars += NumStars;
-		}
-	}
 	return TotalMaximumStars;
 }
 
 int UAG_ColdNitesGameInstance::GetTotalCollectedStars()
 {
-	return TotalStars.Num();
+	return CollectedTotalStars.Num();
 }
 
+void UAG_ColdNitesGameInstance::AddStar(AG_StarType Star)
+{
+	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+	CollectedTotalStars.AddUnique(CurrentLevelName, Star);
+}
 
 void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 {
@@ -105,9 +88,6 @@ void UAG_ColdNitesGameInstance::NotifyLevelCompleted(FString LevelName)
 	FDefaultValueHelper::ParseInt(LevelName.RightChop(LevelBaseString.Len()), LevelNum);
 
 	CompletedLevels.AddUnique(LevelNum);
-
-	UE_LOG(LogTemp, Warning, TEXT("LVL COMPLETED : %d"), LevelNum);
-	UE_LOG(LogTemp, Warning, TEXT("TOTAL LVLS COMPLETED : %d"), CompletedLevels.Num());
 
 	SaveGame();
 }
@@ -119,7 +99,7 @@ void UAG_ColdNitesGameInstance::SaveGame()
 	if (SaveGameInstance)
 	{
 		SaveGameInstance->CompletedLevels = CompletedLevels;
-		SaveGameInstance->TotalCollectedStars = TotalStars;
+		SaveGameInstance->CollectedTotalStars = CollectedTotalStars;
 		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveSlotName, UserIndex))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("GameSaved!"));
@@ -134,7 +114,7 @@ void UAG_ColdNitesGameInstance::LoadGame()
 	if (LoadedGameInstance)
 	{
 		CompletedLevels = LoadedGameInstance->CompletedLevels;
-		TotalStars = LoadedGameInstance->TotalCollectedStars;
+		CollectedTotalStars = LoadedGameInstance->CollectedTotalStars;
 		UE_LOG(LogTemp, Warning, TEXT("GameLoaded!"));
 	}
 }

@@ -251,6 +251,11 @@ int AAG_EventManager::GetLevelStarCount()
 	return CollectedStars.Num();
 }
 
+void AAG_EventManager::AddStar(AG_StarType Star)
+{
+	GameInstance->AddStar(Star);
+}
+
 //Level Won Event.
 
 void AAG_EventManager::LevelWonEventInit()
@@ -268,22 +273,22 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 	if (TileMap->GetTileProperty(PlayerCurrentTileCoord, AG_TileProperty::IsWinTile))
 	{
 		bHasPlayerWon = true;
-	
+		FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+
 		if(PlayerCharacter->bIsReached)
 		{
 			if (TurnPerformed <= GameInstance->GetLevelMinimunTurnRequired())
 			{
 				CollectedStars.AddUnique(2); //give star for level completed in minimum possible turns
-				UE_LOG(LogTemp, Warning, TEXT("Turns: %d"), TurnPerformed);
+				GameInstance->AddStar(AG_StarType::TurnStar);
 			}
 
 			//Notify the GameInstance of Level Completion
 			if (GameInstance && !bIsAlreadyNotified)
 			{
-				FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-				
 				CollectedStars.AddUnique(3); //give star for level completion
-				GameInstance->UpdateTotalStars(CollectedStars.Num());
+				GameInstance->AddStar(AG_StarType::LevelCompletionStar);
+
 				GameInstance->NotifyLevelCompleted(LevelName);
 				bIsAlreadyNotified = true;
 			}
@@ -294,7 +299,6 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 				PlayerController->EnableUIInput(false);
 			}
 		}
-	
 		PlayerController->EnableGamePlayInput(false);
 	}
 }

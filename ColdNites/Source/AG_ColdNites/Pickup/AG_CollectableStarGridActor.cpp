@@ -1,6 +1,8 @@
 #include "AG_CollectableStarGridActor.h"
 #include "AG_ColdNites/EventManager/AG_EventManager.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
+#include "AG_ColdNites/Gameinstance/AG_ColdNitesGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 AAG_CollectableStarGridActor::AAG_CollectableStarGridActor()
 {
@@ -10,9 +12,7 @@ AAG_CollectableStarGridActor::AAG_CollectableStarGridActor()
 void AAG_CollectableStarGridActor::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + ActorHeight));
-
 }
 
 void AAG_CollectableStarGridActor::Tick(float DeltaTime)
@@ -32,7 +32,7 @@ void AAG_CollectableStarGridActor::Tick(float DeltaTime)
 
 void AAG_CollectableStarGridActor::OnCollected()
 {
-	EventManager->CollectedStars.AddUnique(1); //give star on picking up a collectible item
+	EventManager->AddStar(AG_StarType::CollectibleStar);
 	Destroy();
 }
 
