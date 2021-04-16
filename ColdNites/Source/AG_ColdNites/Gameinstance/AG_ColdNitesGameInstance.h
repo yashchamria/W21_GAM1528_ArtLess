@@ -60,13 +60,23 @@ protected:
 private:
 	const uint8 TotalAvailableStars = 15;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Levels", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_ScoringSystem", meta = (AllowPrivateAccess = "true"))
 	TArray<int> LevelMinimunRequiredTurns;
 	
-	uint16 NumberOfTurns = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_ScoringSystem", meta = (AllowPrivateAccess = "true"))
+	TArray<int> LevelMaximumStarPossible;
+
 	TArray<int> TotalStars;
+
+	int TotalMaximumStars = 0;
 
 public:
 	uint16 GetLevelMinimunTurnRequired();
 	void UpdateTotalStars(int CollectedStarsFromCurrenetLevel);
+
+	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
+	int GetTotalMaximumStars();
+
+	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
+	int GetTotalCollectedStars();
 };

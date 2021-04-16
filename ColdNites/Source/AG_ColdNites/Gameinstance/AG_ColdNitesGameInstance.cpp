@@ -15,19 +15,6 @@ void UAG_ColdNitesGameInstance::Init()
 	Super::Init();
 	
 	LoadGame();
-
-	LevelMinimunRequiredTurns.Reserve(10);
-
-	LevelMinimunRequiredTurns.Insert(3 , 0);
-	LevelMinimunRequiredTurns.Insert(6 , 1);
-	LevelMinimunRequiredTurns.Insert(12 , 2);
-	LevelMinimunRequiredTurns.Insert(10, 3);
-	LevelMinimunRequiredTurns.Insert(10, 4);
-	LevelMinimunRequiredTurns.Insert(10, 5);
-	LevelMinimunRequiredTurns.Insert(10, 6);
-	LevelMinimunRequiredTurns.Insert(10, 7);
-	LevelMinimunRequiredTurns.Insert(10, 8);
-	LevelMinimunRequiredTurns.Insert(10, 9);
 }
 
 uint16 UAG_ColdNitesGameInstance::GetLevelMinimunTurnRequired()
@@ -92,6 +79,23 @@ void UAG_ColdNitesGameInstance::UpdateTotalStars(int CollectedStarsFromCurrenetL
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("TOTAL STARS COLLECTED: %d"), TotalStars.Num());
+}
+
+int UAG_ColdNitesGameInstance::GetTotalMaximumStars()
+{
+	if (LevelMaximumStarPossible.Num() > 0)
+	{
+		for (int NumStars : LevelMaximumStarPossible)
+		{
+			TotalMaximumStars += NumStars;
+		}
+	}
+	return TotalMaximumStars;
+}
+
+int UAG_ColdNitesGameInstance::GetTotalCollectedStars()
+{
+	return TotalStars.Num();
 }
 
 
