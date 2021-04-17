@@ -1,11 +1,22 @@
+/******************************************************************************************************************************************
+	Team: ArtLess Games - Section 010
+
+	Name: Yash Chamria
+
+	Module: Event Manager
+
+	Description: Event Manager handles and centralizes level-specific events such as Turn System Events, Camera Switch Events, Level Win/Lose Events,
+				Scoring Events with other small events using the functions and working along with other actors.
+********************************************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "AG_ColdNites/Gameinstance/AG_ColdNitesGameInstance.h"
 #include "AG_EventManager.generated.h"
 
 enum AG_TurnState : unsigned;
+enum class AG_StarType : unsigned char;
 
 UCLASS()
 class AG_COLDNITES_API AAG_EventManager : public AActor

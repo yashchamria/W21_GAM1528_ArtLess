@@ -11,7 +11,7 @@
 #include "AG_ColdNites/AI/AG_AIBaseGridCharacter.h"
 #include "AG_ColdNites/GameMode/AG_ColdNitesGameModeBase.h"
 #include "AG_ColdNites/BaseGridClasses/AG_BaseGridCharacter.h"
-#include "AG_ColdNites/Gameinstance/AG_ColdNitesGameInstance.h"
+#include "AG_ColdNites/LevelManagement/AG_ColdNitesGameInstance.h"
 
 AAG_EventManager::AAG_EventManager()
 {

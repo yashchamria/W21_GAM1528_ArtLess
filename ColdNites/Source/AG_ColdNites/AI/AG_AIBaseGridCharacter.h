@@ -3,10 +3,12 @@ Team - ArtLess Games - Section 010
 
 Name - Yash Chamria
 
- Module:  AI
+ Module:  AI System
  
- Description - This AIBaseGridCharacter handles all the Generic AI functions such as Player Detection, Catching the player, etc.
-			   So any inheriting AI classes don't have to do repetitive code.
+ Description - The AI System allows the easy creation of game enemies using the single BaseAI class and Behaviour Tree Task Nodes.
+
+				AIBase Grid Character inherits from Base Grid Character and will be the base class of all the AI blueprints
+				and the AI behaviours will be extended using the Behaviour Tree.
 ******************************************************************************************************************/
 #pragma once
 

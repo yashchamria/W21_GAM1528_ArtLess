@@ -1,3 +1,12 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Vrund Soni
+
+ Module: 3D Game Menu Module
+
+ Description - Empty GameMode for the GameMenu Level.
+*******************************************************************************************************************/
 #pragma once
 
 #include "CoreMinimal.h"

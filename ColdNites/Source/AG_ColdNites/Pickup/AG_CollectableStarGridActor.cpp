@@ -1,8 +1,7 @@
 #include "AG_CollectableStarGridActor.h"
 #include "AG_ColdNites/EventManager/AG_EventManager.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
-#include "AG_ColdNites/Gameinstance/AG_ColdNitesGameInstance.h"
-#include "Kismet/GameplayStatics.h"
+#include "AG_ColdNites/LevelManagement//AG_ColdNitesGameInstance.h"
 
 AAG_CollectableStarGridActor::AAG_CollectableStarGridActor()
 {

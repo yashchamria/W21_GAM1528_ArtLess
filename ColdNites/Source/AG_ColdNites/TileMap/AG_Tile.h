@@ -1,7 +1,10 @@
 /******************************************************************************************************************
 Team - ArtLess Games - Section 010
+
 Name - Yash Chamria
+
  Module:  TileMap
+ 
  Description - TileMap is resoponsible for spawning the tiles in the world which makes the level possible.
 			   It is possible to spawn any number of tiles on the fly through the editor. For example change 10x10 tile to 100x100 from editor itself.
 

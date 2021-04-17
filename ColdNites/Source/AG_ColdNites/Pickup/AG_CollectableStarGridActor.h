@@ -1,3 +1,13 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Yash Chamria
+
+ Description - The PickupActor inherits from the BaseGridActor.
+			   This actor is reponsible for acting as a collectible star for the level.
+			   
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"

@@ -1,7 +1,10 @@
 /******************************************************************************************************************
 Team - ArtLess Games - Section 010
+
 Name - Xiyang Chen
+
  Module:  Inventory System
+ 
  Description - The PickupActor inherits from the BaseGridActor.
 			   This class will be the base class for all the future pickups in the game.
 			   Also, added a floating effect.

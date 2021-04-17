@@ -1,3 +1,18 @@
+/******************************************************************************************************************
+Team - ArtLess Games - Section 010
+
+Name - Yash Chamria
+
+ Module:  AI System
+
+ Description - The AI System allows the easy creation of game enemies using the single BaseAI class and Behaviour Tree Task Nodes.
+
+				The Behaviour Tree is the one, responsible for the AI Behaviour and what makes every AI unique.
+				It uses a set of nodes that determine the tasks AI needs to perform.
+
+				This node is responsible for checking for any major events such as player win/lose/knockout ot AI knockout before letting the AI move.
+******************************************************************************************************************/
+
 #pragma once
 
 #include "CoreMinimal.h"

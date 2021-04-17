@@ -3,12 +3,10 @@ Team - ArtLess Games - Section 010
 
 Name - Jonathan Sime
 
- Module:  Game Mode Base
+ Module:  Turn System Module (Replaced)
 
- Description - GameModeBase handles TurnStates.
-			   FinishTurn() is called by the last object to update during it's turn to continue the turns.
-			   AllowPlayerMove() allows the player to move once their turn starts.
-
+ Description - GameModeBase stores the TurnStates.
+			   Turn System is handled by the EventManager class in the new system.
 *******************************************************************************************************************/
 
 #pragma once
