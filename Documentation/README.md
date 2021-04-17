@@ -52,10 +52,29 @@ Inventory(Only if you have collected pickups) -->
 Scroll Up Throw the Inventory(collected pickups)   -> PageUp
 Scroll Down Throw the Inventory(collected pickups) -> PageDown
 
-
 Pause(Menu Screen) -> Esc/Q
 Resume -> Esc/Q
 NOTE: The Esc key is disabled to stop PlayInEditor. To Exit the game use the 3D Exit Button in the 3D MainMenu.
+
+Scoring System | Star Types
+
+There are three possible StarType for a level in the game.
+
+Level Completion Star --> Get it by completing the level.
+Collectible Star      --> Get it by collecting in-level Star prop.
+Turn Star 	      --> Get it by completing the level in the minimum number of Turns.
+
+Note - Not every level has 3 stars.
+
+AI System | AI Types
+
+There are three types of AI in the game.
+
+Still AI - Still AI only stays in one place and will only react if the player is right in the front tile.
+Rotating AI - Rotating AI rotates 180 degree after every player turn, it will also attack if the player is right in front of it.
+Patrolling AI - Patrolling AI will patrol on set Tile Coordinates, it will also only attack if the player comes to the forward tile.
+
+Note - All the AI can be knocked out if the player approaches the AI from the blind spot(any direction but not the front).
 
 Known Bugs for Alpha02 -->
 
@@ -67,5 +86,9 @@ Multiple consequence presses in the beginning 3D main menu screen might result i
 Current Limitations -->
 
 No Animation is available for any characters.
-Player cannot knock out AI yet.
+
+The Current Unreal Engine 4.26 does not support UPROPERTY Macro for TMultiMap Yet -
+https://answers.unrealengine.com/questions/588193/tmultimap-not-allowed-as-a-uproperty.html
+As a result, CollectedTotalStars will not work for the new Instance of the Game and will be reset on every new launch.
+Though CollectedTotalStars will work fine with the same running Instance of the Game.
 
