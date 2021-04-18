@@ -22,23 +22,16 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	Tags.Add("AG_PlayableCharacter");
 }
 
-void AAG_PlayableCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
+void AAG_PlayableCharacter::BeginPlay() { Super::BeginPlay(); }
 
-void AAG_PlayableCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
+void AAG_PlayableCharacter::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
-void AAG_PlayableCharacter::MoveForward() { Super::MoveForward(); }
+void AAG_PlayableCharacter::MoveForward()  { Super::MoveForward();  }
 void AAG_PlayableCharacter::MoveBackward() { Super::MoveBackward(); }
+void AAG_PlayableCharacter::MoveRight()    { Super::MoveRight();    }
+void AAG_PlayableCharacter::MoveLeft()     { Super::MoveLeft();     }
 
-void AAG_PlayableCharacter::TransportThroughSewer()
-{
-	Teleport();
-}
+void AAG_PlayableCharacter::TransportThroughSewer() { Teleport(); }
 
 void AAG_PlayableCharacter::AIKnockOut(FIntPoint TileCoord)
 {
@@ -56,13 +49,9 @@ void AAG_PlayableCharacter::AIKnockOut(FIntPoint TileCoord)
 
 				if (AI) { AI->KnockOut(GetActorForwardVector()); }
 			}
-
  		}
 	}
 }
-
-void AAG_PlayableCharacter::MoveRight() { Super::MoveRight(); }
-void AAG_PlayableCharacter::MoveLeft() { Super::MoveLeft(); }
 
 void AAG_PlayableCharacter::NextInventoryItem() { InventoryComponent->NextInventoryItem(); }
 void AAG_PlayableCharacter::PreviousInventoryItem() { InventoryComponent->PreviousInventoryItem(); }
