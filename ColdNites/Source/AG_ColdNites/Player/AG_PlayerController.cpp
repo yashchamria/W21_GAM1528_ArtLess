@@ -13,6 +13,10 @@ AAG_PlayerController::AAG_PlayerController()
 
 	bGamePlayInput = true;
 	bUIInput = true;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk2'"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_PlayerController::BeginPlay()
@@ -109,6 +113,7 @@ void AAG_PlayerController::MoveRight()
 			if (Player->bIsMyTurn)
 			{
 				Player->MoveRight();
+				WalkSoundEffect();
 			}
 		}
 	}
@@ -123,6 +128,7 @@ void AAG_PlayerController::MoveLeft()
 			if (Player->bIsMyTurn)
 			{
 				Player->MoveLeft();
+				WalkSoundEffect();
 			}
 		}
 	}
@@ -137,6 +143,7 @@ void AAG_PlayerController::MoveForward()
 			if (Player->bIsMyTurn)
 			{
 				Player->MoveForward();
+				WalkSoundEffect();
 			}
 		}
 	}
@@ -151,6 +158,7 @@ void AAG_PlayerController::MoveBackward()
 			if (Player->bIsMyTurn)
 			{
 				Player->MoveBackward();
+				WalkSoundEffect();
 			}
 		}
 	}
@@ -239,6 +247,11 @@ void AAG_PlayerController::PreviousInventoryItem()
 }
 
 ///---------------------------------------UI Setup----------------------------------------------------------///
+
+void AAG_PlayerController::WalkSoundEffect()
+{
+	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetSpawnLocation()); }
+}
 
 void AAG_PlayerController::EnableUIInput(bool UIInput)
 {

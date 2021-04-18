@@ -52,4 +52,5 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_PatrolProperty", meta = (EditCondition = "CanPatrol"))
 		TArray<FIntPoint> PatrolTileCoords;
+
 };

@@ -3,6 +3,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "AG_ColdNites/Player/AG_PlayableCharacter.h"
 #include "AG_ColdNites/Player/AG_PlayerController.h"
+#include "Sound/SoundBase.h"
 
 AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
 {
@@ -12,6 +13,10 @@ AAG_AIBaseGridCharacter::AAG_AIBaseGridCharacter()
 void AAG_AIBaseGridCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	//static ConstructorHelpers::FObjectFinder<USoundBase>  USB(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk_on_Wood_Tile'"));
+	//WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	//if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_AIBaseGridCharacter::BeginPlay()
@@ -40,16 +45,19 @@ void AAG_AIBaseGridCharacter::MoveRight()
 void AAG_AIBaseGridCharacter::MoveLeft()
 {
 	Super::MoveLeft();
+	AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 }
 
 void AAG_AIBaseGridCharacter::MoveForward()
 {
 	Super::MoveForward();
+	AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 }
 
 void AAG_AIBaseGridCharacter::MoveBackward()
 {
 	Super::MoveBackward();
+	AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 }
 
 bool AAG_AIBaseGridCharacter::IsActorInRange(FName ActorTag, FVector InDirection, uint32 TileRange)

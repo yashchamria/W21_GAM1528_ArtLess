@@ -98,6 +98,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
 		bool bMainMenuVisible;
 
+
+//-----------------------------Audio---------------------------------------//
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Walk")
+		class USoundBase* WalkSound;
+	void WalkSoundEffect();
+
 public:
 
 	void EnableUIInput(bool UIInput = true);

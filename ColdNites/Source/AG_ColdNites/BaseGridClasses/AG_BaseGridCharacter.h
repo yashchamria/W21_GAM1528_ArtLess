@@ -109,8 +109,8 @@ public:
 
 	
 //Audio Stuff ---> No Proper Implementation Yet
-	/*UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Walk")
 		class USoundBase* WalkSound;
 	
-	void WalkSoundEffect();*/
+	void WalkSoundEffect();
 };

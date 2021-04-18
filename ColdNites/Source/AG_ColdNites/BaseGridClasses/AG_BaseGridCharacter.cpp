@@ -4,6 +4,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine.h"
 
+#include "Sound/SoundBase.h"
+
 AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -17,9 +19,9 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 	AG_TempMesh->SetCollisionProfileName("NoCollision");
 	AG_TempMesh->SetupAttachment(RootComponent);
 	
-	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
-	//WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
-	//if (USB.Succeeded()) { WalkSound = USB.Object; }
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk'"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
@@ -125,6 +127,7 @@ void AAG_BaseGridCharacter::MoveForward()
 {
 	//bRotate = false;
 	MoveTile(GetActorForwardVector());
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
@@ -132,6 +135,7 @@ void AAG_BaseGridCharacter::MoveBackward()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveRight()
@@ -139,6 +143,7 @@ void AAG_BaseGridCharacter::MoveRight()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveLeft()
@@ -146,6 +151,7 @@ void AAG_BaseGridCharacter::MoveLeft()
 	//bRotate = true;
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::Teleport()
@@ -191,10 +197,10 @@ void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
 	KnockedOutAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
 }
 
-//void AAG_BaseGridCharacter::WalkSoundEffect()
-//{
-//	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
-//}
+void AAG_BaseGridCharacter::WalkSoundEffect()
+{
+	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
+}
 
 void AAG_BaseGridCharacter::Animate(){}
 
