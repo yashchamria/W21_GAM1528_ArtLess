@@ -32,7 +32,7 @@ void AAG_CollectableStarGridActor::Tick(float DeltaTime)
 void AAG_CollectableStarGridActor::OnCollected()
 {
 	EventManager->AddStar(AG_StarType::CollectibleStar);
-	EventManager->CollectedStars.AddUnique(AG_StarType::CollectibleStar);
+	EventManager->CollectedLevelStars.AddUnique(AG_StarType::CollectibleStar);
 	Destroy();
 }
 

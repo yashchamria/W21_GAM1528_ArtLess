@@ -69,7 +69,7 @@ private:
 	uint16 TurnPerformed = 0;
 
 public:
-	TArray<AG_StarType> CollectedStars;
+	TArray<AG_StarType> CollectedLevelStars;
 	void UpdateTurnCount();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")

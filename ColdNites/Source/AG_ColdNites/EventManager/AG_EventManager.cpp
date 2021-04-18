@@ -248,7 +248,7 @@ void AAG_EventManager::UpdateTurnCount()
 
 int AAG_EventManager::GetLevelStarCount()
 {
-	return CollectedStars.Num();
+	return CollectedLevelStars.Num();
 }
 
 void AAG_EventManager::AddStar(AG_StarType Star)
@@ -279,14 +279,14 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 		{
 			if (TurnPerformed <= GameInstance->GetLevelMinimunTurnRequired())
 			{
-				CollectedStars.AddUnique(AG_StarType::TurnStar); //give star for level completed in minimum possible turns
+				CollectedLevelStars.AddUnique(AG_StarType::TurnStar); //give star for level completed in minimum possible turns
 				GameInstance->AddStar(AG_StarType::TurnStar);
 			}
 
 			//Notify the GameInstance of Level Completion
 			if (GameInstance && !bIsAlreadyNotified)
 			{
-				CollectedStars.AddUnique(AG_StarType::LevelCompletionStar); //give star for level completion
+				CollectedLevelStars.AddUnique(AG_StarType::LevelCompletionStar); //give star for level completion
 				GameInstance->AddStar(AG_StarType::LevelCompletionStar);
 
 				GameInstance->NotifyLevelCompleted(LevelName);
