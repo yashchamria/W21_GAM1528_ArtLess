@@ -43,17 +43,14 @@ EBTNodeResult::Type UAG_MoveToNextPatrolPoint_BTTask::ExecuteTask(UBehaviorTreeC
 
 			case AG_TileInDirection::TileAtBackward:
 				AICharacter->MoveBackward();
-				AICharacter->Rotate(180);
 				break;
 
 			case AG_TileInDirection::TileAtLeft:
 				AICharacter->MoveLeft();
-				AICharacter->Rotate(-90);
 				break;
 
 			case AG_TileInDirection::TileAtRight:
 				AICharacter->MoveRight();
-				AICharacter->Rotate(90);
 				break;
 
 			default:
