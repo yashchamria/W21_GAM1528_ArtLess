@@ -28,7 +28,7 @@ void UAG_InventoryComponent::AddToInventory(AAG_PickupActor* pickup)
 		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, OwningActor->GetActorLocation());
 	}
 }
-}
+
 
 int UAG_InventoryComponent::GetInventoryCount()
 {
