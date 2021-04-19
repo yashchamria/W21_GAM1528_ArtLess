@@ -1,6 +1,7 @@
 #include "AG_UIController.h"
 #include "AG_MenuButton.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/AudioComponent.h"
 
 AAG_UIController::AAG_UIController()
 {
@@ -12,6 +13,13 @@ AAG_UIController::AAG_UIController()
 	
 	bNextClicked = false;
 	bPrevClicked = false;
+
+	//static ConstructorHelpers::FObjectFinder<UAudioComponent> UAC(TEXT("Switch Sound '/Game/Audio/UnCategorize/UI'"));
+	//AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Switch Sound"));
+	//if (UAC.Succeeded()) { AudioComponent = UAC.Object; }
+	//AudioComponent->SetupAttachment(RootComponent);
+	//AudioComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	
 }
 
 void AAG_UIController::BeginPlay()
@@ -75,6 +83,10 @@ void AAG_UIController::RepositionButtons()
 			Angle += RotationRate;
 		}
 	}
+
+	//if (!AudioComponent->IsPlaying()) {
+	//	AudioComponent->Play();
+	//}
 }
 
 void AAG_UIController::GetCurrentYawValues()
@@ -124,4 +136,8 @@ void AAG_UIController::RotateOnPrevClicked(float YawValue)
 			}
 		}
 	}
+}
+
+void AAG_UIController::PlaySoundEffect()
+{
 }

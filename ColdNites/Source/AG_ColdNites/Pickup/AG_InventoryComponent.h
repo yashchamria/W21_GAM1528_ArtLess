@@ -52,10 +52,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Inventory")
 	TArray< class AAG_PickupActor* > Inventory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Inventory_Sound")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Audio")
 		class USoundBase* PickUpSound;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Inventory_Sound")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Audio")
 		class USoundBase* InventorySound;
 
 protected:

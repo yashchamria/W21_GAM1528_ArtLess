@@ -38,9 +38,11 @@ public:
 	void TransportThroughSewer();
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Pickup")
 	class UAG_InventoryComponent* InventoryComponent;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Pickup")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Pickup")
 		class USceneComponent* ItemHolder;
 
 	void NextInventoryItem();

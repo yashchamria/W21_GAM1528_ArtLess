@@ -33,7 +33,11 @@ public:
 	bool bPrevClicked;
 
 	float RotationRate;
-	
+
+	//----------Audio--------------
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Audio")
+	//	class UAudioComponent* AudioComponent;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -52,6 +56,8 @@ public:
 
 	void RotateOnNextClicked(float YawValue);
 	void RotateOnPrevClicked(float YawValue);
+
+	void PlaySoundEffect();
 
 private:
 	float RotationSpeed = 0.0f;
