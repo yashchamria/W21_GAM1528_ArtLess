@@ -21,6 +21,13 @@ void UAG_InventoryComponent::AddToInventory(AAG_PickupActor* pickup)
 {
 	Inventory.AddUnique(pickup);
 	pickup->Disable();
+	
+	AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
+	if (PickUpSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, OwningActor->GetActorLocation());
+	}
+}
 }
 
 int UAG_InventoryComponent::GetInventoryCount()
@@ -95,6 +102,10 @@ void UAG_InventoryComponent::EquipNewInventoryItem(AAG_PickupActor* NewItem)
 
 		AAG_PlayableCharacter* OwningActor = Cast<AAG_PlayableCharacter>(GetOwner());
 		NewItem->AttachToComponent(OwningActor->ItemHolder, FAttachmentTransformRules::SnapToTargetIncludingScale, "AttachPoint");
+		if (InventorySound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, InventorySound, OwningActor->GetActorLocation());
+		}
 	}
 	CurrentInventoryItem = NewItem;
 }
