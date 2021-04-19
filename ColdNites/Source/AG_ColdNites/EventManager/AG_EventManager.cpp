@@ -64,7 +64,7 @@ void AAG_EventManager::BeginPlay()
 	SetFirstTurn(AG_TurnState::IsPlayerTurn);
 	LevelWonEventInit();
 	LevelLoseEventInit();
-
+	TurnDisplayEventInit();
 }
 
 void AAG_EventManager::Tick(float DeltaTime)
@@ -77,6 +77,7 @@ void AAG_EventManager::Tick(float DeltaTime)
 	CameraSwitchEventUpdate();
 	LevelWonEventUpdate(DeltaTime);
 	LevelLoseEventUpdate(DeltaTime);
+	TurnDisplayEventUpdate(DeltaTime);
 }
 
 //Miscellaneous Events
@@ -256,6 +257,11 @@ void AAG_EventManager::AddStar(AG_StarType Star)
 	GameInstance->AddStar(Star);
 }
 
+int AAG_EventManager::GetTurnCount()
+{
+	return TurnPerformed;
+}
+
 //Level Won Event.
 
 void AAG_EventManager::LevelWonEventInit()
@@ -295,7 +301,10 @@ void AAG_EventManager::LevelWonEventUpdate(float DeltaTime)
 
 			if (WinWidgetTemplate)
 			{
+				//TurnWidget->SetVisibility(ESlateVisibility::Hidden);
 				WinWidget->SetVisibility(ESlateVisibility::Visible);
+
+
 				PlayerController->EnableUIInput(false);
 			}
 		}
@@ -325,6 +334,32 @@ void AAG_EventManager::LevelLoseEventUpdate(float DeltaTime)
 			{
 				LoseWidget->SetVisibility(ESlateVisibility::Visible);
 				PlayerController->EnableUIInput(false);
+			}
+		}
+	}
+}
+
+//Turn Display Event.
+
+void AAG_EventManager::TurnDisplayEventInit()
+{
+	if (TurnWidgetTemplate)
+	{
+		TurnWidget = CreateWidget<UUserWidget>(PlayerController, TurnWidgetTemplate);
+		TurnWidget->AddToViewport();
+		TurnWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AAG_EventManager::TurnDisplayEventUpdate(float DeltaTime)
+{
+	if (PlayerCharacter->bIsKnockedOut || bHasPlayerWon)
+	{
+		if (PlayerCharacter->bIsReached)
+		{
+			if (TurnWidgetTemplate)
+			{
+				TurnWidget->SetVisibility(ESlateVisibility::Hidden);
 			}
 		}
 	}

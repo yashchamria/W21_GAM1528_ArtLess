@@ -76,6 +76,10 @@ public:
 	int GetLevelStarCount();
 
 	void AddStar(AG_StarType Star);
+
+	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
+	int GetTurnCount();
+
 //Win Event
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
@@ -101,4 +105,15 @@ private:
 
 	class UUserWidget* LoseWidget;
 	bool bPlayerKnockedOut = false;
+
+//Display Turn Event
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AG_Widgets")
+		TSubclassOf<UUserWidget> TurnWidgetTemplate;
+
+private:
+	class UUserWidget* TurnWidget;
+
+	void TurnDisplayEventInit();
+	void TurnDisplayEventUpdate(float DeltaTime);
 };

@@ -81,6 +81,9 @@ public:
 	uint16 GetLevelMinimunTurnRequired();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
+	int GetLevelMaxTurns();
+
+	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")
 	int GetTotalMaximumStars();
 
 	UFUNCTION(BlueprintCallable, Category = "AG_ScoringSystem")

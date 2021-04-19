@@ -35,6 +35,16 @@ uint16 UAG_ColdNitesGameInstance::GetLevelMinimunTurnRequired()
 	return LevelMinimunRequiredTurns[CurrentLevelNum - 1];
 }
 
+int UAG_ColdNitesGameInstance::GetLevelMaxTurns()
+{
+	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+
+	int CurrentLevelNum;
+	FDefaultValueHelper::ParseInt(CurrentLevelName.RightChop(LevelBaseString.Len()), CurrentLevelNum);
+
+	return LevelMinimunRequiredTurns[CurrentLevelNum - 1];
+}
+
 void UAG_ColdNitesGameInstance::OpenNextLevel()
 {
 	FString NextLevelToLoad = LevelBaseString;
