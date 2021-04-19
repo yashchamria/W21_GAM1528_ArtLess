@@ -7,6 +7,14 @@
 UAG_InventoryComponent::UAG_InventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB1(TEXT("Pickup Sound '/Game/Audio/UnCategorize/PickUp'"));
+	PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pickup Sound"));
+	if (USB1.Succeeded()) { PickUpSound = USB1.Object; }
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB2(TEXT("Inventory Sound '/Game/Audio/UnCategorize/Inventory_Switch'"));
+	InventorySound = CreateDefaultSubobject<USoundBase>(TEXT("Inventory Sound"));
+	if (USB2.Succeeded()) { InventorySound = USB2.Object; }
 }
 
 void UAG_InventoryComponent::AddToInventory(AAG_PickupActor* pickup)

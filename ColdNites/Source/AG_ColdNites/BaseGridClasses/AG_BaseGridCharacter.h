@@ -119,10 +119,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Components")
 		class UStaticMeshComponent* AG_TempMesh;
 
-	
-//Audio Stuff ---> No Proper Implementation Yet
-	/*UPROPERTY(VisibleAnywhere, Category = "AG_Walk")
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Audio")
 		class USoundBase* WalkSound;
-	
-	void WalkSoundEffect();*/
+
+	void WalkSoundEffect();
 };

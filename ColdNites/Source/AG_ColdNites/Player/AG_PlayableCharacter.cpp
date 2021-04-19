@@ -14,12 +14,12 @@ AAG_PlayableCharacter::AAG_PlayableCharacter()
 	ItemHolder->AttachTo(GetRootComponent());
 	ItemHolder->SetRelativeLocation(FVector(0, 0, 150.f));
 
-	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/PickUp.PickUp"));
-	//PickUpSound = CreateDefaultSubobject<USoundBase>(TEXT("Pick Up Sound"));
-	//if (USB.Succeeded()) { PickUpSound = USB.Object; }
-
 	bShouldDestroy = false;
 	Tags.Add("AG_PlayableCharacter");
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk2'"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_PlayableCharacter::BeginPlay() { Super::BeginPlay(); }

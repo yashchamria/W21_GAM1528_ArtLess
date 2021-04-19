@@ -17,9 +17,9 @@ AAG_BaseGridCharacter::AAG_BaseGridCharacter()
 	AG_TempMesh->SetCollisionProfileName("NoCollision");
 	AG_TempMesh->SetupAttachment(RootComponent);
 	
-	//static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("/Game/Sound/Walk_on_Wood_Tile.Walk_on_Wood_Tile"));
-	//WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
-	//if (USB.Succeeded()) { WalkSound = USB.Object; }
+	static ConstructorHelpers::FObjectFinder<USoundBase> USB(TEXT("Walk Sound '/Game/Audio/Footsteps/Walk'"));
+	WalkSound = CreateDefaultSubobject<USoundBase>(TEXT("Walk Sound"));
+	if (USB.Succeeded()) { WalkSound = USB.Object; }
 }
 
 void AAG_BaseGridCharacter::PostInitializeComponents()
@@ -128,6 +128,7 @@ void AAG_BaseGridCharacter::MoveForward()
 	//bRotate = false;
 	MoveTile(GetActorForwardVector());
 	MoveInDirection = AG_Direction::Forward;
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveBackward()
@@ -136,6 +137,7 @@ void AAG_BaseGridCharacter::MoveBackward()
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 180.0f, 0.0f);
 	MoveTile(-GetActorForwardVector());
 	MoveInDirection = AG_Direction::Backward;
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveRight()
@@ -144,6 +146,7 @@ void AAG_BaseGridCharacter::MoveRight()
 	TargetRotation = GetActorRotation() + FRotator(0.0f, 90.0f, 0.0f);
 	MoveTile(GetActorRightVector());
 	MoveInDirection = AG_Direction::Right;
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::MoveLeft()
@@ -152,6 +155,7 @@ void AAG_BaseGridCharacter::MoveLeft()
 	TargetRotation = GetActorRotation() + FRotator(0.0f, -90.0f, 0.0f);
 	MoveTile(-GetActorRightVector());
 	MoveInDirection = AG_Direction::Left;
+	WalkSoundEffect();
 }
 
 void AAG_BaseGridCharacter::Teleport()
@@ -197,11 +201,6 @@ void AAG_BaseGridCharacter::KnockOut(FVector FallDirection)
 	KnockedOutAngle = FallDirection.Rotation() + FRotator(0.0f , 0.0f, -80.0f);
 }
 
-//void AAG_BaseGridCharacter::WalkSoundEffect()
-//{
-//	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
-//}
-
 void AAG_BaseGridCharacter::Animate(){}
 
 void AAG_BaseGridCharacter::SetAnimation(AG_AnimationStates NewState)
@@ -239,6 +238,11 @@ void AAG_BaseGridCharacter::AutoRepositionToTileCenter(FIntPoint TileCoord)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 200.0f, FColor::Red, FString::Printf(TEXT("Character placed on Unwalkable tile")));
 	}
+}
+
+void AAG_BaseGridCharacter::WalkSoundEffect()
+{
+	if (WalkSound) { UGameplayStatics::PlaySoundAtLocation(this->GetWorld(), WalkSound, GetActorLocation()); }
 }
 
 void AAG_BaseGridCharacter::ResetOnTurnEnd()

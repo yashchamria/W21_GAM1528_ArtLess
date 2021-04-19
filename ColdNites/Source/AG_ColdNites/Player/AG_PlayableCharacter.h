@@ -44,7 +44,8 @@ public:
 	
 ///---------------------------------------Inventory Setup----------------------------------------------------------///
 public:
-	class UAG_InventoryComponent* InventoryComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AG_Pickup")
+		class UAG_InventoryComponent* InventoryComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AG_Pickup")
 		class USceneComponent* ItemHolder;
@@ -52,7 +53,4 @@ public:
 	void NextInventoryItem();
 	void PreviousInventoryItem();
 
-///---------------------------------------Audio Setup----------------------------------------------------------///
-	//UPROPERTY(VisibleAnywhere, Category = "AG_PickUp")
-	//	class USoundBase* PickUpSound;
 };
